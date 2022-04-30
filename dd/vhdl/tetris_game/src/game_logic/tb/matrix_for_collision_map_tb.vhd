@@ -29,11 +29,11 @@ architecture bhv of tb_matrix_for_collision_map is
         (T_BB_T,     T_BB_T, T_BB_T)
     );
 
-    type fsm_state_t is ();
+    type fsm_state_t is (TB_WAIT);
     type state_t is record 
         fsm_state: fsm_state_t;
-        dest_tetromino_x: integer;
-        dest_tetromino_y: integer;
+        dest_tetromino_x : std_logic_vector(log2c(BLOCKS_X) downto 0); --signed
+        dest_tetromino_y : std_logic_vector(log2c(BLOCKS_Y) downto 0); --signed
         dest_tetromino: tetromino_t;
         dest_rotation: rotation_t;
     end record;
