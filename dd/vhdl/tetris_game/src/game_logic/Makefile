@@ -50,12 +50,13 @@ VHDL_FILES = \
 
 TB_FILES = \
 	./tb/rows_full_handler_tb.vhd\
-	./tb/add_tetromino_handler_tb.vhd
+	./tb/add_tetromino_handler_tb.vhd\
+	./tb/tetris_game_logic_pkg_tb.vhd
 
 TIME_RESOLUTION = 1ps
 TB_ROWS_FULL = tb_rows_full_handler
 TB_ADD_TETROMINO = tb_add_tetromino_handler
-
+TB_GAME_LOGIC = tb_tetris_game_logic_pkg
 SIM_TIME = 2663 us
 WAVE_FILE = scripts/wave.do
 
@@ -92,6 +93,9 @@ sim_rows_full_gui: compile
 
 sim_add_tetromino: compile
 	vsim -c -do "vsim $(TB_ADD_TETROMINO) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
+
+sim_game_logic: compile 
+	vsim -c -do "vsim $(TB_GAME_LOGIC) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
 
 clean:
 	rm -f transcript

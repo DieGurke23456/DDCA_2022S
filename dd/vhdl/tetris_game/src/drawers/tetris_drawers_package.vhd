@@ -34,6 +34,9 @@ package tetris_drawers_pkg is
     
     subtype t_filled_rows is std_logic_vector(3 downto 0); 
 
+    subtype t_solidity_row is std_logic_vector(0 to 2);
+    type t_solidity_matrix is array (integer range) of t_solidity_row;
+
     constant EMPTY_ROW : t_bb_block_row (0 to 2) := (others => T_BB_EMPTY);
     
     function get_T_BB_from_tetromino(tetromino :tetromino_t) return t_bb_block;
@@ -276,8 +279,8 @@ package body tetris_drawers_pkg is
     end function;
 
 
-    
-    
+
+
     --region misc
     function to_string(b: t_bb_block) return string is
     begin
