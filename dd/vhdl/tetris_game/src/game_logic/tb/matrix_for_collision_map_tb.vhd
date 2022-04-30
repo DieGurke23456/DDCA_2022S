@@ -44,7 +44,7 @@ architecture bhv of tb_matrix_for_collision_map is
     -- test case here! 
     signal state : state_t := (
         fsm_state => WAIT_RESET, 
-        dest_tetromino_x => "0001",
+        dest_tetromino_x => "001",
         dest_tetromino_y => "0001",
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
