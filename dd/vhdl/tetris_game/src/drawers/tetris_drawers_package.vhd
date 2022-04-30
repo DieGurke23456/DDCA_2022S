@@ -53,8 +53,6 @@ package tetris_drawers_pkg is
 
     function add_tetromino_to_matrix(matrix: t_bb_block_matrix; tetromino: tetromino_t; rotation: rotation_t; x: integer; y: integer) return t_bb_block_matrix; 
 
-    function get_slv_block_from_t_BB(t_bb: t_bb_block) return t_slv_block;
-
     function equals(a,b: t_bb_block_row) return boolean;
     function equals(a,b: t_bb_block_matrix) return boolean;
 
@@ -163,21 +161,6 @@ package body tetris_drawers_pkg is
         end case;
         return to_return;
     end function;     
-    
-    function get_slv_block_from_t_BB(t_bb: t_bb_block) return t_slv_block is 
-        variable to_return : t_slv_block;
-        case t_bb is 
-            when T_BB_T => to_return := T_BB_T;
-            when T_BB_I => to_return := T_BB_I;
-            when T_BB_O => to_return := T_BB_O;
-            when T_BB_S => to_return := T_BB_S;
-            when T_BB_Z => to_return := T_BB_Z;
-            when T_BB_J => to_return := T_BB_J;
-            when T_BB_L => to_return := T_BB_L; 
-        end case;
-        return to_return;
-    begin 
-    end function;
 
     
     function get_bb_x_from_t_BB(t_bb: t_bb_block) return t_bb_x_cords is
