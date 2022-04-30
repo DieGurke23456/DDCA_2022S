@@ -132,7 +132,6 @@ begin
         case state.fsm_state is 
             WHEN WAIT_RESET => 
                 report "WAIT_RESET!";
-                state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
                 if res_n = '1' then
                     report "starting test!";
                     state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
