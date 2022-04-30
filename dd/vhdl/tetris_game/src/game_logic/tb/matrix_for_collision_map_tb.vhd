@@ -98,7 +98,7 @@ begin
 
     clk_toggle : process 
     begin
-        wait for 10 ns;
+        wait for 50 ns;
         clk <= not clk;
     end process clk_toggle; 
     reset_single : process
@@ -117,6 +117,7 @@ begin
         report "test failed!";
         finish;
     end process timeout_detection;
+
     sync : process(clk)
 	begin
 		if (rising_edge(clk)) then
