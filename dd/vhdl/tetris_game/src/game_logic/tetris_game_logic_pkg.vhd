@@ -97,11 +97,11 @@ package body tetris_game_logic_pkg is
     end function;
 
     function equals(a,b: t_solidity_row) return boolean is
-        variable to_return : boolean := 1;
+        variable to_return : boolean := true;
         begin
             for i in a'length - 1 loop 
                 if (a(i) /= b(i)) then
-                    to_return := 0;
+                    to_return := false;
                     exit;   -- break
                 end if;
             end loop;
@@ -109,11 +109,11 @@ package body tetris_game_logic_pkg is
     end function;
 
     function equals(a,b: t_solidity_matrix) return boolean is 
-        to_return : boolean := 1;
+        to_return : boolean := true;
         begin 
             for i in a'length - 1 loop
                 if (not equals(a(i), b(i))) then
-                    to_return := 0;
+                    to_return := false;
                     exit;   --break
                 end if;
             end loop;
