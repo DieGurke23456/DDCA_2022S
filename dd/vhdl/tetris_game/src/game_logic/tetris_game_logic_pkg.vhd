@@ -87,7 +87,7 @@ package body tetris_game_logic_pkg is
 
     function matrix_to_solidity_matrix(matrix: t_bb_block_matrix) return t_solidity_matrix is
         variable to_return : t_solidity_matrix(matrix'length - 1 downto 0) := (
-            others => t_solidity_matrix:= (others => '0')
+            others => (t_solidity_matrix:= (others => '0'))
         );
         begin 
             for i in 0 to matrix'length - 1 loop
@@ -97,7 +97,7 @@ package body tetris_game_logic_pkg is
     end function;
 
     function equals(a,b: t_solidity_row) return boolean is
-        to_return :boolean := 1;
+        variable to_return : boolean := 1;
         begin
             for i in a'length - 1 loop 
                 if (a(i) /= b(i)) then
