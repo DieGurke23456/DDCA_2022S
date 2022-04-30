@@ -34,8 +34,7 @@ package tetris_drawers_pkg is
     
     subtype t_filled_rows is std_logic_vector(3 downto 0); 
 
-    subtype t_solidity_row is std_logic_vector(0 to 2);
-    type t_solidity_matrix is array (integer range) of t_solidity_row;
+
 
     constant EMPTY_ROW : t_bb_block_row (0 to 2) := (others => T_BB_EMPTY);
     

@@ -9,7 +9,9 @@ use work.tetris_util_pkg.all;
 
 package tetris_game_logic_pkg is
 
-
+    subtype t_solidity_row is std_logic_vector(0 to 2);
+    type t_solidity_matrix is array (integer range) of t_solidity_row;
+    
     function matrix_to_solidity_matrix(matrix: t_bb_block_matrix) return t_solidity_matrix;
     function row_to_solidity_vector(row: t_bb_block_row) return t_solidity_row;
     function is_solid_at(matrix: t_bb_block_matrix; x: integer, y: integer) return std_logic;
