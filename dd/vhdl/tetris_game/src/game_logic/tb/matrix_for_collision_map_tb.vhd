@@ -100,8 +100,8 @@ begin
     begin
         wait for 50 ns;
         clk <= not clk;
-        report "clock edge";
     end process clk_toggle; 
+
     reset_single : process
     begin
         res_n <= '0'; 
@@ -154,6 +154,7 @@ begin
                     finish;
                 end if;
             WHEN CHECK_RESULT => 
+                report "eyy";
         end case;
     end process;
 end architecture;
