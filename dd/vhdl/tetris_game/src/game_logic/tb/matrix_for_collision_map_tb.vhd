@@ -141,6 +141,7 @@ begin
                 tc_start <= '1';
                 state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
+                report "WAIT_TETROMINO_COLLIDER";
                 if (tc_busy = '0') then
                     if (tc_collision_detected = '0') then
                         report "test successfull";
