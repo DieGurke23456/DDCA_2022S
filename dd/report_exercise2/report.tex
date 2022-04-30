@@ -1,0 +1,102 @@
+\documentclass[10pt,a4paper,titlepage,oneside]{article}
+\usepackage{LabProtocol}
+
+\exercise{Exercise II}
+
+% enter your data here
+\authors{
+	Vorname Nachname, Matr. Nr. 0123456 \par
+	{\small e0123456@student.tuwien.ac.at} \par
+}
+
+
+\begin{document}
+
+\maketitle
+
+
+%████████╗ █████╗ ███████╗██╗  ██╗     ██╗
+%╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝    ███║
+%   ██║   ███████║███████╗█████╔╝     ╚██║
+%   ██║   ██╔══██║╚════██║██╔═██╗      ██║
+%   ██║   ██║  ██║███████║██║  ██╗     ██║
+%   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝     ╚═╝
+\Task{VGA Graphics Controller}
+
+\begin{qa}{VGA Oscilloscope Measurements}
+
+	\begin{figure}[h!]
+		\centering
+		% \includegraphics[width=1.0\linewidth]{your filename here}
+		\dummyimage
+		\caption{Line measurement with cursors marking the length (duration) of the whole line}
+	\end{figure}
+	
+	\begin{figure}[h!]
+		\centering
+		% \includegraphics[width=1.0\linewidth]{your filename here}
+		\dummyimage
+		\caption{Line measurement with cursors marking the length (duration) of the horizontal synchronization pulse}
+	\end{figure}
+	
+
+\end{qa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%████████╗ █████╗ ███████╗██╗  ██╗    ██████╗ 
+%╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝    ╚════██╗
+%   ██║   ███████║███████╗█████╔╝      █████╔╝
+%   ██║   ██╔══██║╚════██║██╔═██╗     ██╔═══╝ 
+%   ██║   ██║  ██║███████║██║  ██╗    ███████╗
+%   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝
+\Task{Tetris Game}
+
+\begin{qa}{Briefly describe the architecture of your \textsf{tetris\_game} module. Are there any submodules? What is their purpose? How many FSMs did you use?}
+add your explanation here (approximately 8-10 sentences, you can also include figures) ... 
+\end{qa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%████████╗ █████╗ ███████╗██╗  ██╗    ██████╗ 
+%╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝    ╚════██╗
+%   ██║   ███████║███████╗█████╔╝      █████╔╝
+%   ██║   ██╔══██║╚════██║██╔═██╗      ╚═══██╗
+%   ██║   ██║  ██║███████║██║  ██╗    ██████╔╝
+%   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚═════╝ 
+\Task{Bonus: SignalTap Measurement}
+
+\begin{qa}{Trigger Condition}
+	\begin{figure}[h!]
+		\centering
+		% \includegraphics[width=1.0\linewidth]{your filename here}
+		\dummyimage
+		\caption{Screenshot showing the trigger condition}
+	\end{figure}
+\end{qa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{qa}{Measurement Screenshot}
+	\begin{figure}[h!]
+		\centering
+		% \includegraphics[width=1.0\linewidth]{your filename here}
+		\dummyimage
+		\caption{Screenshot showing at least the first 4 instructions (and their associated data items) issued to the graphics controller during one frame by the \textsf{tetris\_game} module.}
+	\end{figure}
+\end{qa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{qa}{Instruction Decoding}
+	\begin{center}
+	\scriptsize
+	\begin{tabular}{p{0.05\linewidth}p{0.2\linewidth}p{0.25\linewidth}p{0.40\linewidth}}
+		Command & Operands                                 & Instruction Name & Description \\\hline\hline
+		0x..    & \valuelist{0x0001}                       & ??               & ...\\\hline
+		0x..    & \valuelist{0x0001,0x0002}                & ??               & ...\\\hline
+		0x..    & \valuelist{0x0001,0x0002,0x0003}         & ??               & ...\\\hline
+		0x..    & \valuelist{0x0001,0x0002,0x0003,0x0004}  & ??               & ...\\\hline
+	\end{tabular}
+	\end{center}
+\end{qa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

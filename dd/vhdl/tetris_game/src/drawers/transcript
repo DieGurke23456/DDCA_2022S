@@ -1,0 +1,80 @@
+# vsim tb_tetris_drawers_package -t 1ps -msgmode both
+# vsim tb_tetris_drawers_package -t 1ps -msgmode both 
+# Start time: 05:16:55 on Apr 30,2022
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim
+# //  Version 10.6c_1 linux Sep 15 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading std.env(body)
+# Loading ieee.numeric_std(body)
+# Loading work.math_pkg(body)
+# Loading work.vga_gfx_cntrl_pkg(body)
+# Loading work.tetris_util_pkg(body)
+# Loading work.tetris_drawers_pkg(body)
+# Loading work.tb_tetris_drawers_package(bhv)#1
+#  run 2663 us
+# ** Note: testing get_T_BB_from_tetromino
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 1 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 2 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: testing get_bb_x_from_t_BB
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 3 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 4 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 5 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 6 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 7 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: 0111
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 8 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: 1101
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 10 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 11 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 12 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 12 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 13 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test_empty_1 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test_empty_2 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test_empty_3 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 14 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# ** Note: test 15 passed
+#    Time: 0 ps  Iteration: 0  Instance: /tb_tetris_drawers_package
+# T_BB_E T_BB_E T_BB_E 
+# T_BB_E T_BB_E T_BB_E 
+# T_BB_E T_BB_E T_BB_E 
+# T_BB_E T_BB_T T_BB_E 
+# T_BB_T T_BB_T T_BB_T 
+# End time: 05:16:56 on Apr 30,2022, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
