@@ -79,7 +79,7 @@ package body tetris_game_logic_pkg is
     function row_to_solidity_vector(row: t_bb_block_row) return t_solidity_row is 
         variable to_return : t_solidity_row := (others => '0');
         begin 
-            for (i in 0 to row'length - 1) loop
+            for i in 0 to row'length - 1 loop
                 to_return(i) := is_solid_at(row, i);
             end loop;
             return to_return;
@@ -90,7 +90,7 @@ package body tetris_game_logic_pkg is
             others => t_solidity_matrix:= (others => '0')
         );
         begin 
-            for (i in 0 to matrix'length - 1) loop
+            for i in 0 to matrix'length - 1 loop
                 to_return(i) := row_to_solidity_vector(matrix(i));
             end loop;
             return to_return;
