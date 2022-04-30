@@ -27,14 +27,13 @@ package tetris_drawers_pkg is
         T_BB_CARO,
         T_BB_WALL
     );
+    subtype t_slv_block is std_logic_vector(3 downto 0);
     type t_bb_block_row is array (integer range <>) of t_bb_block;
     
     --TODO change row span using constants 
     type t_bb_block_matrix is array (integer range <>) of t_bb_block_row(0 to 2);
     
     subtype t_filled_rows is std_logic_vector(3 downto 0); 
-
-
 
     constant EMPTY_ROW : t_bb_block_row (0 to 2) := (others => T_BB_EMPTY);
     
@@ -54,6 +53,7 @@ package tetris_drawers_pkg is
 
     function add_tetromino_to_matrix(matrix: t_bb_block_matrix; tetromino: tetromino_t; rotation: rotation_t; x: integer; y: integer) return t_bb_block_matrix; 
 
+    function get_slv_block_from_t_BB(t_bb: t_bb_block) return t_slv_block;
 
     function equals(a,b: t_bb_block_row) return boolean;
     function equals(a,b: t_bb_block_matrix) return boolean;
@@ -162,7 +162,23 @@ package body tetris_drawers_pkg is
             when OTHERS => return "ZZZ";
         end case;
         return to_return;
-    end function;       
+    end function;     
+    
+    function get_slv_block_from_t_BB(t_bb: t_bb_block) return t_slv_block is 
+        variable to_return : t_slv_block;
+        case t_bb is 
+            when T_BB_T => to_return := T_BB_T;
+            when T_BB_I => to_return := T_BB_I;
+            when T_BB_O => to_return := T_BB_O;
+            when T_BB_S => to_return := T_BB_S;
+            when T_BB_Z => to_return := T_BB_Z;
+            when T_BB_J => to_return := T_BB_J;
+            when T_BB_L => to_return := T_BB_L; 
+        end case;
+        return to_return;
+    begin 
+    end function;
+
     
     function get_bb_x_from_t_BB(t_bb: t_bb_block) return t_bb_x_cords is
         variable to_return : t_bb_x_cords;
