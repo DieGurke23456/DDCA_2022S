@@ -48,39 +48,52 @@ begin
         assert is_solid_at(TEST_MATRIX_A(0), 0) = '1' report "test 1 failed!" severity error; 
         
         --report "2 :is_solid_at(row)";
+        echo(".");
         assert is_solid_at(TEST_MATRIX_A(1), 0) = '0' report "test 2 failed!" severity error;
         
         --report "3 :is_solid_at(matrix)";
+        echo(".");
         assert is_solid_at(TEST_MATRIX_A, 0, 0) = '1' report "test 3 failed!" severity error;
 
         --report "4 :is_solid_at(matrix)";
+        echo(".");
         assert is_solid_at(TEST_MATRIX_A, 0,1) = '0' report "test 4 failed!" severity error;
 
         --report "5 :equals(rows)";
+        echo(".");
         assert equals(OUT_MATRIX_A(0), OUT_MATRIX_A(0)) report "test 5 failed!" severity error;
 
         --report "6 :equals(rows)";
+        echo(".");
         assert not equals(OUT_MATRIX_A(0), OUT_MATRIX_A(1)) report "test 6 failed!" severity error;
 
         --report "7 :row_to_solidity_vector";
+        echo(".");
         assert equals(row_to_solidity_vector(TEST_MATRIX_A(0)), OUT_MATRIX_A(0)) report "test 7 failed!" severity error;
         
         --report "8 :row_to_solidity_vector";
+        echo(".");
         assert equals(row_to_solidity_vector(TEST_MATRIX_A(1)), OUT_MATRIX_A(1)) report "test 8 failed!" severity error;
         
         --report "9 :equals(matrixs)";
+        echo(".");
         assert equals(OUT_MATRIX_A, OUT_MATRIX_A) report "test 9 failed!" severity error;
 
         --report "10 :equals(matrixs)";
+        echo(".");
         assert not equals(OUT_MATRIX_A, OUT_MATRIX_B) report "test 10 failed!" severity error;
         
         --report "11 :matrix_to_solidity_matrix";
+        echo(".");
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_A), OUT_MATRIX_A) report "test 11 failed!" severity error;
 
         --report "12 :matrix_to_solidity_matrix";
         echo(".");
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_B), OUT_MATRIX_B) report "test 12 failed!" severity error;        
         
+        print(matrix_to_solidity_matrix(TEST_MATRIX_B));
+        echo("" & LF); --newline
+        print(OUT_MATRIX_B);
         report "test finished";
         wait;
 

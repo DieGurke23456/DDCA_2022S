@@ -20,6 +20,9 @@ package tetris_game_logic_pkg is
     function equals(a,b: t_solidity_row) return boolean;
     function equals(a,b: t_solidity_matrix) return boolean;
 
+    procedure print(row: t_solidity_row);
+    procedure print(matrix: t_solidity_matrix);
+
 
     component rows_full_handler is 
         generic (
@@ -117,5 +120,19 @@ package body tetris_game_logic_pkg is
             end loop;
             return to_return;
     end function;
- 
+
+    procedure print(row: t_solidity_row) is 
+    begin 
+        for i in 0 to row'length - 1 loop
+            echo(std_logic'image(row(i)) & " ");
+        end loop;
+    end procedure; 
+
+    procedure print(matrix: t_solidity_matrix) is 
+    begin 
+        for i in 0 to matrix'length - 1 loop 
+            print(matrix(i));
+            echo("" & LF); -- newline
+        end loop;
+    end procedure;
 end package body;
