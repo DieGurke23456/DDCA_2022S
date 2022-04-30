@@ -76,7 +76,7 @@ begin
         signal block_map_x_int : integer;
         signal block_map_y_int : integer;
     begin
-        process(all)
+        x_y: process(tc_block_map_rd)
         begin
             if (tc_block_map_rd = '1') then
                 block_map_x_int <= to_integer(unsigned(tc_block_map_x));
