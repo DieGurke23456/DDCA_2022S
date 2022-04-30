@@ -112,7 +112,7 @@ begin
     timeout_detection : process
     begin 
         report "timeout_detection";
-        wait for 3000 us;
+        wait for 300000 us;
         report "test-timeout";
         report "test failed!";
         finish;
