@@ -1,0 +1,10 @@
+# vsim tb_add_tetromino_handler -t 1ps -msgmode both
+# vsim tb_add_tetromino_handler -t 1ps -msgmode both 
+# Start time: 11:15:07 on Apr 30,2022
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error (suppressible): ./add_tetromino_handler.vhd(37): (vopt-1272) Length of expected is 3; length of actual is 10.
+# ** Error: Vopt Compiler exiting
+# ** Error: (vopt-2064) Compiler back-end code generation process terminated with code 2.
+# Error loading design
+# End time: 11:15:08 on Apr 30,2022, Elapsed time: 0:00:01
+# Errors: 3, Warnings: 0
