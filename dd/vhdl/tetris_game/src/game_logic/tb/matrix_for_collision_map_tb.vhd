@@ -6,6 +6,8 @@ use work.tetris_util_pkg.all;
 use work.tetris_drawers_pkg.all;
 use work.tetris_game_logic_pkg.all;
 use work.vga_gfx_cntrl_pkg.all;
+use work.math_pkg.all;
+
 
 entity tb_matrix_for_collision_map is 
 end tb_matrix_for_collision_map;
