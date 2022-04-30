@@ -86,9 +86,7 @@ package body tetris_game_logic_pkg is
     end function;
 
     function matrix_to_solidity_matrix(matrix: t_bb_block_matrix) return t_solidity_matrix is
-        variable to_return : t_solidity_matrix(matrix'length - 1 downto 0) := (
-            others => (t_solidity_matrix:= (others => '0'))
-        );
+        variable to_return : t_solidity_matrix(matrix'length - 1 downto 0);
         begin 
             for i in 0 to matrix'length - 1 loop
                 to_return(i) := row_to_solidity_vector(matrix(i));
