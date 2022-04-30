@@ -11,7 +11,7 @@ use work.vga_gfx_cntrl_pkg.all;
 entity tb_rows_full_handler is
 end tb_rows_full_handler;
 architecture bhv of tb_rows_full_handler is
-    constant ROWS : integer := 7;
+    constant ROWS : integer := 5;
     constant COLUMNS : integer := 3; 
 
     signal RES_SIGNAL, START_SIGNAL, BUSY_SIGNAL : std_logic;
