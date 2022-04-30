@@ -88,7 +88,7 @@ begin
             end if;
         end process;
 
-        check_solid :process(block_map_x_int, block_map_y_int)
+        check_solid :process(all)
         begin 
             echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
             if (block_map_y_int > 0 and block_map_y_int < test_matrix'length and block_map_x_int > 0 and block_map_x_int < BLOCKS_X) then 
