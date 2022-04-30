@@ -64,8 +64,8 @@ begin
 
 
     block_map : block 
-        signal block_map_x_int : integer <= 0;
-        signal block_map_y_int : integer <= 0;
+        signal block_map_x_int : integer;
+        signal block_map_y_int : integer;
     begin
         process(all)
         begin
