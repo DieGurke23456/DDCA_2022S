@@ -28,8 +28,6 @@ architecture arch of add_tetromino_handler is
     type fsm_state_t is (ATH_IDLE, ADD_TETROMINO, ADD_BLOCK);
     type state_t is record 
         fsm_state: fsm_state_t;
-        current_row: integer range 0 to 3;
-        current_column: integer range 0 to 3;
         current_index : integer range 0 to tetromino_blocks_t'length - 1; -- iterate through blocks 
         out_matrix : t_bb_block_matrix(ROWS - 1 downto 0);
     end record;
@@ -44,7 +42,7 @@ begin
                 state <= (
                     fsm_state => ATH_IDLE,
                     current_index => 0,
-                    out_matrix => EMPTY_MATRIX,
+                    out_matrix => EMPTY_MATRIX
                 );
             elsif (rising_edge(clk)) then
                 state <= state_nxt;
@@ -63,9 +61,6 @@ begin
                     busy <= '1';
                     state_nxt.fsm_state <= ADD_TETROMINO;
                     state_nxt.current_index <= 0;
-                    state_nxt.current_column <= 0;
-                    state_nxt.row_full <= '0';
-                    state_nxt.rows_removed <= "0000";
                 end if;
             WHEN ADD_TETROMINO => 
                 state_nxt.out_matrix <= in_matrix;
