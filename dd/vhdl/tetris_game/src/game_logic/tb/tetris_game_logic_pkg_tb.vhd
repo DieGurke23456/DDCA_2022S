@@ -11,28 +11,28 @@ use work.vga_gfx_cntrl_pkg.all;
 entity tb_tetris_game_logic_pkg is
 end tb_tetris_game_logic_pkg;
 architecture bhv of tb_tetris_game_logic_pkg is
-    constant TEST_MATRIX_A : t_bb_block_matrix(4 downto 0) := (
+    constant TEST_MATRIX_A : t_bb_block_matrix(0 to 4) := (
         (T_BB_I,     T_BB_I, T_BB_I),
         (T_BB_EMPTY, T_BB_T, T_BB_CARO),
         (T_BB_T,     T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T)
     );
-    constant OUT_MATRIX_A : t_solidity_matrix(4 downto 0) := (
+    constant OUT_MATRIX_A : t_solidity_matrix(0 to 4) := (
         "111",
         "011",
         "111",
         "111",
         "111"
     );
-    constant TEST_MATRIX_B : t_bb_block_matrix(4 downto 0) := (
+    constant TEST_MATRIX_B : t_bb_block_matrix(0 to 4) := (
         (T_BB_EMPTY,     T_BB_I, T_BB_I),
         (T_BB_T,     T_BB_T, T_BB_EMPTY),
         (T_BB_T,     T_BB_EMPTY, T_BB_T),
         (T_BB_EMPTY, T_BB_T, T_BB_CARO),
         (T_BB_T,     T_BB_T, T_BB_T)
     );
-    constant OUT_MATRIX_B : t_solidity_matrix(4 downto 0) := (
+    constant OUT_MATRIX_B : t_solidity_matrix(0 to 4) := (
         "011",
         "110",
         "101",
