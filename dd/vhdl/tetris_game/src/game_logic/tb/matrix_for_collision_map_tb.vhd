@@ -38,7 +38,7 @@ architecture bhv of tb_matrix_for_collision_map is
         dest_tetromino: tetromino_t;
         dest_rotation: rotation_t;
     end record;
-    signal state,state_nxt;
+    signal state, state_nxt: state_t;
 begin 
 
     tetromino_collider_inst : tetromino_collider
