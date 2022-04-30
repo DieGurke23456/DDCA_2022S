@@ -122,6 +122,7 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			state <= state_nxt;
+            report "clock edge";
 		end if;
 	end process;
 
