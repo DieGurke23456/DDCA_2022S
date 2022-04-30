@@ -82,7 +82,6 @@ begin
             block_map_x_int <= to_integer(unsigned(tc_block_map_x));
             block_map_y_int <= to_integer(unsigned(tc_block_map_y));
             if (tc_block_map_rd = '1') then
-                echo ("checking block " & to_string(tc_block_map_x) & " " & to_string(tc_block_map_y) & LF);
                 block_map_x_int <= to_integer(unsigned(tc_block_map_x));
                 block_map_y_int <= to_integer(unsigned(tc_block_map_y));
             end if;
