@@ -25,7 +25,6 @@ generic (
 end entity;
 architecture arch of add_tetromino_handler is 
 
-begin
     type fsm_state_t is (ATH_IDLE, ADD_TETROMINO, ADD_BLOCK);
     type state_t is record 
         fsm_state: fsm_state_t;
@@ -38,7 +37,7 @@ begin
 
     constant EMPTY_ROW_CUSTOM:  t_bb_block_row(COLUMNS -1 downto 0) := (others => T_BB_EMPTY);
     constant EMPTY_MATRIX : t_bb_block_matrix(ROWS - 1 downto 0) := (others => EMPTY_ROW_CUSTOM);
-
+begin
     sync : process(clk, res_n)
         begin
             if (res_n = '0') then
