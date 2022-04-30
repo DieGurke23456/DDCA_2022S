@@ -28,7 +28,7 @@ architecture arch of add_tetromino_handler is
     type fsm_state_t is (ATH_IDLE, ADD_TETROMINO, ADD_BLOCK);
     type state_t is record 
         fsm_state: fsm_state_t;
-        current_index : integer range 0 to tetromino_blocks_t'length - 1; -- iterate through blocks 
+        current_index : integer range 0 to tetromino_blocks_t'length; -- iterate through blocks 
         out_matrix : t_bb_block_matrix(ROWS - 1 downto 0);
     end record;
     signal state, state_nxt: state_t;
