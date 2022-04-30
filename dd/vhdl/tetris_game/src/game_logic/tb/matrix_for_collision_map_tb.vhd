@@ -148,7 +148,7 @@ begin
                 tc_start <= '1';
                 state_nxt.fsm_state <= CHECK_RESULT;
             WHEN CHECK_RESULT => 
-                state_nxt.fsm_state => WAIT_TETROMINO_COLLIDER;
+                state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
                 report "WAIT_TETROMINO_COLLIDER";
                 if (tc_busy = '0') then
