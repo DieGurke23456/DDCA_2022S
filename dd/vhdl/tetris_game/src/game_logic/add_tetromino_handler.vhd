@@ -75,7 +75,7 @@ begin
             WHEN ADD_BLOCK => 
                 if blocks_solid(state.current_index) = '1' then
                     state_nxt.out_matrix(3 - state.current_index / (2*2) + y)(3 - state.current_index mod (2*2) + x) <= get_T_BB_from_tetromino(tetromino);
-                    report "adding " &to_string(get_T_BB_from_tetromino(tetromino)) & "at x:" & integer'image(3 - state.current_index mod (2*2) + x) &" y:" integer'image(3 - state.current_index / (2*2) + y);
+                    report "adding " &to_string(get_T_BB_from_tetromino(tetromino)) & "at x:" & integer'image(3 - state.current_index mod (2*2) + x) &" y:" & integer'image(3 - state.current_index / (2*2) + y);
                 end if;
                 state_nxt.current_index <= state.current_index + 1;
                 state_nxt.fsm_state <= ADD_TETROMINO;
