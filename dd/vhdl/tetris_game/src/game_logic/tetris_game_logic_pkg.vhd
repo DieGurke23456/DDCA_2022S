@@ -18,7 +18,7 @@ package tetris_game_logic_pkg is
     function is_solid_at(row: t_bb_block_row; x: integer) return std_logic;
 
     function equals(a,b: t_solidity_row) return boolean;
-    function euqals(a,b: t_solidity_matrix) return boolean;
+    function equals(a,b: t_solidity_matrix) return boolean;
 
 
     component rows_full_handler is 
@@ -108,7 +108,7 @@ package body tetris_game_logic_pkg is
             return to_return;
     end function;
 
-    function euqals(a,b: t_solidity_matrix) return boolean is 
+    function equals(a,b: t_solidity_matrix) return boolean is 
         to_return : boolean := 1;
         begin 
             for i in a'length - 1 loop
