@@ -88,7 +88,7 @@ begin
         check_solid :process(block_map_x_int, block_map_y_int)
         begin 
             if (block_map_y_int > 0 and block_map_y_int < test_matrix'length and block_map_x_int > 0 and block_map_x_int < BLOCKS_X) then 
-                echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int); 
+                echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
                 if (test_matrix(block_map_y_int)(block_map_x_int) = T_BB_EMPTY) then 
                     tc_block_map_solid <= '0';
                 else 
