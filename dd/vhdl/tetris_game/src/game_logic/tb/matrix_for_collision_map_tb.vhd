@@ -100,6 +100,7 @@ begin
     begin
         wait for 50 ns;
         clk <= not clk;
+        report "clock edge";
     end process clk_toggle; 
     reset_single : process
     begin
@@ -122,7 +123,6 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			state <= state_nxt;
-            report "clock edge";
 		end if;
 	end process;
 
