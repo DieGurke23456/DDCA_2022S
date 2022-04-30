@@ -79,7 +79,8 @@ begin
 
         report "12 :matrix_to_solidity_matrix";
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_B), OUT_MATRIX_B) report "test 12 failed!" severity error;        
-
+        
+        wait;
 
     end process;    
 
