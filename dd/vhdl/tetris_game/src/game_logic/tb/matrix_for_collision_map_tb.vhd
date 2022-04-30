@@ -124,14 +124,19 @@ begin
 		end if;
 	end process;
 
-    next_state : process
+    next_state : process(all)
     begin 
         state_nxt <= state;
         tc_start <= '0';
         case state.fsm_state is 
             WHEN WAIT_RESET => 
-            
+                if res_n = '1' then
+                    state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
+                else 
+                    state_nxt.fsm_state <= WAIT_RESET;
+                end if;
             WHEN START_TETROMINO_COLLIDER => 
+                report "starting test!";
                 tc_start <= '1';
                 state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
@@ -144,7 +149,6 @@ begin
                 finish;
                 end if;
             WHEN CHECK_RESULT => 
-
         end case;
     end process;
 end architecture;
