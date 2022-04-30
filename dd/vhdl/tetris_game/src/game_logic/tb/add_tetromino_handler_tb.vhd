@@ -101,14 +101,14 @@ begin
                 IN_TETROMINO <= TET_T;
                 IN_ROTATION <= ROT_0;
                 IN_X <= 0;
-                IN_Y <= 0;
+                IN_Y <= 1;
                 if (BUSY_SIGNAL = '0') then
 					state_nxt.fsm_state <= CHECK_RESULT;
                     state_nxt.stored_matrix <= OUT_MATRIX;
 				end if;
             WHEN CHECK_RESULT => 
-                if equals(add_tetromino_to_matrix(EMPTY_MATRIX,TET_T, ROT_0, 0, 0),state.stored_matrix) then
-                    report "test delete rows successfull!";
+                if equals(add_tetromino_to_matrix(EMPTY_MATRIX,TET_T, ROT_0, 0, 1),state.stored_matrix) then
+                    report "test add_tetromino_to_matrix!";
                     finish;
                 else 
                     report "test delete rows failed!";
