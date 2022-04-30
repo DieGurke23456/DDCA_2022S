@@ -74,7 +74,7 @@ begin
                 end if;
             WHEN ADD_BLOCK => 
                 if blocks_solid(state.current_index) = '1' then
-                    out_matrix(state.current_index / 4 + y)((state.current_index mod (2*2)) + x) <= get_T_BB_from_tetromino(tetromino);
+                    out_matrix(state.current_index / (2*2) + y)((state.current_index mod (2*2)) + x) <= get_T_BB_from_tetromino(tetromino);
                 end if;
                 state_nxt.current_index <= state.current_index + 1;
                 state_nxt.fsm_state <= ADD_TETROMINO;
