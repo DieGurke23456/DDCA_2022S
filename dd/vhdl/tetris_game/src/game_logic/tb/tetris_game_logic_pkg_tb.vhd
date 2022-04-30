@@ -91,6 +91,7 @@ begin
         echo(".");
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_B), OUT_MATRIX_B) report "test 12 failed!" severity error;        
         
+        echo("" & LF); --newline
         print(matrix_to_solidity_matrix(TEST_MATRIX_B));
         echo("" & LF); --newline
         print(OUT_MATRIX_B);
