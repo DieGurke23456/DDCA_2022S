@@ -96,13 +96,13 @@ begin
     clk_toggle : process 
     begin
         wait for 10 ns;
-        CLK_SIGNAL <= not CLK_SIGNAL;
+        clk <= not clk;
     end process clk_toggle; 
     reset_single : process
     begin
-        RES_SIGNAL <= '0'; 
+        res_n <= '0'; 
         wait for 10 ns;
-        RES_SIGNAL <= '1';
+        res_n <= '1';
         wait;
     end process reset_single;
 
@@ -113,11 +113,11 @@ begin
         report "test failed!";
         finish;
     end process timeout_detection;
-    sync : process(CLK_SIGNAL)
+    sync : process(clk)
 	begin
-		if (rising_edge(CLK_SIGNAL)) then
+		if (rising_edge(clk)) then
 			state <= state_nxt;
 		end if;
 	end process;
-    
+
 end architecture;
