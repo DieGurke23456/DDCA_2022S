@@ -10,8 +10,8 @@ use work.vga_gfx_cntrl_pkg.all;
 entity tb_add_tetromino_handler is
 end tb_add_tetromino_handler;
 architecture bhv of tb_add_tetromino_handler is
-    constant ROWS : integer := 20;
-    constant COLUMNS : integer := 10;
+    constant ROWS : integer := 5;
+    constant COLUMNS : integer := 3;
     signal RES_SIGNAL, START_SIGNAL, BUSY_SIGNAL : std_logic;
     signal CLK_SIGNAL : std_logic := '0';
     signal IN_MATRIX, OUT_MATRIX : t_bb_block_matrix(ROWS - 1 downto 0); 
