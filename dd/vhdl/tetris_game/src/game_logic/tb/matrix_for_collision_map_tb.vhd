@@ -30,8 +30,8 @@ architecture bhv of tb_matrix_for_collision_map is
         (T_BB_T,     T_BB_T, T_BB_T)
     );
 
-    type fsm_state_t is (TB_WAIT);
-
+    type fsm_state_t is (WAIT_RESET, START_TETROMINO_COLLIDER, WAIT_TETROMINO_COLLIDER, CHECK_RESULT);
+    
     type state_t is record 
         fsm_state: fsm_state_t;
         dest_tetromino_x : std_logic_vector(log2c(BLOCKS_X) downto 0); --signed
@@ -39,9 +39,16 @@ architecture bhv of tb_matrix_for_collision_map is
         dest_tetromino: tetromino_t;
         dest_rotation: rotation_t;
     end record;
-    signal state, state_nxt: state_t;
-begin 
+    signal state : state_t := (
+        fsm_state => WAIT_RESET, 
+        dest_tetromino_x => to_unsigned(0),
+        dest_tetromino_y =>to_unsigned(0),
+        dest_tetromino => TET_T,
+        dest_rotation => ROT_0
+    );
 
+    signal state_nxt : state_t;
+begin 
     tetromino_collider_inst : tetromino_collider
     generic map (
         BLOCKS_X => BLOCKS_X,
@@ -86,4 +93,31 @@ begin
         end process;
     end block;
 
+    clk_toggle : process 
+    begin
+        wait for 10 ns;
+        CLK_SIGNAL <= not CLK_SIGNAL;
+    end process clk_toggle; 
+    reset_single : process
+    begin
+        RES_SIGNAL <= '0'; 
+        wait for 10 ns;
+        RES_SIGNAL <= '1';
+        wait;
+    end process reset_single;
+
+    timeout_detection : process
+    begin 
+        wait for 3000 us;
+        report "test-timeout";
+        report "test failed!";
+        finish;
+    end process timeout_detection;
+    sync : process(CLK_SIGNAL)
+	begin
+		if (rising_edge(CLK_SIGNAL)) then
+			state <= state_nxt;
+		end if;
+	end process;
+    
 end architecture;
