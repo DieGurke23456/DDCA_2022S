@@ -78,7 +78,7 @@ begin
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_A), OUT_MATRIX_A) report "test 11 failed!" severity error;
 
         --report "12 :matrix_to_solidity_matrix";
-        echo(.);
+        echo(".");
         assert equals(matrix_to_solidity_matrix(TEST_MATRIX_B), OUT_MATRIX_B) report "test 12 failed!" severity error;        
         
         report "test finished";
