@@ -24,8 +24,8 @@ architecture bhv of tb_matrix_for_collision_map is
 	signal tc_block_map_solid : std_logic;
 
     constant test_matrix : t_bb_block_matrix(BLOCKS_Y - 1 downto 0) :=(
-        (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-        (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_T, T_BB_T, T_BB_T),
+        (T_BB_T, T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T)
@@ -148,9 +148,10 @@ begin
                 report "WAIT_TETROMINO_COLLIDER";
                 if (tc_busy = '0') then
                     if (tc_collision_detected = '0') then
-                        echo("collision_detected!");
+                        echo("no collision_detected!");
                         report "test successfull";
                     else
+                        echo("collision_detected!");
                         report "test failed!";
                     end if;
                     finish;
