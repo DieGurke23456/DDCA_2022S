@@ -108,10 +108,10 @@ begin
 				end if;
             WHEN CHECK_RESULT => 
                 if equals(add_tetromino_to_matrix(EMPTY_MATRIX,TET_T, ROT_0, 0, 1),state.stored_matrix) then
-                    report "test add_tetromino_to_matrix!";
+                    report "test add_tetromino_to_matrix successfull!";
                     finish;
                 else 
-                    report "test delete rows failed!";
+                    report "test add_tetromino_to_matrix failed!";
                     print(state.stored_matrix);
                     echo(""&LF);
                     print(add_tetromino_to_matrix(EMPTY_MATRIX,TET_T, ROT_0, 0, 0));
