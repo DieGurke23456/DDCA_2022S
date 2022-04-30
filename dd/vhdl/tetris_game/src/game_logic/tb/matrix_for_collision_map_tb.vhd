@@ -39,10 +39,12 @@ architecture bhv of tb_matrix_for_collision_map is
         dest_tetromino: tetromino_t;
         dest_rotation: rotation_t;
     end record;
+    
+    -- test case here! 
     signal state : state_t := (
         fsm_state => WAIT_RESET, 
-        dest_tetromino_x => std_logic_vector(0),
-        dest_tetromino_y => unsigned(0),
+        dest_tetromino_x => std_logic_vector(log2c(BLOCKS_X) downto 0) (others => '0'),
+        dest_tetromino_y => std_logic_vector(log2c(BLOCKS_X) downto 0) (others => '0'),
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
     );
