@@ -10,12 +10,12 @@ use work.tetris_util_pkg.all;
 package tetris_game_logic_pkg is
 
     subtype t_solidity_row is std_logic_vector(0 to 2);
-    type t_solidity_matrix is array (integer range) of t_solidity_row;
-    
+    type t_solidity_matrix is array (integer range<>) of t_solidity_row;
+
     function matrix_to_solidity_matrix(matrix: t_bb_block_matrix) return t_solidity_matrix;
     function row_to_solidity_vector(row: t_bb_block_row) return t_solidity_row;
-    function is_solid_at(matrix: t_bb_block_matrix; x: integer, y: integer) return std_logic;
-    function is_solid_at(row: t_bb_block_row, x: integer) return std_logic;
+    function is_solid_at(matrix: t_bb_block_matrix; x: integer; y: integer) return std_logic;
+    function is_solid_at(row: t_bb_block_row; x: integer) return std_logic;
 
     function equals(a,b: t_solidity_row) return boolean;
     function euqals(a,b: t_solidity_matrix) return boolean;
@@ -58,7 +58,7 @@ package tetris_game_logic_pkg is
 end package;
 
 package body tetris_game_logic_pkg is 
-    function is_solid_at(row: t_bb_block_row, x: integer) return std_logic is
+    function is_solid_at(row: t_bb_block_row; x: integer) return std_logic is
         variable to_return : std_logic := '0';
         begin 
             if (row(x) /= T_BB_EMPTY) then
@@ -67,7 +67,7 @@ package body tetris_game_logic_pkg is
             return to_return;
     end function;
 
-    function is_solid_at(matrix: t_bb_block_matrix; x: integer, y: integer) return std_logic is
+    function is_solid_at(matrix: t_bb_block_matrix; x: integer; y: integer) return std_logic is
         variable to_return :std_logic := '0';
         begin
             if(matrix(y)(x) /= T_BB_EMPTY) then
