@@ -103,9 +103,9 @@ begin
     end process clk_toggle; 
     reset_single : process
     begin
-        -- res_n <= '0'; 
-        -- wait for 10 ns;
-        -- res_n <= '1';
+        res_n <= '0'; 
+        wait for 10 ns;
+        res_n <= '1';
         wait;
     end process reset_single;
 
@@ -133,12 +133,12 @@ begin
             WHEN WAIT_RESET => 
                 report "WAIT_RESET!";
                 state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
-                -- if res_n = '1' then
-                --     report "starting test!";
-                --     state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
-                -- else 
-                --     state_nxt.fsm_state <= WAIT_RESET;
-                -- end if;
+                if res_n = '1' then
+                    report "starting test!";
+                    state_nxt.fsm_state <= START_TETROMINO_COLLIDER;
+                else 
+                    state_nxt.fsm_state <= WAIT_RESET;
+                end if;
             WHEN START_TETROMINO_COLLIDER => 
                 report "START_TETROMINO_COLLIDER";
                 tc_start <= '1';
