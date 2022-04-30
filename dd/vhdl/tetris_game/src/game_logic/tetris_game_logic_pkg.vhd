@@ -107,10 +107,10 @@ package body tetris_game_logic_pkg is
     end function;
 
     function equals(a,b: t_solidity_matrix) return boolean is 
-        to_return : boolean := true;
+        variable to_return : boolean := true;
         begin 
-            for i in a'length - 1 loop
-                if (not equals(a(i), b(i))) then
+            for i in 0 to a'length - 1 loop
+                if not equals(a(i), b(i)) then
                     to_return := false;
                     exit;   --break
                 end if;
