@@ -45,7 +45,7 @@ architecture bhv of tb_matrix_for_collision_map is
     signal state : state_t := (
         fsm_state => WAIT_RESET, 
         dest_tetromino_x => (others => '0'),
-        dest_tetromino_y => (others => '0'),
+        dest_tetromino_y => "001",
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
     );
@@ -148,6 +148,7 @@ begin
                 report "WAIT_TETROMINO_COLLIDER";
                 if (tc_busy = '0') then
                     if (tc_collision_detected = '0') then
+                        echo("collision_detected!");
                         report "test successfull";
                     else
                         report "test failed!";
@@ -155,7 +156,6 @@ begin
                     finish;
                 end if;
             WHEN CHECK_RESULT => 
-                report "eyy";
         end case;
     end process;
 end architecture;
