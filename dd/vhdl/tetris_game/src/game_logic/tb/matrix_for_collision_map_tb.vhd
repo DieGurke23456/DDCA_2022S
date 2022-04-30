@@ -41,8 +41,8 @@ architecture bhv of tb_matrix_for_collision_map is
     end record;
     signal state : state_t := (
         fsm_state => WAIT_RESET, 
-        dest_tetromino_x => to_unsigned(0),
-        dest_tetromino_y =>to_unsigned(0),
+        dest_tetromino_x => std_logic_vector(0),
+        dest_tetromino_y => unsigned(0),
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
     );
