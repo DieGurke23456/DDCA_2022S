@@ -15,7 +15,8 @@ end tb_matrix_for_collision_map;
 architecture bhv of tb_matrix_for_collision_map is
     constant BLOCKS_X: integer := 3;
     constant BLOCKS_Y: integer := 5;
-    signal clk, res_n, tc_start, tc_busy, tc_collision_detected : std_logic;
+    signal clk std_logic := 0;
+    signal res_n, tc_start, tc_busy, tc_collision_detected : std_logic;
     
     signal tc_block_map_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0) := (others => '0');
 	signal tc_block_map_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0) := (others => '0');
