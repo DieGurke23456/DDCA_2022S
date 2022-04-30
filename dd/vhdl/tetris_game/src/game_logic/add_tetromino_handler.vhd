@@ -65,7 +65,7 @@ begin
                 end if;
             WHEN ADD_TETROMINO => 
                 state_nxt.out_matrix <= in_matrix;
-                blocks_solid := get_blocks(tetromino, rotation)(state.current_index);
+                blocks_solid := get_blocks(tetromino, rotation);
                 if state.current_index < tetromino_blocks_t'length then
                     state_nxt.fsm_state <= ADD_BLOCK;
                 else 
@@ -74,7 +74,7 @@ begin
                 end if;
             WHEN ADD_BLOCK => 
                 if blocks_solid(state.current_index) = '1' then
-                    out_matrix(state.current_index / 4 + y)(state.current_index % 4 + x) <= 
+                    out_matrix(state.current_index / 4 + y)(state.current_index % 4 + x) <= get_T_BB_from_tetromino(tetromino);
                 end if;
                 state_nxt.current_index <= state.current_index + 1;
                 state_nxt.fsm_state <= ADD_TETROMINO;
