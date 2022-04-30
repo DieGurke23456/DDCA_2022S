@@ -146,8 +146,9 @@ begin
             WHEN START_TETROMINO_COLLIDER => 
                 echo("START_TETROMINO_COLLIDER");
                 tc_start <= '1';
-                state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
-                wait for 20 ns;
+                state_nxt.fsm_state <= CHECK_RESULT;
+            WHEN CHECK_RESULT => 
+                state_nxt.fsm_state => WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
                 report "WAIT_TETROMINO_COLLIDER";
                 if (tc_busy = '0') then
@@ -159,7 +160,6 @@ begin
                     finish;
                 end if;
 
-            WHEN CHECK_RESULT => 
         end case;
     end process;
 end architecture;
