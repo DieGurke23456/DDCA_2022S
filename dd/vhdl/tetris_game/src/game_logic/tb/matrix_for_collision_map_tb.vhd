@@ -124,4 +124,27 @@ begin
 		end if;
 	end process;
 
+    next_state : process
+    begin 
+        state_nxt <= state;
+        tc_start <= '0';
+        case state.fsm_state is 
+            WHEN WAIT_RESET => 
+            
+            WHEN START_TETROMINO_COLLIDER => 
+                tc_start <= '1';
+                state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
+            WHEN WAIT_TETROMINO_COLLIDER =>
+                if (tc_busy = '0') then
+                    if (tc_collision_detected = '0') then
+                        report "test successfull";
+                    else
+                        report "test failed!";
+                    end if;
+                finish;
+                end if;
+            WHEN CHECK_RESULT => 
+
+        end case;
+    end process;
 end architecture;
