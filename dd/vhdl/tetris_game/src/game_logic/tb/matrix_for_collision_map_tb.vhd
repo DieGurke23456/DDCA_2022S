@@ -48,7 +48,6 @@ architecture bhv of tb_matrix_for_collision_map is
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
     );
-
     signal state_nxt : state_t;
 begin 
     tetromino_collider_inst : tetromino_collider
@@ -112,6 +111,7 @@ begin
 
     timeout_detection : process
     begin 
+        report "timeout_detection";
         wait for 3000 us;
         report "test-timeout";
         report "test failed!";
