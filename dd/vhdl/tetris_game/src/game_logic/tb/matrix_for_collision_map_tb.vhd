@@ -24,7 +24,7 @@ architecture bhv of tb_matrix_for_collision_map is
 	signal tc_block_map_solid : std_logic;
 
     constant test_matrix : t_bb_block_matrix(0 to BLOCKS_Y - 1) :=(
-        (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_EMPTY, T_BB_T, T_BB_EMPTY),
         (T_BB_T, T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T),
         (T_BB_T,     T_BB_T, T_BB_T),
