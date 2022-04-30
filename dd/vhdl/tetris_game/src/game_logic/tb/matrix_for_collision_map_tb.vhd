@@ -80,7 +80,7 @@ begin
         x_y: process(all)
         begin
             if (tc_block_map_rd = '1') then
-                echo ("checking block " & to_string(tc_block_map_x) & " " & to_string'image(tc_block_map_y) & LF);
+                echo ("checking block " & to_string(tc_block_map_x) & " " & to_string(tc_block_map_y) & LF);
                 block_map_x_int <= to_integer(unsigned(tc_block_map_x));
                 block_map_y_int <= to_integer(unsigned(tc_block_map_y));
                 --echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF);
