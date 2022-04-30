@@ -138,6 +138,7 @@ begin
                     state_nxt.fsm_state <= WAIT_RESET;
                 end if;
             WHEN START_TETROMINO_COLLIDER => 
+                report "START_TETROMINO_COLLIDER";
                 tc_start <= '1';
                 state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
