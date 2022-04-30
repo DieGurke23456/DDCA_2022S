@@ -103,7 +103,7 @@ begin
 
     clk_toggle : process 
     begin
-        wait for 50 ns;
+        wait for 10 ns;
         clk <= not clk;
     end process clk_toggle; 
 
