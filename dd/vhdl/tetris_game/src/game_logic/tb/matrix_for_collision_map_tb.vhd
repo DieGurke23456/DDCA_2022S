@@ -26,9 +26,9 @@ architecture bhv of tb_matrix_for_collision_map is
     constant test_matrix : t_bb_block_matrix(0 to BLOCKS_Y - 1) :=(
         (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
         (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_EMPTY,     T_BB_WALL, T_BB_EMPTY),
         (T_BB_EMPTY,     T_BB_EMPTY, T_BB_EMPTY),
-        (T_BB_EMPTY,     T_BB_EMPTY, T_BB_EMPTY),
-        (T_BB_WALL,     T_BB_WALL, T_BB_WALL)
+        (T_BB_EMPTY,     T_BB_EMPTY, T_BB_EMPTY)
     );
 
     type fsm_state_t is (WAIT_RESET, START_TETROMINO_COLLIDER, WAIT_TETROMINO_COLLIDER, CHECK_RESULT);
@@ -76,8 +76,9 @@ begin
     block_map : block 
         signal block_map_x_int : integer;
         signal block_map_y_int : integer;
+        signal next_solid : std_logic;
     begin
-        x_y: process(all)
+        x_y: process(clk)
         begin
             block_map_x_int <= to_integer(unsigned(tc_block_map_x));
             block_map_y_int <= to_integer(unsigned(tc_block_map_y));
@@ -87,14 +88,18 @@ begin
             end if;
         end process;
 
-        check_solid :process(all)
+        check_solid :process(clk)
         begin 
-            echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
-            if (block_map_y_int > -1 and block_map_y_int < test_matrix'length and block_map_x_int > -1 and block_map_x_int < BLOCKS_X) then 
+            tc_block_map_solid <= next_solid;
+            if(tc_block_map_rd = '0') then 
+            elsif (block_map_y_int > -1 and block_map_y_int < test_matrix'length and block_map_x_int > -1 and block_map_x_int < BLOCKS_X) then 
+                echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
                 if (test_matrix(test_matrix'length - 1 - block_map_y_int)(block_map_x_int) = T_BB_EMPTY) then 
-                    tc_block_map_solid <= '0';
+                    next_solid <= '0';
+                    echo("empty!"&LF);
                 else 
-                    tc_block_map_solid <= '1';
+                    next_solid <= '1';
+                    echo("blocked!"&LF);
                 end if;
             end if;
         end process;
@@ -131,7 +136,7 @@ begin
 	end process;
 
     next_state : process(all)
-        variable out_matrix: t_bb_block_matrix := test_matrix;
+        variable out_matrix: t_bb_block_matrix(0 to BLOCKS_Y - 1) := test_matrix;
     begin 
         state_nxt <= state;
         tc_start <= '0';
@@ -154,12 +159,14 @@ begin
                 echo("WAIT_TETROMINO_COLLIDER" & LF );
                 if (tc_busy = '0') then
                     if (tc_collision_detected = '0') then
-                        echo("no collision_detected!");
+                        echo("no collision detected!");
+                        out_matrix := add_tetromino_to_matrix(test_matrix, TET_T, ROT_0, 0, 0); 
                     else
-                        echo("collision_detected!");
+                        out_matrix := test_matrix;
+                        echo("collision detected!");
                     end if;
                     echo(LF &"out_matrix: "&LF);
-                    print(add_tetromino_to_matrix(test_matrix, TET_T, ROT_0, 0, 0));
+                    print(out_matrix);
                     finish;
                 end if;
         end case;
