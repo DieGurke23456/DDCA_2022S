@@ -24,11 +24,11 @@ architecture bhv of tb_matrix_for_collision_map is
 	signal tc_block_map_solid : std_logic;
 
     constant test_matrix : t_bb_block_matrix(0 to BLOCKS_Y - 1) :=(
-        (T_BB_T, T_BB_T, T_BB_EMPTY),
-        (T_BB_T, T_BB_T, T_BB_T),
-        (T_BB_T,     T_BB_T, T_BB_T),
-        (T_BB_T,     T_BB_T, T_BB_T),
-        (T_BB_T,     T_BB_T, T_BB_T)
+        (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_EMPTY,     T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_EMPTY,     T_BB_EMPTY, T_BB_EMPTY),
+        (T_BB_WALL,     T_BB_WALL, T_BB_WALL)
     );
 
     type fsm_state_t is (WAIT_RESET, START_TETROMINO_COLLIDER, WAIT_TETROMINO_COLLIDER, CHECK_RESULT);
@@ -44,8 +44,8 @@ architecture bhv of tb_matrix_for_collision_map is
     -- test case here! 
     signal state : state_t := (
         fsm_state => WAIT_RESET, 
-        dest_tetromino_x => "001",
-        dest_tetromino_y => "0001",
+        dest_tetromino_x => "000",
+        dest_tetromino_y => "0000",
         dest_tetromino => TET_T,
         dest_rotation => ROT_0
     );
@@ -91,7 +91,7 @@ begin
         begin 
             echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
             if (block_map_y_int > -1 and block_map_y_int < test_matrix'length and block_map_x_int > -1 and block_map_x_int < BLOCKS_X) then 
-                if (test_matrix(block_map_y_int)(block_map_x_int) = T_BB_EMPTY) then 
+                if (test_matrix(test_matrix'length - 1 - block_map_y_int)(block_map_x_int) = T_BB_EMPTY) then 
                     tc_block_map_solid <= '0';
                 else 
                     tc_block_map_solid <= '1';
@@ -116,7 +116,7 @@ begin
 
     timeout_detection : process
     begin 
-        report "timeout_detection";
+        report "timeout_detection!!";
         wait for 300000 us;
         report "test-timeout";
         report "test failed!";
@@ -131,6 +131,7 @@ begin
 	end process;
 
     next_state : process(all)
+        variable out_matrix: t_bb_block_matrix := test_matrix;
     begin 
         state_nxt <= state;
         tc_start <= '0';
@@ -144,22 +145,23 @@ begin
                     state_nxt.fsm_state <= WAIT_RESET;
                 end if;
             WHEN START_TETROMINO_COLLIDER => 
-                echo("START_TETROMINO_COLLIDER");
+                echo("START_TETROMINO_COLLIDER!!" & LF);
                 tc_start <= '1';
                 state_nxt.fsm_state <= CHECK_RESULT;
             WHEN CHECK_RESULT => 
                 state_nxt.fsm_state <= WAIT_TETROMINO_COLLIDER;
             WHEN WAIT_TETROMINO_COLLIDER =>
-                report "WAIT_TETROMINO_COLLIDER";
+                echo("WAIT_TETROMINO_COLLIDER" & LF );
                 if (tc_busy = '0') then
                     if (tc_collision_detected = '0') then
                         echo("no collision_detected!");
                     else
                         echo("collision_detected!");
                     end if;
+                    echo(LF &"out_matrix: "&LF);
+                    print(add_tetromino_to_matrix(test_matrix, TET_T, ROT_0, 0, 0));
                     finish;
                 end if;
-
         end case;
     end process;
 end architecture;

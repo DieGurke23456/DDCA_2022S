@@ -1,10 +1,62 @@
-# vsim tb_add_tetromino_handler -t 1ps -msgmode both
-# vsim tb_add_tetromino_handler -t 1ps -msgmode both 
-# Start time: 11:15:07 on Apr 30,2022
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Error (suppressible): ./add_tetromino_handler.vhd(37): (vopt-1272) Length of expected is 3; length of actual is 10.
-# ** Error: Vopt Compiler exiting
-# ** Error: (vopt-2064) Compiler back-end code generation process terminated with code 2.
-# Error loading design
-# End time: 11:15:08 on Apr 30,2022, Elapsed time: 0:00:01
-# Errors: 3, Warnings: 0
+# vsim tb_matrix_for_collision_map -t 1ps -msgmode both
+# vsim tb_matrix_for_collision_map -t 1ps -msgmode both 
+# Start time: 12:31:49 on May 01,2022
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# //  Questa Sim
+# //  Version 10.6c_1 linux Sep 15 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading std.env(body)
+# Loading work.math_pkg(body)
+# Loading work.vga_gfx_cntrl_pkg(body)
+# Loading work.tetris_util_pkg(body)
+# Loading work.tetris_drawers_pkg(body)
+# Loading work.tetris_game_logic_pkg(body)
+# Loading work.tb_matrix_for_collision_map(bhv)#1
+#  run 2663 us
+# ** Note: WAIT_RESET!
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_for_collision_map
+# ** Note: timeout_detection!!
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_for_collision_map
+# checking block -2147483648 -2147483648
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Region: /tb_matrix_for_collision_map/block_map
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Region: /tb_matrix_for_collision_map/block_map
+# checking block 0 0
+# ** Note: WAIT_RESET!
+#    Time: 0 ps  Iteration: 1  Instance: /tb_matrix_for_collision_map
+# ** Note: WAIT_RESET!
+#    Time: 0 ps  Iteration: 3  Instance: /tb_matrix_for_collision_map
+# ** Note: WAIT_RESET!
+#    Time: 10 ns  Iteration: 1  Instance: /tb_matrix_for_collision_map
+# ** Note: starting test!
+#    Time: 10 ns  Iteration: 1  Instance: /tb_matrix_for_collision_map
+# START_TETROMINO_COLLIDER!!
+# WAIT_TETROMINO_COLLIDER
+# checking block 1 0
+# checking block 0 0
+# WAIT_TETROMINO_COLLIDER
+# collision_detected!
+# out_matrix: 
+# TESTT_BB_W T_BB_T T_BB_W 
+# T_BB_T T_BB_T T_BB_T 
+# T_BB_E T_BB_E T_BB_E 
+# T_BB_E T_BB_E T_BB_E 
+# T_BB_E T_BB_E T_BB_E 
+# End time: 12:31:50 on May 01,2022, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 4
