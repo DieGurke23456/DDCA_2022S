@@ -46,19 +46,22 @@ VHDL_FILES = \
 	./tb/rows_full_handler_tb.vhd\
 	./rows_full_handler.vhd\
 	./add_tetromino_handler.vhd\
+	./timer.vhd\
 	../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
 
 TB_FILES = \
 	./tb/rows_full_handler_tb.vhd\
 	./tb/add_tetromino_handler_tb.vhd\
 	./tb/tetris_game_logic_pkg_tb.vhd\
-	./tb/matrix_for_collision_map_tb.vhd
+	./tb/matrix_for_collision_map_tb.vhd\
+	./tb/timer_tb.vhd
 
 TIME_RESOLUTION = 1ps
 TB_ROWS_FULL = tb_rows_full_handler
 TB_ADD_TETROMINO = tb_add_tetromino_handler
 TB_GAME_LOGIC = tb_tetris_game_logic_pkg
 TB_MATRX_FOR_COLLISION = tb_matrix_for_collision_map
+TB_TIMER = tb_timer
 
 SIM_TIME = 2663 us
 WAVE_FILE = scripts/wave.do
@@ -102,6 +105,9 @@ sim_game_logic: compile
 
 sim_matrix_for_collision: compile
 	vsim -c -do "vsim $(TB_MATRX_FOR_COLLISION) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
+
+sim_timer: compile 
+	vsim -c -do "vsim $(TB_TIMER) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
 
 clean:
 	rm -f transcript

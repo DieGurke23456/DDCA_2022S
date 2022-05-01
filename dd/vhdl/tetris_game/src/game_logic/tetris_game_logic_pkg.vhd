@@ -58,6 +58,17 @@ package tetris_game_logic_pkg is
         );
     end component;
 
+    component cycles_timer is 
+    generic (
+        CYCLES: integer
+    ); port (
+        clk: in std_logic;
+        res_n: in std_logic;
+        start: in std_logic;
+        finished: out std_logic
+    );
+    end component;
+
 end package;
 
 package body tetris_game_logic_pkg is 

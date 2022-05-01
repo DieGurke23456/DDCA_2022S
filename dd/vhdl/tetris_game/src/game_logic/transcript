@@ -1,6 +1,6 @@
-# vsim tb_matrix_for_collision_map -t 1ps -msgmode both
-# vsim tb_matrix_for_collision_map -t 1ps -msgmode both 
-# Start time: 15:08:46 on May 01,2022
+# vsim tb_timer -t 1ps -msgmode both
+# vsim tb_timer -t 1ps -msgmode both 
+# Start time: 16:28:35 on May 01,2022
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # //  Questa Sim
 # //  Version 10.6c_1 linux Sep 15 2017
@@ -26,49 +26,15 @@
 # Loading work.tetris_util_pkg(body)
 # Loading work.tetris_drawers_pkg(body)
 # Loading work.tetris_game_logic_pkg(body)
-# Loading work.tb_matrix_for_collision_map(bhv)#1
+# Loading work.tb_timer(bhv)#1
 #  run 2663 us
-# ** Note: WAIT_RESET!
-#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_for_collision_map
-# ** Note: timeout_detection!!
-#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_for_collision_map
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Region: /tb_matrix_for_collision_map/block_map
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Region: /tb_matrix_for_collision_map/block_map
-# ** Note: WAIT_RESET!
-#    Time: 0 ps  Iteration: 1  Instance: /tb_matrix_for_collision_map
-# ** Note: WAIT_RESET!
-#    Time: 0 ps  Iteration: 3  Instance: /tb_matrix_for_collision_map
-# ** Note: WAIT_RESET!
-#    Time: 10 ns  Iteration: 1  Instance: /tb_matrix_for_collision_map
-# ** Note: starting test!
-#    Time: 10 ns  Iteration: 1  Instance: /tb_matrix_for_collision_map
-# START_TETROMINO_COLLIDER!!
-# WAIT_TETROMINO_COLLIDER
-# checking block 0 0
-# empty!
-# checking block 1 0
-# empty!
-# checking block 0 0
-# empty!
-# checking block 0 1
-# empty!
-# checking block 0 0
-# empty!
-# checking block 1 1
-# empty!
-# checking block 0 0
-# empty!
-# checking block 2 1
-# empty!
-# WAIT_TETROMINO_COLLIDER
-# no collision detected!
-# out_matrix: 
-# T_BB_E T_BB_E T_BB_E 
-# T_BB_E T_BB_E T_BB_E 
-# T_BB_E T_BB_W T_BB_E 
-# T_BB_T T_BB_T T_BB_T 
-# T_BB_E T_BB_T T_BB_E 
-# End time: 15:08:46 on May 01,2022, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 4
+# ** Note: waiting for reset
+#    Time: 0 ps  Iteration: 0  Instance: /tb_timer
+# ** Note: starting counter!
+#    Time: 20 ns  Iteration: 0  Instance: /tb_timer
+# ** Note: restarting counter!
+#    Time: 2080 ns  Iteration: 0  Instance: /tb_timer
+# ** Note: done
+#    Time: 4160 ns  Iteration: 0  Instance: /tb_timer
+# End time: 16:28:35 on May 01,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
