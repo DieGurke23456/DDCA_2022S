@@ -12,6 +12,7 @@ package tetris_drawers_pkg is
     
     --constant ROWS: natural := 20;
     --constant COLUMNS: natural := 10;
+    constant ROW_LENGTH: natural := 10;
 
     subtype t_bb_x_cords is natural range 0 to 10;
     subtype t_bb_y_cords is natural range 0 to 9;
@@ -31,11 +32,11 @@ package tetris_drawers_pkg is
     type t_bb_block_row is array (integer range <>) of t_bb_block;
     
     --TODO change row span using constants 
-    type t_bb_block_matrix is array (integer range <>) of t_bb_block_row(0 to 2);
+    type t_bb_block_matrix is array (integer range <>) of t_bb_block_row(0 to ROW_LENGTH - 1);
     
     subtype t_filled_rows is std_logic_vector(3 downto 0); 
 
-    constant EMPTY_ROW : t_bb_block_row (0 to 2) := (others => T_BB_EMPTY);
+    constant EMPTY_ROW : t_bb_block_row (0 to ROW_LENGTH - 1) := (others => T_BB_EMPTY);
     
     function get_T_BB_from_tetromino(tetromino :tetromino_t) return t_bb_block;
 

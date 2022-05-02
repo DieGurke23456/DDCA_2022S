@@ -10,6 +10,7 @@ use work.ram_pkg.all;
 use work.tetris_util_pkg.all;
 use work.decimal_printer_pkg.all;
 use work.tetris_drawers_pkg.all;
+use work.tetris_game_logic_pkg.all;
 
 architecture ex1 of tetris_game is
 
@@ -70,14 +71,25 @@ architecture ex1 of tetris_game is
 	signal bld_gfx_instr : std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
 	signal bld_gfx_instr_wr : std_logic;
 
-	--matrix drawer 
-	constant md_block_matrix : t_bb_block_matrix(0 to 4) :=(
-        (T_BB_I,     T_BB_I, T_BB_I),
-        (T_BB_EMPTY, T_BB_T, T_BB_CARO),
-        (T_BB_T,     T_BB_T, T_BB_T),
-        (T_BB_T,     T_BB_T, T_BB_T),
-        (T_BB_T,     T_BB_T, T_BB_T)
+	--matrix drawer
+	constant wall_row: t_bb_block_row(0 to BLOCKS_X - 1) := (
+		T_BB_WALL,T_BB_WALL,T_BB_WALL,T_BB_WALL,
+		others => T_BB_EMPTY
 	);
+	constant EMPTY_MATRIX: t_bb_block_matrix(0 to BLOCKS_Y - 1) :=(
+		others => (EMPTY_ROW)
+	);
+
+	-- add_tetromino_handler 
+	signal ath_start :std_logic;
+	signal ath_busy: std_logic;
+	signal ath_out_matrix : t_bb_block_matrix(0 to BLOCKS_Y -1);
+
+	--rows_full_handler 
+	signal rfh_start : std_logic;
+	signal rfh_busy: std_logic;
+	signal rfh_out_matrix: t_bb_block_matrix(0 to BLOCKS_Y -1);
+	signal rfh_rows_removed: std_logic_vector(3 downto 0);
 
 	signal md_start : std_logic;
 	signal md_busy : std_logic;
@@ -126,7 +138,11 @@ architecture ex1 of tetris_game is
 		DRAW_TEST_BLOCK,
 		WAIT_DRAW_TEST_BLOCK,
 		CLEAR_BLOCK_MAP_INIT, CLEAR_BLOCK_MAP_WRITE,
-		START_DECIMAL_PRINTER, WAIT_DECIMAL_PRINTER
+		START_DECIMAL_PRINTER, WAIT_DECIMAL_PRINTER,
+		TEST_ADD_TETROMINO_HANDLER,
+		WAIT_TEST_ADD_TETROMINO_HANDLER,
+		TEST_ROWS_FULL_HANDLER,
+		WAIT_ROWS_FULL_HANDLER
 	);
 
 	signal td_cur_tetromino : tetromino_t;
@@ -156,17 +172,6 @@ architecture ex1 of tetris_game is
 	end record;
 	signal state, state_nxt : state_t;
 	
-	constant WALL_BIT_BLIT_CMDS : gfx_instr_array_t(0 to 4)(GFX_INSTR_WIDTH -1 downto 0) := (
-		gfx_instr_bit_blit(
-			movx => true, movy => false,
-			alpha_mode => false,
-			vflip => false, hflip => False
-		),
-		std_logic_vector(resize(to_unsigned(BLOCK_SIZE, GFX_INSTR_WIDTH) * unsigned(TET_T), GFX_INSTR_WIDTH)),
-		std_logic_vector(to_unsigned(6 * BLOCK_SIZE, GFX_INSTR_WIDTH)),
-		std_logic_vector(to_unsigned(BLOCK_SIZE, GFX_INSTR_WIDTH)),
-		std_logic_vector(to_unsigned(BLOCK_SIZE, GFX_INSTR_WIDTH))
-	);
 	type tetromino_object_t is record
 		x: std_logic_vector(log2c(BLOCKS_X) downto 0);
 		y: std_logic_vector(log2c(BLOCKS_Y) downto 0);
@@ -192,6 +197,7 @@ begin
 				detected_collision => '0',
 				current_wall_block => 0,
 				current_wall_column => 0,
+				block_matrix => EMPTY_MATRIX,
 				others => (others=>'0')
 			);
 		elsif (rising_edge(clk)) then
@@ -225,6 +231,8 @@ begin
 		bd_start <= '0';
 		bld_start <= '0';
 		md_start <= '0';
+		ath_start <= '0';
+		rfh_start <= '0';
 		
 		--block map stuff
 		block_map_rd_x <= (others=>'0');
@@ -351,7 +359,12 @@ begin
 					state_nxt.dest_rotation <= std_logic_vector(unsigned(state.cur_rotation) + 1);
 					state_nxt.fsm_state <= TEST_MOVEMENT;
 				end if;
-				
+				if (gc_cntrl_state.btn_y = '1' and state.last_controller_state.btn_y = '0') then
+					state_nxt.fsm_state <= TEST_ADD_TETROMINO_HANDLER;
+				end if;
+				if (gc_cntrl_state.btn_x = '1' and state.last_controller_state.btn_x = '0') then
+					state_nxt.fsm_state <= TEST_ROWS_FULL_HANDLER;
+				end if;
 				
 				if (gc_cntrl_state.btn_b = '1' and state.last_controller_state.btn_b = '0') then
 					prng_en <= '1';
@@ -361,11 +374,25 @@ begin
 					state_nxt.cur_rotation <= ROT_0;
 					state_nxt.next_tetromino <= prng_value;
 				end if;
-
+			when TEST_ADD_TETROMINO_HANDLER => 
+				ath_start <= '1';
+				state_nxt.fsm_state <= WAIT_TEST_ADD_TETROMINO_HANDLER;
+			when WAIT_TEST_ADD_TETROMINO_HANDLER => 
+				if(ath_busy = '0') then
+					state_nxt.block_matrix <= ath_out_matrix;
+					state_nxt.fsm_state <= DRAW_WALL_1;
+				end if;
+			when TEST_ROWS_FULL_HANDLER => 
+				rfh_start <= '1';
+				state_nxt.fsm_state <= WAIT_ROWS_FULL_HANDLER; 
+			when WAIT_ROWS_FULL_HANDLER => 
+				if (rfh_busy = '0') then
+					state_nxt.block_matrix <= rfh_out_matrix;
+					state_nxt.fsm_state <= DRAW_WALL_1;
+				end if;
 			when TEST_MOVEMENT =>
 				tc_start <= '1';
 				state_nxt.fsm_state <= WAIT_CHECK_COLLISION;
-			
 			when WAIT_CHECK_COLLISION =>
 				if (tc_busy = '0') then
 					if (tc_collision_detected = '0') then
@@ -378,7 +405,7 @@ begin
 					end if;
 					state_nxt.fsm_state <= DRAW_WALL_1;
 				end if;
-			
+
 			--██████╗  ██████╗ ██████╗ ██████╗ ███████╗██████╗ 
 			--██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 			--██████╔╝██║   ██║██████╔╝██║  ██║█████╗  ██████╔╝
@@ -424,7 +451,7 @@ begin
 				state_nxt.fsm_state <= WAIT_DRAW_TEST_MATRIX;
 			when WAIT_DRAW_TEST_MATRIX => 
 				md_x <= OFFSET_X;
-				md_y <= 9;
+				md_y <= OFFSET_Y;
 				gfx_instr <= md_gfx_instr;
 				gfx_instr_wr <= md_gfx_instr_wr;
 				if(md_busy = '0') then
@@ -581,6 +608,39 @@ begin
 			end if;
 		end process;
 	end block;
+
+	add_tetromino_handler_inst: add_tetromino_handler
+	generic map (
+    	ROWS => EMPTY_MATRIX'length,
+    	COLUMNS =>EMPTY_MATRIX(0)'length
+	)
+	port map (
+		clk => clk,
+		res_n => res_n,
+		start => ath_start,
+		busy => ath_busy,
+		in_matrix => state.block_matrix,
+		out_matrix => ath_out_matrix,
+		tetromino => state.cur_tetromino,
+		rotation => state.cur_rotation,
+		x => to_integer(unsigned(state.cur_tetromino_x)),
+		y => to_integer(unsigned(state.cur_tetromino_y))
+	);
+
+	rows_full_handler_inst: rows_full_handler 
+	generic map (
+		ROWS => EMPTY_MATRIX'length,
+		COLUMNS =>EMPTY_MATRIX(0)'length
+	)
+	port map(
+		clk => clk,
+		res_n => res_n,
+		start => rfh_start,
+		busy => rfh_busy,
+		in_matrix => state.block_matrix,
+		out_matrix => rfh_out_matrix,
+		rows_removed => rfh_rows_removed
+	);
 	
 	tetromino_drawer_inst : tetromino_drawer
 	generic map (
@@ -645,8 +705,8 @@ begin
 			BLOCK_SIZE => BLOCK_SIZE,
 			BLOCKS_X => BLOCKS_VIEW_X,
 			BLOCKS_Y => BLOCKS_VIEW_Y,
-			ROWS => md_block_matrix'length,
-			COLUMNS => md_block_matrix(0)'length
+			ROWS => EMPTY_MATRIX'length,
+			COLUMNS => EMPTY_MATRIX(0)'length
 		)
 		port map (
 			clk => clk,
@@ -655,7 +715,7 @@ begin
 			busy => md_busy,
 			x_start => md_x,
 			y_start => md_y,
-			matrix_to_draw => md_block_matrix,
+			matrix_to_draw => state.block_matrix,
 			gfx_instr => md_gfx_instr,
 			gfx_instr_wr => md_gfx_instr_wr,
 			gfx_instr_full => gfx_instr_full
@@ -697,36 +757,37 @@ begin
 	);
 
 
-	block_map : block 
-		signal block_map_rd_addr : std_logic_vector(log2c(BLOCKS_X*BLOCKS_Y)-1 downto 0);
-		signal block_map_wr_addr : std_logic_vector(log2c(BLOCKS_X*BLOCKS_Y)-1 downto 0);
-	begin
-		process(all)
-		begin
-			block_map_rd_addr <= std_logic_vector(resize(unsigned(block_map_rd_x) + BLOCKS_X * unsigned(block_map_rd_y), block_map_rd_addr'length));
-			block_map_wr_addr <= std_logic_vector(resize(unsigned(block_map_wr_x) + BLOCKS_X * unsigned(block_map_wr_y), block_map_wr_addr'length));
-			if (tc_block_map_rd = '1') then
-				block_map_rd_addr <= std_logic_vector(resize(unsigned(tc_block_map_x) + BLOCKS_X * unsigned(tc_block_map_y), block_map_rd_addr'length));
-			end if;
-		end process;
-		
-		tc_block_map_solid <= block_map_rd_data(0);
-		
-		block_map : dp_ram_1c1r1w
-		generic map (
-			ADDR_WIDTH => log2c(BLOCKS_X*BLOCKS_Y),
-			DATA_WIDTH => 1
-		)
-		port map (
-			clk      => clk,
-			rd1_addr => block_map_rd_addr,
-			rd1_data => block_map_rd_data,
-			rd1      => block_map_rd or tc_block_map_rd,
-			wr2_addr => block_map_wr_addr,
-			wr2_data => block_map_wr_data,
-			wr2      => block_map_wr
-		);
-	end block;
+    block_map : block 
+        signal block_map_x_int : integer;
+        signal block_map_y_int : integer;
+        signal next_solid : std_logic;
+    begin
+        x_y: process(clk)
+        begin
+            block_map_x_int <= to_integer(unsigned(tc_block_map_x));
+            block_map_y_int <= to_integer(unsigned(tc_block_map_y));
+            if (tc_block_map_rd = '1') then
+                block_map_x_int <= to_integer(unsigned(tc_block_map_x));
+                block_map_y_int <= to_integer(unsigned(tc_block_map_y));
+            end if;
+        end process;
+
+        check_solid :process(clk)
+        begin 
+            tc_block_map_solid <= next_solid;
+            if(tc_block_map_rd = '0') then 
+            elsif (block_map_y_int > -1 and block_map_y_int < EMPTY_MATRIX'length and block_map_x_int > -1 and block_map_x_int < BLOCKS_X) then 
+                echo ("checking block " & integer'image(block_map_x_int) & " " & integer'image(block_map_y_int) & LF); 
+                if (state.block_matrix(EMPTY_MATRIX'length - 1 - block_map_y_int)(wall_row'length - 1 - block_map_x_int) = T_BB_EMPTY) then 
+                    next_solid <= '0';
+                    echo("empty!"&LF);
+                else 
+                    next_solid <= '1';
+                    echo("blocked!"&LF);
+                end if;
+            end if;
+        end process;
+    end block;
 
 
 	synth_cntrl(0).high_time <= x"30";

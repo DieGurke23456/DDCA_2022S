@@ -92,7 +92,7 @@ begin
                     state_nxt.fsm_state <= CHECK_ROWS;
                 end if;
             WHEN CHECK_BLOCK_IS_EMPTY =>                 
-                if in_matrix(in_matrix'length - ROWS_TO_CHECK + state.current_row)(state.current_column) = T_BB_EMPTY then 
+                if in_matrix(state.current_row)(state.current_column) = T_BB_EMPTY then 
                     state_nxt.row_full <= '0';
                 end if;
                 state_nxt.current_column <= state.current_column + 1;
@@ -101,8 +101,8 @@ begin
                 if state.current_row < ROWS and state.current_row < ROWS_TO_CHECK then 
                     state_nxt.fsm_state <= REMOVE_FULL_ROW;
                 else 
-                    state_nxt.current_row <= in_matrix'length - 1;
-                    state_nxt.row_adding <= in_matrix'length - 1;
+                    state_nxt.current_row <= 0; 
+                    state_nxt.row_adding <= 0;
                     state_nxt.fsm_state <= MERGE_COLUMNS;
                     state_nxt.out_matrix <= EMPTY_MATRIX;
                 end if;
@@ -115,22 +115,22 @@ begin
                     state_nxt.fsm_state <= REMOVE_FULL_ROWS;
                 end if;
             WHEN REMOVE_BLOCK =>
-                state_nxt.rows_removed_matrix(in_matrix'length - ROWS_TO_CHECK + state.current_row + 1 )(state.current_column) <= T_BB_EMPTY;
+                state_nxt.rows_removed_matrix(state.current_row)(state.current_column) <= T_BB_EMPTY;
                 state_nxt.current_column <= state.current_column + 1;
                 state_nxt.fsm_state <= REMOVE_FULL_ROW;
             WHEN MERGE_COLUMNS =>
-                    if (in_matrix'length -1 -state.current_row  < state.rows_removed'length) and
+                    if (state.current_row  < state.rows_removed'length) and
                         (state.rows_removed(in_matrix'length - 1 - state.current_row) = '1') then
                         report "deleting row " & integer'image(state.current_row);
                         report integer'image(in_matrix'length -1 -state.current_row);
                     else 
                         state_nxt.out_matrix(state.row_adding) <= in_matrix(state.current_row);
-                        state_nxt.row_adding <= state.row_adding - 1;
+                        state_nxt.row_adding <= state.row_adding + 1;
                     end if;
-                    if state.current_row = 0 then 
+                    if state.current_row = state_nxt.out_matrix'length then 
                         state_nxt.fsm_state <= RFH_IDLE;
                     else
-                        state_nxt.current_row <= state.current_row - 1; 
+                        state_nxt.current_row <= state.current_row + 1; 
                         state_nxt.fsm_state <= MERGE_COLUMNS;
                     end if;    
         end case;
