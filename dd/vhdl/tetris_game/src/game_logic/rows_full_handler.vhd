@@ -17,7 +17,7 @@ entity rows_full_handler is
         busy : out std_logic;
         in_matrix : in t_bb_block_matrix(ROWS - 1 downto 0);
         out_matrix : out t_bb_block_matrix(ROWS - 1 downto 0);
-        rows_removed : out std_logic_vector(3 downto 0)
+        rows_removed : out std_logic_vector(ROWS - 1 downto 0)
     );
 end entity;
 architecture arch of rows_full_handler is 
@@ -28,11 +28,10 @@ architecture arch of rows_full_handler is
         current_column : integer range 0 to COLUMNS;
         row_adding: integer range 0 to ROWS;
         row_full: std_logic;
-        rows_removed: std_logic_vector(3 downto 0);
+        rows_removed: std_logic_vector(ROWS - 1 downto 0);
         rows_removed_matrix: t_bb_block_matrix(ROWS - 1 downto 0); 
         out_matrix : t_bb_block_matrix(ROWS - 1 downto 0);
     end record;
-    constant ROWS_TO_CHECK : integer := 4;
     constant EMPTY_ROW_CUSTOM:  t_bb_block_row(COLUMNS -1 downto 0) := (others => T_BB_EMPTY);
     constant EMPTY_MATRIX : t_bb_block_matrix(ROWS - 1 downto 0) := (others => EMPTY_ROW_CUSTOM);
     signal state, state_nxt: state_t;
@@ -46,7 +45,7 @@ begin
 				current_row => 0,
 				current_column => 0,
 				row_full => '0',
-                rows_removed => "0000",
+                rows_removed => (others => '0'),
                 row_adding => 0,
                 rows_removed_matrix => EMPTY_MATRIX,
                 out_matrix => EMPTY_MATRIX
@@ -71,18 +70,18 @@ begin
                     state_nxt.current_row <= 0;
                     state_nxt.current_column <= 0;
                     state_nxt.row_full <= '0';
-                    state_nxt.rows_removed <= "0000";
+                    state_nxt.rows_removed <= (others => '0');
                 end if;
             WHEN CHECK_ROWS => 
                 state_nxt.rows_removed_matrix <= in_matrix;
-                if (state.current_row < ROWS and state.current_row < ROWS_TO_CHECK) then
+                if (state.current_row < ROWS) then
                     state_nxt.row_full <= '1';
                     state_nxt.fsm_state <= CHECK_ROW_FULL;
                 else
                     state_nxt.current_row <= 0;
                     state_nxt.fsm_state <= REMOVE_FULL_ROWS;
                 end if;
-                state_nxt.rows_removed <= state.rows_removed(2 downto 0) & state.row_full;
+                state_nxt.rows_removed <= state.rows_removed(ROWS - 2 downto 0) & state.row_full;
             WHEN CHECK_ROW_FULL =>
                 if state.current_column < COLUMNS then
                     state_nxt.fsm_state <= CHECK_BLOCK_IS_EMPTY;
@@ -98,7 +97,7 @@ begin
                 state_nxt.current_column <= state.current_column + 1;
                 state_nxt.fsm_state <= CHECK_ROW_FULL;                
             WHEN REMOVE_FULL_ROWS => 
-                if state.current_row < ROWS and state.current_row < ROWS_TO_CHECK then 
+                if state.current_row < ROWS then 
                     state_nxt.fsm_state <= REMOVE_FULL_ROW;
                 else 
                     state_nxt.current_row <= 0; 

@@ -36,7 +36,7 @@ package tetris_game_logic_pkg is
             busy : out std_logic;
             in_matrix : in t_bb_block_matrix(ROWS - 1 downto 0);
             out_matrix : out t_bb_block_matrix(ROWS - 1 downto 0);
-            rows_removed : out std_logic_vector(3 downto 0)
+            rows_removed : out std_logic_vector(ROWS - 1 downto 0)
         );
     end component;
 

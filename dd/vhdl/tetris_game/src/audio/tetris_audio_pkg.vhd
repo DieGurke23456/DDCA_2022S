@@ -5,63 +5,137 @@ use work.audio_cntrl_pkg.all;
 use std.textio.all;
 
 package tetris_audio_pkg is
-    type pitch_t is (NONE,A4, B4, C5, D5, E5);
-    type duration is (WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH);
+    type pitch_t is (NONE,A5, B5, C6, D6, E6);
+    type duration_t is (WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH);
 
     type note_t is record 
         pitch: pitch_t;
         duration: duration_t;
     end record;
-
+    subtype high_time_t is std_logic_vector(7 downto 0); 
     type song_t is array(integer range<>) of note_t;
-    constant TETRIS_THEME : song_t is := (
+
+    function note_constr(pitch: pitch_t;duration: duration_t) return note_t;
+
+    constant TETRIS_THEME : song_t(0 to 63) := (
         -- first bar
-        note_constr(E5, QUARTER),
-        note_constr(B4, EIGHT),
-        note_constr(C5, EIGHT),
-        note_constr(D5, EIGHT),
-        note_constr(E5, SIXTEENTH),
-        note_constr(D5, SIXTEENTH),
-        note_constr(C5, EIGHT),
-        note_constr(B5, EIGHT),
+            note_constr(E6, SIXTEENTH),
+            note_constr(E6, SIXTEENTH),
+            note_constr(E6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),-- quarter
+
+            note_constr(B5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- eigth
+            note_constr(C6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- eigth
+            
+            note_constr(D6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- eigth
+            note_constr(E6, SIXTEENTH), -- sixth
+            note_constr(D6, SIXTEENTH), -- sixth
+            
+            note_constr(C6, SIXTEENTH), -- eigth
+            note_constr(NONE, SIXTEENTH), -- eigth
+            note_constr(B5, SIXTEENTH), 
+            note_constr(NONE, SIXTEENTH), -- eigth
         -- second bar
-        note_constr(A5, QUARTER),
-        note_constr(A5, EIGHT),
-        note_constr(C5, EIGHT),
-        note_constr(E5, QUARTER),
-        note_constr(D5, EIGHT),
-        note_constr(C5, EIGHT),
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- quart
+
+            note_constr(A5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- quart
+            note_constr(C6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- eigth
+            
+            note_constr(E6, SIXTEENTH), --
+            note_constr(E6, SIXTEENTH), -- 
+            note_constr(E6, SIXTEENTH), -- 
+            note_constr(NONE, SIXTEENTH), -- quarter
+
+            note_constr(D6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH), -- eigth
+            note_constr(C6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
         -- third bar
-        note_constr(B5, QUARTER),
-        note_constr(B5, EIGHT),
-        note_constr(C5, EIGHT),
-        note_constr(D5, QUARTER),
-        note_constr(E5, QUARTER),
+            note_constr(B5, SIXTEENTH),
+            note_constr(B5, SIXTEENTH),
+            note_constr(B5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(B5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+            note_constr(C6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(D6, SIXTEENTH),
+            note_constr(D6, SIXTEENTH),
+            note_constr(D6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(E6, SIXTEENTH),
+            note_constr(E6, SIXTEENTH),
+            note_constr(E6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
         -- fourth bar 
-        note_constr(C5, QUARTER),
-        note_constr(A4, QUARTER),
-        note_constr(A4, QUARTER),
-        note_constr(NONE, QUARTER)
+            note_constr(C6, SIXTEENTH),
+            note_constr(C6, SIXTEENTH),
+            note_constr(C6, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(A5, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+
+            note_constr(NONE, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH),
+            note_constr(NONE, SIXTEENTH)
     );
+    function high_time_from_pitch(pitch: pitch_t) return high_time_t;
 
     component duration_counter is
         generic(
-            SIXTEENTH_CYCLE_TIME: integer
-        )
-        port(
-            start: in std_logic;
+            SIXTEENTH_CYCLE_TIME: integer;
             duration: in duration_t;
-            finished: in: std_logic
+            finished: in std_logic
         );
     end component;
-    function note_constr(pitch: pitch_t;duration: duration_t) return note_t;
 end package;
 package body tetris_audio_pkg is 
-    function note_constr(pitch: pitch_t;duration: duration_t) is 
+    function note_constr(pitch: pitch_t;duration: duration_t) return note_t is 
         variable to_return: note_t;
     begin 
         to_return.pitch := pitch;
         to_return.duration := duration;
+        return to_return;
+    end function;
+    
+    
+    function high_time_from_pitch(pitch: pitch_t) return high_time_t is 
+    variable to_return: high_time_t := std_logic_vector(to_unsigned(0, high_time_t'length));
+    begin
+        case pitch is
+            WHEN NONE => 
+            WHEN A5 =>
+                to_return := std_logic_vector(to_unsigned(18, high_time_t'length));
+            WHEN B5 =>
+                to_return := std_logic_vector(to_unsigned(16, high_time_t'length));  
+            WHEN C6 =>
+                to_return := std_logic_vector(to_unsigned(15, high_time_t'length));  
+            WHEN D6 =>
+                to_return := std_logic_vector(to_unsigned(13, high_time_t'length));  
+            WHEN E6 =>
+                to_return := std_logic_vector(to_unsigned(12, high_time_t'length)); 
+        end case;
         return to_return;
     end function;
  
