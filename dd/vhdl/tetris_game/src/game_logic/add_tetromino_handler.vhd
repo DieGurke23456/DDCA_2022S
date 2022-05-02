@@ -25,10 +25,11 @@ generic (
 end entity;
 architecture arch of add_tetromino_handler is 
 
-    type fsm_state_t is (ATH_IDLE, ADD_TETROMINO, ADD_BLOCK);
+    type fsm_state_t is (ATH_IDLE, ADD_TETROMINO,ADD_TETROMINO_ROW, ADD_BLOCK);
     type state_t is record 
         fsm_state: fsm_state_t;
-        current_index : integer range 0 to tetromino_blocks_t'length; -- iterate through blocks 
+        current_x: integer;
+        current_y: integer;
         out_matrix : t_bb_block_matrix(ROWS - 1 downto 0);
     end record;
     signal state, state_nxt: state_t;
@@ -41,8 +42,9 @@ begin
             if (res_n = '0') then
                 state <= (
                     fsm_state => ATH_IDLE,
-                    current_index => 0,
-                    out_matrix => EMPTY_MATRIX
+                    out_matrix => EMPTY_MATRIX,
+                    current_x => 0,
+                    current_y => 0
                 );
             elsif (rising_edge(clk)) then
                 state <= state_nxt;
@@ -61,24 +63,31 @@ begin
                 if (start = '1') then
                     busy <= '1';
                     state_nxt.fsm_state <= ADD_TETROMINO;
-                    state_nxt.current_index <= 0;
                     state_nxt.out_matrix <= in_matrix;
+                    state_nxt.current_x <= 0;
+                    state_nxt.current_y <= 0;
                 end if;
             WHEN ADD_TETROMINO => 
-                blocks_solid := get_blocks(tetromino, rotation);
-                if state.current_index < tetromino_blocks_t'length then
-                    state_nxt.fsm_state <= ADD_BLOCK;
+                if state.current_y < 4 then 
+                    state_nxt.fsm_state <= ADD_TETROMINO_ROW;
                 else 
-                    state_nxt.current_index <= 0;
+                    state_nxt.current_y <= 0;
                     state_nxt.fsm_state <= ATH_IDLE;
                 end if;
-            WHEN ADD_BLOCK => 
-                if blocks_solid(state.current_index) = '1' then
-                    state_nxt.out_matrix(3 - state.current_index / (2*2) + y)(3 - state.current_index mod (2*2) + x) <= get_T_BB_from_tetromino(tetromino);
-                    report "adding " &to_string(get_T_BB_from_tetromino(tetromino)) & "at x:" & integer'image(3 - state.current_index mod (2*2) + x) &" y:" & integer'image(3 - state.current_index / (2*2) + y);
+            WHEN ADD_TETROMINO_ROW => 
+                if state.current_x < 4 then 
+                    state_nxt.fsm_state <= ADD_BLOCK;
+                else
+                    state_nxt.current_y <= state.current_y + 1;
+                    state_nxt.current_x <= 0;
+                    state_nxt.fsm_state <= ADD_TETROMINO;
                 end if;
-                state_nxt.current_index <= state.current_index + 1;
+            WHEN ADD_BLOCK => 
+                state_nxt.current_x <= state.current_x + 1;
                 state_nxt.fsm_state <= ADD_TETROMINO;
+                if is_tetromino_solid_at(tetromino, rotation, std_logic_vector(to_unsigned(state.current_x, 2)), std_logic_vector(to_unsigned(state.current_y, 2))) then
+                    state_nxt.out_matrix(out_matrix'length - 1 - y - state.current_y)(out_matrix(0)'length - x - state.current_x - 1) <= get_T_BB_from_tetromino(tetromino);
+                end if; 
         end case;
     end process;
 

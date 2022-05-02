@@ -17,6 +17,7 @@ Z1 o-quiet -auto_acc_if_foreign -work work
 Z2 tCvgOpt 0
 n@_opt
 Z3 OE;O;10.6c_1;65
+R0
 T_opt1
 !s110 1651316530
 VY;ECC@=<6PGXJ@oQXNjUV2
@@ -38,9 +39,9 @@ n@_opt2
 R3
 R0
 Eadd_tetromino_handler
-Z4 w1651311275
+Z4 w1651494289
 Z5 DPx4 work 21 tetris_game_logic_pkg 0 22 7`ENIKhZAk_9bSHAQ3@E;3
-Z6 DPx4 work 18 tetris_drawers_pkg 0 22 hkib]38?_FZ9ebe_hAQ1D2
+Z6 DPx4 work 18 tetris_drawers_pkg 0 22 >G_K[9b`g_R0J4gZVQTXK0
 Z7 DPx4 work 17 vga_gfx_cntrl_pkg 0 22 RS[n^d2HfHGf:CAhWU=201
 Z8 DPx4 work 8 math_pkg 0 22 K93d5ThEW`PiMGBULU?K^3
 Z9 DPx4 work 15 tetris_util_pkg 0 22 jH<c@l>YN=48j;U;4BKQC2
@@ -56,9 +57,9 @@ VHPoTRWR=bD4Hd@C9oX@7?0
 !s100 de5VJf0l]k=<1E3k8XG?n3
 Z15 OE;C;10.6c_1;65
 33
-Z16 !s110 1651415313
+Z16 !s110 1651494319
 !i10b 1
-Z17 !s108 1651415313.000000
+Z17 !s108 1651494319.000000
 Z18 !s90 -2008|-work|work|-suppress|1236|./add_tetromino_handler.vhd|
 Z19 !s107 ./add_tetromino_handler.vhd|
 !i113 0
@@ -66,7 +67,7 @@ Z20 o-suppress 1236 -2008 -work work
 Z21 tExplicit 1 CvgOpt 0
 Aarch
 R5
-R6
+Z22 DPx4 work 18 tetris_drawers_pkg 0 22 hkib]38?_FZ9ebe_hAQ1D2
 R7
 R8
 R9
@@ -80,20 +81,20 @@ Vz<3465oUaLNl5dK;?dI9:0
 !s100 dO>J8TIN?j72cL4gG<P8[2
 R15
 33
-R16
+Z23 !s110 1651415313
 !i10b 1
-R17
+Z24 !s108 1651415313.000000
 R18
 R19
 !i113 0
 R20
 R21
 Pbb_rom_pkg
-Z22 DPx4 work 12 gfx_util_pkg 0 22 mZc:TSg1z2cB@oRl`hlDn0
+Z25 DPx4 work 12 gfx_util_pkg 0 22 mZc:TSg1z2cB@oRl`hlDn0
 R10
 R11
 R12
-Z23 w1648718541
+Z26 w1648718541
 R0
 8../../../vga_gfx_cntrl/src/bb_rom_pkg.vhd
 F../../../vga_gfx_cntrl/src/bb_rom_pkg.vhd
@@ -103,16 +104,16 @@ VI>>@@SHoom[UfB?UG9nTJ0
 !s100 R>ZFZ4KI5nnGeWe6ETU8Z2
 R15
 33
-Z24 !s110 1651415310
+Z27 !s110 1651494316
 !i10b 1
-Z25 !s108 1651415310.000000
+Z28 !s108 1651494316.000000
 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/bb_rom_pkg.vhd|
 !s107 ../../../vga_gfx_cntrl/src/bb_rom_pkg.vhd|
 !i113 0
 R20
 R21
 Eblock_drawer
-Z26 w1651158999
+Z29 w1651158999
 R6
 R7
 R8
@@ -121,19 +122,19 @@ R10
 R11
 R12
 R0
-Z27 8../drawers/block_drawer.vhd
-Z28 F../drawers/block_drawer.vhd
+Z30 8../drawers/block_drawer.vhd
+Z31 F../drawers/block_drawer.vhd
 l0
 L8
 V?M:P>0`MbHdJ>E0ChAb=m2
 !s100 ?UeCFo8@bQ_J:m?PRnPYG2
 R15
 33
-Z29 !s110 1651415312
+Z32 !s110 1651494318
 !i10b 1
-Z30 !s108 1651415312.000000
-Z31 !s90 -2008|-work|work|-suppress|1236|../drawers/block_drawer.vhd|
-Z32 !s107 ../drawers/block_drawer.vhd|
+Z33 !s108 1651494318.000000
+Z34 !s90 -2008|-work|work|-suppress|1236|../drawers/block_drawer.vhd|
+Z35 !s107 ../drawers/block_drawer.vhd|
 !i113 0
 R20
 R21
@@ -152,16 +153,16 @@ V@]J[ZlV:P`77;CaRAYf1O1
 !s100 Am@iJhMJmSmBE=l7OE@z?1
 R15
 33
-R29
-!i10b 1
-R30
-R31
 R32
+!i10b 1
+R33
+R34
+R35
 !i113 0
 R20
 R21
 Eblock_line_drawer
-Z33 w1650636849
+Z36 w1650636849
 R6
 R7
 R8
@@ -170,19 +171,19 @@ R10
 R11
 R12
 R0
-Z34 8../drawers/block_line_drawer.vhd
-Z35 F../drawers/block_line_drawer.vhd
+Z37 8../drawers/block_line_drawer.vhd
+Z38 F../drawers/block_line_drawer.vhd
 l0
 L8
 V6cn0WLkEe?>GchHAM=Wj>3
 !s100 YUYO5YkX5Jmc7c;fNi6fR3
 R15
 33
-R29
+R32
 !i10b 1
-R30
-Z36 !s90 -2008|-work|work|-suppress|1236|../drawers/block_line_drawer.vhd|
-Z37 !s107 ../drawers/block_line_drawer.vhd|
+R33
+Z39 !s90 -2008|-work|work|-suppress|1236|../drawers/block_line_drawer.vhd|
+Z40 !s107 ../drawers/block_line_drawer.vhd|
 !i113 0
 R20
 R21
@@ -201,16 +202,16 @@ VYmI5]UQ[Zal11QRAZQo;33
 !s100 SXe;Gf;Y;kbLkOU?0kMfV2
 R15
 33
-R29
+R32
 !i10b 1
-R30
-R36
-R37
+R33
+R39
+R40
 !i113 0
 R20
 R21
 Eblock_matrix_drawer
-Z38 w1651243489
+Z41 w1651243489
 R6
 R7
 R8
@@ -219,19 +220,19 @@ R10
 R11
 R12
 R0
-Z39 8../drawers/block_matrix_drawer.vhd
-Z40 F../drawers/block_matrix_drawer.vhd
+Z42 8../drawers/block_matrix_drawer.vhd
+Z43 F../drawers/block_matrix_drawer.vhd
 l0
 L9
 Vi`AQ0QZM?O>Kl1jG73>>Y3
 !s100 zeGm7`6CPc<hUaHU<Bj_n0
 R15
 33
-R29
+R16
 !i10b 1
-R30
-Z41 !s90 -2008|-work|work|-suppress|1236|../drawers/block_matrix_drawer.vhd|
-Z42 !s107 ../drawers/block_matrix_drawer.vhd|
+R17
+Z44 !s90 -2008|-work|work|-suppress|1236|../drawers/block_matrix_drawer.vhd|
+Z45 !s107 ../drawers/block_matrix_drawer.vhd|
 !i113 0
 R20
 R21
@@ -250,16 +251,16 @@ VDM7NF_bCEVeDT=:kJi:WW3
 !s100 HeNNgZ?1R[z5ngP=]UPkF0
 R15
 33
-R29
+R16
 !i10b 1
-R30
-R41
-R42
+R17
+R44
+R45
 !i113 0
 R20
 R21
 Ecycles_timer
-Z43 w1651415081
+Z46 w1651415081
 R7
 R9
 R6
@@ -269,8 +270,8 @@ R10
 R11
 R12
 R0
-Z44 8./timer.vhd
-Z45 F./timer.vhd
+Z47 8./timer.vhd
+Z48 F./timer.vhd
 l0
 L7
 VNR>87EhPRAIiYM00cdM`Y2
@@ -280,8 +281,8 @@ R15
 R16
 !i10b 1
 R17
-Z46 !s90 -2008|-work|work|-suppress|1236|./timer.vhd|
-Z47 !s107 ./timer.vhd|
+Z49 !s90 -2008|-work|work|-suppress|1236|./timer.vhd|
+Z50 !s107 ./timer.vhd|
 !i113 0
 R20
 R21
@@ -304,30 +305,30 @@ R15
 R16
 !i10b 1
 R17
-R46
-R47
+R49
+R50
 !i113 0
 R20
 R21
 Edp_ram_1c1r1w
-Z48 w1648718544
+Z51 w1648718544
 R10
 R11
 R12
 R0
-Z49 8../../../ram/src/dp_ram_1c1r1w.vhd
-Z50 F../../../ram/src/dp_ram_1c1r1w.vhd
+Z52 8../../../ram/src/dp_ram_1c1r1w.vhd
+Z53 F../../../ram/src/dp_ram_1c1r1w.vhd
 l0
 L7
 V;YOSV<1BMcWo2MA<_lgL]3
 !s100 a8KU`KGomPf>XhoNHXj3A0
 R15
 33
-Z51 !s110 1651415311
+R32
 !i10b 1
-Z52 !s108 1651415311.000000
-Z53 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/dp_ram_1c1r1w.vhd|
-Z54 !s107 ../../../ram/src/dp_ram_1c1r1w.vhd|
+R33
+Z54 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/dp_ram_1c1r1w.vhd|
+Z55 !s107 ../../../ram/src/dp_ram_1c1r1w.vhd|
 !i113 0
 R20
 R21
@@ -342,40 +343,40 @@ V_z[<Y^:Uc5NIJB[Zc7CSk2
 !s100 [AA<ZiY`9:>UJZR0ICA@`2
 R15
 33
-R51
+R32
 !i10b 1
-R52
-R53
+R33
 R54
+R55
 !i113 0
 R20
 R21
 Efifo_1c1r1w
-R48
-Z55 DPx4 work 7 ram_pkg 0 22 0F?U_]Y_FioGb>eYBGTfK3
+R51
+Z56 DPx4 work 7 ram_pkg 0 22 0F?U_]Y_FioGb>eYBGTfK3
 R8
 R10
 R11
 R12
 R0
-Z56 8../../../ram/src/fifo_1c1r1w.vhd
-Z57 F../../../ram/src/fifo_1c1r1w.vhd
+Z57 8../../../ram/src/fifo_1c1r1w.vhd
+Z58 F../../../ram/src/fifo_1c1r1w.vhd
 l0
 L8
 VSPYICabW6U9J0]cGQ1i4G3
 !s100 P?GAohdYiiJTJ=VcKXMPn1
 R15
 33
-R29
+R32
 !i10b 1
-R30
-Z58 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/fifo_1c1r1w.vhd|
-Z59 !s107 ../../../ram/src/fifo_1c1r1w.vhd|
+R33
+Z59 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/fifo_1c1r1w.vhd|
+Z60 !s107 ../../../ram/src/fifo_1c1r1w.vhd|
 !i113 0
 R20
 R21
 Aarch
-R55
+R56
 R8
 R10
 R11
@@ -387,40 +388,40 @@ VK3IQkU>GVoh]`;3Q@MoZR1
 !s100 mb5OcAd=;F[G6L8[f1cEm3
 R15
 33
-R29
+R32
 !i10b 1
-R30
-R58
+R33
 R59
+R60
 !i113 0
 R20
 R21
 Efifo_1c1r1w_fwft
-R48
-R55
+R51
+R56
 R8
 R10
 R11
 R12
 R0
-Z60 8../../../ram/src/fifo_1c1r1w_fwft.vhd
-Z61 F../../../ram/src/fifo_1c1r1w_fwft.vhd
+Z61 8../../../ram/src/fifo_1c1r1w_fwft.vhd
+Z62 F../../../ram/src/fifo_1c1r1w_fwft.vhd
 l0
 L8
 V8b8871e<iMb_F0jQV3j]12
 !s100 5hdQ^PW2oez`d<YVUW2;z3
 R15
 33
-R29
+R32
 !i10b 1
-R30
-Z62 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/fifo_1c1r1w_fwft.vhd|
-Z63 !s107 ../../../ram/src/fifo_1c1r1w_fwft.vhd|
+R33
+Z63 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/fifo_1c1r1w_fwft.vhd|
+Z64 !s107 ../../../ram/src/fifo_1c1r1w_fwft.vhd|
 !i113 0
 R20
 R21
 Aarch
-R55
+R56
 R8
 R10
 R11
@@ -432,46 +433,46 @@ V5@go^IZ5c`HEFHY36@keA2
 !s100 >]H>9bW2f?iYZkWETd]TS2
 R15
 33
-R29
+R32
 !i10b 1
-R30
-R62
+R33
 R63
+R64
 !i113 0
 R20
 R21
 Eframe_reader
-R23
-R55
+R26
+R56
 R8
 R10
-Z64 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z65 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z65 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z66 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 R11
 R12
 R0
-Z66 8../../../vga_gfx_cntrl/src/frame_reader.vhd
-Z67 F../../../vga_gfx_cntrl/src/frame_reader.vhd
+Z67 8../../../vga_gfx_cntrl/src/frame_reader.vhd
+Z68 F../../../vga_gfx_cntrl/src/frame_reader.vhd
 l0
 L10
 V[_5Wf^fkQ]lz8ZTOQYAG33
 !s100 ]]>2T_oM2med>5`2SYo:13
 R15
 33
-R29
+R32
 !i10b 1
-R30
-Z68 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/frame_reader.vhd|
-Z69 !s107 ../../../vga_gfx_cntrl/src/frame_reader.vhd|
+R33
+Z69 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/frame_reader.vhd|
+Z70 !s107 ../../../vga_gfx_cntrl/src/frame_reader.vhd|
 !i113 0
 R20
 R21
 Aarch
-R55
+R56
 R8
 R10
-R64
 R65
+R66
 R11
 R12
 DEx4 work 12 frame_reader 0 22 [_5Wf^fkQ]lz8ZTOQYAG33
@@ -481,40 +482,40 @@ Vl<E`D<hbO@@G^9cISo4Xo2
 !s100 [>eH8C6LGB8?:G6L32>FM3
 R15
 33
-R29
+R32
 !i10b 1
-R30
-R68
+R33
 R69
+R70
 !i113 0
 R20
 R21
 Egfx_bb
-Z70 w1648718546
-R22
+Z71 w1648718546
+R25
 R8
 R10
 R11
 R12
 R0
-Z71 8../../../gfx_util/src/gfx_bb.vhd
-Z72 F../../../gfx_util/src/gfx_bb.vhd
+Z72 8../../../gfx_util/src/gfx_bb.vhd
+Z73 F../../../gfx_util/src/gfx_bb.vhd
 l0
 L9
 V:Sg=5h^k907oRV1FzG3452
 !s100 cQDOgO35JQP0VhiUHd43:0
 R15
 33
-R51
+R32
 !i10b 1
-R52
-Z73 !s90 -2008|-work|work|-suppress|1236|../../../gfx_util/src/gfx_bb.vhd|
-Z74 !s107 ../../../gfx_util/src/gfx_bb.vhd|
+R33
+Z74 !s90 -2008|-work|work|-suppress|1236|../../../gfx_util/src/gfx_bb.vhd|
+Z75 !s107 ../../../gfx_util/src/gfx_bb.vhd|
 !i113 0
 R20
 R21
 Aarch
-R22
+R25
 R8
 R10
 R11
@@ -526,34 +527,34 @@ VUaIM3WRO@0_jHNJiI4cLd1
 !s100 <azLENTLDI1@MBVEFPaB90
 R15
 33
-R51
+R32
 !i10b 1
-R52
-R73
+R33
 R74
+R75
 !i113 0
 R20
 R21
 Egfx_line
-Z75 w1648718545
+Z76 w1648718545
 R8
 R10
 R11
 R12
 R0
-Z76 8../../../gfx_util/src/gfx_line.vhd
-Z77 F../../../gfx_util/src/gfx_line.vhd
+Z77 8../../../gfx_util/src/gfx_line.vhd
+Z78 F../../../gfx_util/src/gfx_line.vhd
 l0
 L8
 V]2kzJ2_m4HXz2EF1Td^A`3
 !s100 `?VKM7n`3k:DDUhz3e=BB3
 R15
 33
-R29
+R32
 !i10b 1
-R52
-Z78 !s90 -2008|-work|work|-suppress|1236|../../../gfx_util/src/gfx_line.vhd|
-Z79 !s107 ../../../gfx_util/src/gfx_line.vhd|
+R33
+Z79 !s90 -2008|-work|work|-suppress|1236|../../../gfx_util/src/gfx_line.vhd|
+Z80 !s107 ../../../gfx_util/src/gfx_line.vhd|
 !i113 0
 R20
 R21
@@ -569,11 +570,11 @@ V=aTHd09V4<LQoDI2C;YNN2
 !s100 6o`YQzJjCARmiN<VW2_K_0
 R15
 33
-R29
+R32
 !i10b 1
-R52
-R78
+R33
 R79
+R80
 !i113 0
 R20
 R21
@@ -581,7 +582,7 @@ Pgfx_util_pkg
 R10
 R11
 R12
-R75
+R76
 R0
 8../../../gfx_util/src/gfx_util_pkg.vhd
 F../../../gfx_util/src/gfx_util_pkg.vhd
@@ -591,46 +592,46 @@ VmZc:TSg1z2cB@oRl`hlDn0
 !s100 ``UjTI5ZW;8lnOCc[6Ng22
 R15
 33
-R24
+R27
 !i10b 1
-R25
+R28
 !s90 -2008|-work|work|-suppress|1236|../../../gfx_util/src/gfx_util_pkg.vhd|
 !s107 ../../../gfx_util/src/gfx_util_pkg.vhd|
 !i113 0
 R20
 R21
 Ehard_block
-R23
-Z80 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
-Z81 DPx10 cycloneive 20 cycloneive_atom_pack 0 22 71Lo^7UGa[oQ[R?C?1SQ83
-Z82 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+R26
+Z81 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z82 DPx10 cycloneive 20 cycloneive_atom_pack 0 22 71Lo^7UGa[oQ[R?C?1SQ83
+Z83 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
 R11
 R12
-Z83 DPx10 cycloneive 21 cycloneive_components 0 22 CFDYHRL^UiIJgel]fQoB]0
+Z84 DPx10 cycloneive 21 cycloneive_components 0 22 CFDYHRL^UiIJgel]fQoB]0
 R0
-Z84 8../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho
-Z85 F../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho
+Z85 8../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho
+Z86 F../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho
 l0
 L34
 VcYl8T;7FV`Ad[9nzW>cS^1
 !s100 A`ID_i56<Ua56=ZD=[EG=2
 R15
 33
-R51
+Z87 !s110 1651494317
 !i10b 1
-R25
-Z86 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho|
-Z87 !s107 ../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho|
+Z88 !s108 1651494317.000000
+Z89 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho|
+Z90 !s107 ../../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho|
 !i113 0
 R20
 R21
 Astructure
-R80
 R81
 R82
+R83
 R11
 R12
-R83
+R84
 DEx4 work 10 hard_block 0 22 cYl8T;7FV`Ad[9nzW>cS^1
 l63
 L49
@@ -638,19 +639,19 @@ V5HLm22E=B0MkAdUM45TCm3
 !s100 SCKlHe`JiNVjD>gU8NlmR0
 R15
 33
-R51
-!i10b 1
-R25
-R86
 R87
+!i10b 1
+R88
+R89
+R90
 !i113 0
 R20
 R21
 Pmath_pkg
-R48
+R51
 R0
-Z88 8../../../math/src/math_pkg.vhd
-Z89 F../../../math/src/math_pkg.vhd
+Z91 8../../../math/src/math_pkg.vhd
+Z92 F../../../math/src/math_pkg.vhd
 l0
 L2
 VK93d5ThEW`PiMGBULU?K^3
@@ -658,11 +659,11 @@ VK93d5ThEW`PiMGBULU?K^3
 R15
 33
 b1
-R24
+R27
 !i10b 1
-R25
-Z90 !s90 -2008|-work|work|-suppress|1236|../../../math/src/math_pkg.vhd|
-Z91 !s107 ../../../math/src/math_pkg.vhd|
+R28
+Z93 !s90 -2008|-work|work|-suppress|1236|../../../math/src/math_pkg.vhd|
+Z94 !s107 ../../../math/src/math_pkg.vhd|
 !i113 0
 R20
 R21
@@ -674,50 +675,50 @@ V@Q0CjE?m0c:6o<GU`41U:0
 !s100 3];L1Zk2hFnHVD32?]WhO2
 R15
 33
-R24
+R27
 !i10b 1
-R25
-R90
-R91
+R28
+R93
+R94
 !i113 0
 R20
 R21
 Eprecompiled_vga_gfx_cntrl
-R23
-R81
-R83
-R80
-Z92 DPx6 altera 11 dffeas_pack 0 22 =lVBJCWG^b?QVVDGT`kIg1
+R26
 R82
+R84
+R81
+Z95 DPx6 altera 11 dffeas_pack 0 22 =lVBJCWG^b?QVVDGT`kIg1
+R83
 R11
 R12
-Z93 DPx6 altera 28 altera_primitives_components 0 22 2<Rdhb7C2keo8zWkPTJRc1
+Z96 DPx6 altera 28 altera_primitives_components 0 22 2<Rdhb7C2keo8zWkPTJRc1
 R0
-R84
 R85
+R86
 l0
 L78
 VDQMkI:WkRXW]WP[3<iE2:0
 !s100 ?J4FlIB?Zh9n[j==bOjEm1
 R15
 33
-R51
-!i10b 1
-R25
-R86
 R87
+!i10b 1
+R88
+R89
+R90
 !i113 0
 R20
 R21
 Astructure
-R81
-R83
-R80
-R92
 R82
+R84
+R81
+R95
+R83
 R11
 R12
-R93
+R96
 DEx4 work 25 precompiled_vga_gfx_cntrl 0 22 DQMkI:WkRXW]WP[3<iE2:0
 l3555
 L202
@@ -725,11 +726,11 @@ V<jF24GfI6`;PPGJF=>J^z1
 !s100 kknoH@h4bi@=a>DN735XO1
 R15
 33
-R51
-!i10b 1
-R25
-R86
 R87
+!i10b 1
+R88
+R89
+R90
 !i113 0
 R20
 R21
@@ -737,7 +738,7 @@ Pram_pkg
 R8
 R11
 R12
-R48
+R51
 R0
 8../../../ram/src/ram_pkg.vhd
 F../../../ram/src/ram_pkg.vhd
@@ -747,16 +748,16 @@ V0F?U_]Y_FioGb>eYBGTfK3
 !s100 >K4PLj0`;@_ejjT=Q>RUJ1
 R15
 33
-R24
+R27
 !i10b 1
-R25
+R28
 !s90 -2008|-work|work|-suppress|1236|../../../ram/src/ram_pkg.vhd|
 !s107 ../../../ram/src/ram_pkg.vhd|
 !i113 0
 R20
 R21
 Erows_full_handler
-Z94 w1651246411
+Z97 w1651246411
 R5
 R6
 R7
@@ -766,8 +767,8 @@ R10
 R11
 R12
 R0
-Z95 8./rows_full_handler.vhd
-Z96 F./rows_full_handler.vhd
+Z98 8./rows_full_handler.vhd
+Z99 F./rows_full_handler.vhd
 l0
 L8
 V5kbYfSB2e=P[WIP?3<N2H1
@@ -777,8 +778,8 @@ R15
 R16
 !i10b 1
 R17
-Z97 !s90 -2008|-work|work|-suppress|1236|./rows_full_handler.vhd|
-Z98 !s107 ./rows_full_handler.vhd|
+Z100 !s90 -2008|-work|work|-suppress|1236|./rows_full_handler.vhd|
+Z101 !s107 ./rows_full_handler.vhd|
 !i113 0
 R20
 R21
@@ -801,25 +802,25 @@ R15
 R16
 !i10b 1
 R17
-R97
-R98
+R100
+R101
 !i113 0
 R20
 R21
 Etb_add_tetromino_handler
-Z99 w1651311917
+Z102 w1651311917
 R5
 R6
 R7
 R8
 R10
 R9
-Z100 DPx3 std 3 env 0 22 d?`1ck@NdeD@H3RZG7FgZ2
+Z103 DPx3 std 3 env 0 22 d?`1ck@NdeD@H3RZG7FgZ2
 R11
 R12
 R0
-Z101 8./tb/add_tetromino_handler_tb.vhd
-Z102 F./tb/add_tetromino_handler_tb.vhd
+Z104 8./tb/add_tetromino_handler_tb.vhd
+Z105 F./tb/add_tetromino_handler_tb.vhd
 l0
 L10
 VBGdZOQiI]W:N3Sb`?E5;F1
@@ -829,8 +830,8 @@ R15
 R16
 !i10b 1
 R17
-Z103 !s90 -2008|-work|work|-suppress|1236|./tb/add_tetromino_handler_tb.vhd|
-Z104 !s107 ./tb/add_tetromino_handler_tb.vhd|
+Z106 !s90 -2008|-work|work|-suppress|1236|./tb/add_tetromino_handler_tb.vhd|
+Z107 !s107 ./tb/add_tetromino_handler_tb.vhd|
 !i113 0
 R20
 R21
@@ -841,7 +842,7 @@ R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 DEx4 work 24 tb_add_tetromino_handler 0 22 BGdZOQiI]W:N3Sb`?E5;F1
@@ -854,46 +855,46 @@ R15
 R16
 !i10b 1
 R17
-R103
-R104
+R106
+R107
 !i113 0
 R20
 R21
 Etb_matrix_for_collision_map
-Z105 w1651410521
+Z108 w1651410521
 R5
 R6
 R7
 R8
 R9
-R100
+R103
 R10
 R11
 R12
 R0
-Z106 8./tb/matrix_for_collision_map_tb.vhd
-Z107 F./tb/matrix_for_collision_map_tb.vhd
+Z109 8./tb/matrix_for_collision_map_tb.vhd
+Z110 F./tb/matrix_for_collision_map_tb.vhd
 l0
 L13
 V4kQ>NdngakPU0P;m[z`kQ2
 !s100 Q1clCV;LkH7AeWMiUlKVl0
 R15
 33
-R16
+Z111 !s110 1651494320
 !i10b 1
 R17
-Z108 !s90 -2008|-work|work|-suppress|1236|./tb/matrix_for_collision_map_tb.vhd|
-Z109 !s107 ./tb/matrix_for_collision_map_tb.vhd|
+Z112 !s90 -2008|-work|work|-suppress|1236|./tb/matrix_for_collision_map_tb.vhd|
+Z113 !s107 ./tb/matrix_for_collision_map_tb.vhd|
 !i113 0
 R20
 R21
 Abhv
 R5
-R6
+R22
 R7
 R8
 R9
-R100
+R103
 R10
 R11
 R12
@@ -904,28 +905,28 @@ Vio5>2H_oKNP^Zl84WIFQn3
 !s100 z0gLKnS3FbL1ASm^j_FLQ0
 R15
 33
-R16
+R23
 !i10b 1
-R17
-R108
-R109
+R24
+R112
+R113
 !i113 0
 R20
 R21
 Etb_rows_full_handler
-Z110 w1651310726
+Z114 w1651310726
 R5
 R6
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 R0
-Z111 8./tb/rows_full_handler_tb.vhd
-Z112 F./tb/rows_full_handler_tb.vhd
+Z115 8./tb/rows_full_handler_tb.vhd
+Z116 F./tb/rows_full_handler_tb.vhd
 l0
 L11
 VVR=z:<6N=G5=PmYVUT=QZ1
@@ -935,19 +936,19 @@ R15
 R16
 !i10b 1
 R17
-Z113 !s90 -2008|-work|work|-suppress|1236|./tb/rows_full_handler_tb.vhd|
-Z114 !s107 ./tb/rows_full_handler_tb.vhd|
+Z117 !s90 -2008|-work|work|-suppress|1236|./tb/rows_full_handler_tb.vhd|
+Z118 !s107 ./tb/rows_full_handler_tb.vhd|
 !i113 0
 R20
 R21
 Abhv
 R5
-R6
+R22
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 DEx4 work 20 tb_rows_full_handler 0 22 VR=z:<6N=G5=PmYVUT=QZ1
@@ -957,27 +958,27 @@ VmQBCH7hO5mSZczocYA6@b3
 !s100 WcBTk99OkVFHgNZ;0mb1G1
 R15
 33
-R16
+R23
 !i10b 1
-R17
-R113
-R114
+R24
+R117
+R118
 !i113 0
 R20
 R21
 Etb_tetris_drawers_package
-Z115 w1651244131
+Z119 w1651244131
 R6
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 R0
-Z116 8../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
-Z117 F../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
+Z120 8../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
+Z121 F../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
 l0
 L10
 VRRb63_2PY:kKe5eINcT4?1
@@ -987,18 +988,18 @@ R15
 R16
 !i10b 1
 R17
-Z118 !s90 -2008|-work|work|-suppress|1236|../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd|
-Z119 !s107 ../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd|
+Z122 !s90 -2008|-work|work|-suppress|1236|../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd|
+Z123 !s107 ../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd|
 !i113 0
 R20
 R21
 Abhv
-R6
+R22
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 DEx4 work 25 tb_tetris_drawers_package 0 22 RRb63_2PY:kKe5eINcT4?1
@@ -1008,28 +1009,28 @@ V@F5:zz?kg<WYH>0dozM=S0
 !s100 <6Saa]_a[nmGYBmUOZ;<I0
 R15
 33
-R16
+R23
 !i10b 1
-R17
-R118
-R119
+R24
+R122
+R123
 !i113 0
 R20
 R21
 Etb_tetris_game_logic_pkg
-Z120 w1651316519
+Z124 w1651316519
 R5
 R6
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 R0
-Z121 8./tb/tetris_game_logic_pkg_tb.vhd
-Z122 F./tb/tetris_game_logic_pkg_tb.vhd
+Z125 8./tb/tetris_game_logic_pkg_tb.vhd
+Z126 F./tb/tetris_game_logic_pkg_tb.vhd
 l0
 L11
 V:zFQ]lY8?c>NmJ_:Mc<zj3
@@ -1039,19 +1040,19 @@ R15
 R16
 !i10b 1
 R17
-Z123 !s90 -2008|-work|work|-suppress|1236|./tb/tetris_game_logic_pkg_tb.vhd|
-Z124 !s107 ./tb/tetris_game_logic_pkg_tb.vhd|
+Z127 !s90 -2008|-work|work|-suppress|1236|./tb/tetris_game_logic_pkg_tb.vhd|
+Z128 !s107 ./tb/tetris_game_logic_pkg_tb.vhd|
 !i113 0
 R20
 R21
 Abhv
 R5
-R6
+R22
 R7
 R8
 R10
 R9
-R100
+R103
 R11
 R12
 DEx4 work 24 tb_tetris_game_logic_pkg 0 22 :zFQ]lY8?c>NmJ_:Mc<zj3
@@ -1061,39 +1062,39 @@ Vl3l1HAO2_1IMi2>_:_JVF1
 !s100 Rd@dBmO<Fa=Jf]VR`Fk`41
 R15
 33
-R16
+R23
 !i10b 1
-R17
-R123
-R124
+R24
+R127
+R128
 !i113 0
 R20
 R21
 Etb_timer
-Z125 w1651415308
+Z129 w1651415308
 R7
 R9
 R6
 R8
 R5
-R100
+R103
 R10
 R11
 R12
 R0
-Z126 8./tb/timer_tb.vhd
-Z127 F./tb/timer_tb.vhd
+Z130 8./tb/timer_tb.vhd
+Z131 F./tb/timer_tb.vhd
 l0
 L9
 VD6joIDm3JKn[O?ghNPlOh3
 !s100 74Xm6bTK_MGmFI2[a9:Ee1
 R15
 33
-Z128 !s110 1651415314
+R111
 !i10b 1
-R17
-Z129 !s90 -2008|-work|work|-suppress|1236|./tb/timer_tb.vhd|
-Z130 !s107 ./tb/timer_tb.vhd|
+Z132 !s108 1651494320.000000
+Z133 !s90 -2008|-work|work|-suppress|1236|./tb/timer_tb.vhd|
+Z134 !s107 ./tb/timer_tb.vhd|
 !i113 0
 R20
 R21
@@ -1103,22 +1104,22 @@ R9
 R6
 R8
 R5
-R100
+R103
 R10
 R11
 R12
-DEx4 work 8 tb_timer 0 22 D6joIDm3JKn[O?ghNPlOh3
+Z135 DEx4 work 8 tb_timer 0 22 D6joIDm3JKn[O?ghNPlOh3
 l18
 L11
-VTONCeJ:Zh]^e:nfHn5[NX0
-!s100 @oz_IJzRH^0915TZ8YBL21
+Z136 VTONCeJ:Zh]^e:nfHn5[NX0
+Z137 !s100 @oz_IJzRH^0915TZ8YBL21
 R15
 33
-R128
+R111
 !i10b 1
-R17
-R129
-R130
+R132
+R133
+R134
 !i113 0
 R20
 R21
@@ -1129,22 +1130,22 @@ R8
 R10
 R11
 R12
-Z131 w1651321583
+Z138 w1651489250
 R0
-Z132 8../drawers/tetris_drawers_package.vhd
-Z133 F../drawers/tetris_drawers_package.vhd
+Z139 8../drawers/tetris_drawers_package.vhd
+Z140 F../drawers/tetris_drawers_package.vhd
 l0
 L10
-Vhkib]38?_FZ9ebe_hAQ1D2
-!s100 g8WCjM3]l1mL;2ezbz7@Q0
+V>G_K[9b`g_R0J4gZVQTXK0
+!s100 2B0SBd5VSLcebZ<ggM7i51
 R15
 33
 b1
-R29
+R32
 !i10b 1
-R30
-Z134 !s90 -2008|-work|work|-suppress|1236|../drawers/tetris_drawers_package.vhd|
-Z135 !s107 ../drawers/tetris_drawers_package.vhd|
+R33
+Z141 !s90 -2008|-work|work|-suppress|1236|../drawers/tetris_drawers_package.vhd|
+Z142 !s107 ../drawers/tetris_drawers_package.vhd|
 !i113 0
 R20
 R21
@@ -1157,16 +1158,16 @@ R10
 R11
 R12
 l0
-L132
-VVK0F^Fz9^ZE:a<CkMjS<T1
-!s100 Df`b;@Id3I<=oH3d5E]F92
+L133
+Vi2GSz8T1[X`TI_QCVcXmn0
+!s100 >;dCUX<SQlLH00:Q8fo7P2
 R15
 33
-R29
+R32
 !i10b 1
-R30
-R134
-R135
+R33
+R141
+R142
 !i113 0
 R20
 R21
@@ -1178,10 +1179,10 @@ R8
 R10
 R11
 R12
-Z136 w1651414698
+Z143 w1651414698
 R0
-Z137 8./tetris_game_logic_pkg.vhd
-Z138 F./tetris_game_logic_pkg.vhd
+Z144 8./tetris_game_logic_pkg.vhd
+Z145 F./tetris_game_logic_pkg.vhd
 l0
 L10
 V7`ENIKhZAk_9bSHAQ3@E;3
@@ -1189,11 +1190,11 @@ V7`ENIKhZAk_9bSHAQ3@E;3
 R15
 33
 b1
-R29
+R16
 !i10b 1
-R30
-Z139 !s90 -2008|-work|work|-suppress|1236|./tetris_game_logic_pkg.vhd|
-Z140 !s107 ./tetris_game_logic_pkg.vhd|
+R17
+Z146 !s90 -2008|-work|work|-suppress|1236|./tetris_game_logic_pkg.vhd|
+Z147 !s107 ./tetris_game_logic_pkg.vhd|
 !i113 0
 R20
 R21
@@ -1212,11 +1213,11 @@ VbCG6mz0aelcBQkT=jGNiX3
 !s100 cJo[ZzD?0j=f:Q@;=mh?H2
 R15
 33
-R29
+R16
 !i10b 1
-R30
-R139
-R140
+R17
+R146
+R147
 !i113 0
 R20
 R21
@@ -1226,10 +1227,10 @@ R8
 R10
 R11
 R12
-Z141 w1650540352
+Z148 w1650540352
 R0
-Z142 8../../../tetris_util/src/tetris_util_pkg.vhd
-Z143 F../../../tetris_util/src/tetris_util_pkg.vhd
+Z149 8../../../tetris_util/src/tetris_util_pkg.vhd
+Z150 F../../../tetris_util/src/tetris_util_pkg.vhd
 l0
 L8
 VjH<c@l>YN=48j;U;4BKQC2
@@ -1237,11 +1238,11 @@ VjH<c@l>YN=48j;U;4BKQC2
 R15
 33
 b1
-R24
+R27
 !i10b 1
-R25
-Z144 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetris_util_pkg.vhd|
-Z145 !s107 ../../../tetris_util/src/tetris_util_pkg.vhd|
+R28
+Z151 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetris_util_pkg.vhd|
+Z152 !s107 ../../../tetris_util/src/tetris_util_pkg.vhd|
 !i113 0
 R20
 R21
@@ -1258,16 +1259,16 @@ VU2h>?zBFIFKS=6IK6M]Fz2
 !s100 N55[Lzn7HhLed5_6AOffC3
 R15
 33
-R24
+R27
 !i10b 1
-R25
-R144
-R145
+R28
+R151
+R152
 !i113 0
 R20
 R21
 Etetromino_collider
-Z146 w1648718563
+Z153 w1648718563
 R7
 R9
 R8
@@ -1275,19 +1276,19 @@ R10
 R11
 R12
 R0
-Z147 8../../../tetris_util/src/tetromino_collider.vhd
-Z148 F../../../tetris_util/src/tetromino_collider.vhd
+Z154 8../../../tetris_util/src/tetromino_collider.vhd
+Z155 F../../../tetris_util/src/tetromino_collider.vhd
 l0
 L8
 VSA<=PaoZLNjRjz8@SG9d?0
 !s100 7]T@3`bbmz@`j_S>hKgzE0
 R15
 33
-R24
+R87
 !i10b 1
-R25
-Z149 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetromino_collider.vhd|
-Z150 !s107 ../../../tetris_util/src/tetromino_collider.vhd|
+R28
+Z156 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetromino_collider.vhd|
+Z157 !s107 ../../../tetris_util/src/tetromino_collider.vhd|
 !i113 0
 R20
 R21
@@ -1305,16 +1306,16 @@ Vh1zmP^<aR@ZVHTZ000`AQ1
 !s100 JE3F_AeP?kDjUGSS`oig@1
 R15
 33
-R24
+R87
 !i10b 1
-R25
-R149
-R150
+R28
+R156
+R157
 !i113 0
 R20
 R21
 Etetromino_drawer
-R146
+R153
 R7
 R8
 R9
@@ -1322,19 +1323,19 @@ R10
 R11
 R12
 R0
-Z151 8../../../tetris_util/src/tetromino_drawer.vhd
-Z152 F../../../tetris_util/src/tetromino_drawer.vhd
+Z158 8../../../tetris_util/src/tetromino_drawer.vhd
+Z159 F../../../tetris_util/src/tetromino_drawer.vhd
 l0
 L8
 Vo@cM8RE;O[RdTFLR=]NN_1
 !s100 >WKF3]h4l:aOj0Eh5kPfE1
 R15
 33
-R24
+R87
 !i10b 1
-R25
-Z153 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetromino_drawer.vhd|
-Z154 !s107 ../../../tetris_util/src/tetromino_drawer.vhd|
+R88
+Z160 !s90 -2008|-work|work|-suppress|1236|../../../tetris_util/src/tetromino_drawer.vhd|
+Z161 !s107 ../../../tetris_util/src/tetromino_drawer.vhd|
 !i113 0
 R20
 R21
@@ -1352,47 +1353,47 @@ VUF8`b6b5:K65Rm^V9NkQa1
 !s100 9QXHKI0e3bE7Ia59Qo6QR2
 R15
 33
-R24
+R87
 !i10b 1
-R25
-R153
-R154
+R88
+R160
+R161
 !i113 0
 R20
 R21
 Etimer
-Z155 w1651414519
+Z162 w1651414519
 R7
 R9
-R6
+R22
 R8
-Z156 DPx4 work 21 tetris_game_logic_pkg 0 22 Q3?6oIo]OoV6fzaHTh9kl2
+Z163 DPx4 work 21 tetris_game_logic_pkg 0 22 Q3?6oIo]OoV6fzaHTh9kl2
 R10
 R11
 R12
 R0
-R44
-R45
+R47
+R48
 l0
 L6
 V@Hn?Z382glY<3;^C8AYU?1
 !s100 he:POaOW`[W8L^aZeFiA62
 R15
 33
-Z157 !s110 1651414525
+Z164 !s110 1651414525
 !i10b 1
-Z158 !s108 1651414525.000000
-R46
-R47
+Z165 !s108 1651414525.000000
+R49
+R50
 !i113 0
 R20
 R21
 Aarch
 R7
 R9
-R6
+R22
 R8
-R156
+R163
 R10
 R11
 R12
@@ -1403,33 +1404,33 @@ V6Xam<Lb@2Y7F1:`SNQN:_2
 !s100 QN[m^CDGF:DHj`efOnCeh3
 R15
 33
-R157
+R164
 !i10b 1
-R158
-R46
-R47
+R165
+R49
+R50
 !i113 0
 R20
 R21
 Etpg
-Z159 w1648718538
+Z166 w1648718538
 R10
 R11
 R12
 R0
-Z160 8../../../vga_gfx_cntrl/src/tpg.vhd
-Z161 F../../../vga_gfx_cntrl/src/tpg.vhd
+Z167 8../../../vga_gfx_cntrl/src/tpg.vhd
+Z168 F../../../vga_gfx_cntrl/src/tpg.vhd
 l0
 L6
 VPZ8E6hXCn]PXmYTTh8HNN3
 !s100 ERc0Vj>_;:ah9<G4eQNWE1
 R15
 33
-R51
+R32
 !i10b 1
-R52
-Z162 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/tpg.vhd|
-Z163 !s107 ../../../vga_gfx_cntrl/src/tpg.vhd|
+R88
+Z169 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/tpg.vhd|
+Z170 !s107 ../../../vga_gfx_cntrl/src/tpg.vhd|
 !i113 0
 R20
 R21
@@ -1444,11 +1445,11 @@ V@oEgUkgd`nBEDcfMlgoNI3
 !s100 l?e[?I@UfdB0]FRmXHJA_3
 R15
 33
-R51
+R32
 !i10b 1
-R52
-R162
-R163
+R88
+R169
+R170
 !i113 0
 R20
 R21
@@ -1456,10 +1457,10 @@ Pvga_gfx_cntrl_pkg
 R10
 R11
 R12
-Z164 w1650630446
+Z171 w1650630446
 R0
-Z165 8../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd
-Z166 F../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd
+Z172 8../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd
+Z173 F../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd
 l0
 L5
 VRS[n^d2HfHGf:CAhWU=201
@@ -1467,11 +1468,11 @@ VRS[n^d2HfHGf:CAhWU=201
 R15
 33
 b1
-R24
+R27
 !i10b 1
-R25
-Z167 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd|
-Z168 !s107 ../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd|
+R28
+Z174 !s90 -2008|-work|work|-suppress|1236|../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd|
+Z175 !s107 ../../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd|
 !i113 0
 R20
 R21
@@ -1486,11 +1487,11 @@ VzOF3IV`>@Q4EXf]cDaU1:3
 !s100 Y@J]HoPdCE7:Jb:70Pn;73
 R15
 33
-R24
+R27
 !i10b 1
-R25
-R167
-R168
+R28
+R174
+R175
 !i113 0
 R20
 R21
