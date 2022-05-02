@@ -221,7 +221,7 @@ begin
 	gc_cntrl_inst : gc_cntrl
 	generic map (
         CLK_FREQ        => 50000000,
-		  SYNC_STAGES     => SYNC_STAGES,
+		SYNC_STAGES     => SYNC_STAGES,
         REFRESH_TIMEOUT => 300000	--6ms delay
 	)
 	port map (

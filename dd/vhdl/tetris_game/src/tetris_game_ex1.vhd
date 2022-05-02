@@ -15,6 +15,7 @@ use work.tetris_game_logic_pkg.all;
 architecture ex1 of tetris_game is
 
 	type gfx_instr_array_t is array(natural range<>) of std_logic_vector;
+	constant FALL_INTERVAL : integer := 1;
 	constant DISPLAY_WIDTH : integer := 320;
 	constant DISPLAY_HEIGHT : integer := 240;
 	constant BLOCK_SIZE : integer := 12; 
@@ -80,31 +81,28 @@ architecture ex1 of tetris_game is
 		others => (EMPTY_ROW)
 	);
 
+	signal timer_gravity_done, timer_gravity_start : std_logic;
+
 	-- add_tetromino_handler 
-	signal ath_start :std_logic;
-	signal ath_busy: std_logic;
+	signal ath_start,ath_busy :std_logic;
 	signal ath_out_matrix : t_bb_block_matrix(0 to BLOCKS_Y -1);
 
 	--rows_full_handler 
-	signal rfh_start : std_logic;
-	signal rfh_busy: std_logic;
+	signal rfh_start,rfh_busy : std_logic;
 	signal rfh_out_matrix: t_bb_block_matrix(0 to BLOCKS_Y -1);
 	signal rfh_rows_removed: std_logic_vector(3 downto 0);
 
-	signal md_start : std_logic;
-	signal md_busy : std_logic;
+	--matrix drawer
+	signal md_start,md_busy : std_logic;
 	signal md_x : integer range 0 to (BLOCKS_VIEW_X - 1);
 	signal md_y : integer range 0 to (BLOCKS_VIEW_Y - 1);
 	signal md_gfx_instr : std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
 	signal md_gfx_instr_wr : std_logic;	
-
-	signal tc_start : std_logic;
-	signal tc_busy : std_logic;
-	signal tc_collision_detected :  std_logic;
+	
+	-- tetromino_collider 
+	signal tc_start,tc_busy,tc_collision_detected, tc_block_map_rd,tc_block_map_solid : std_logic;
 	signal tc_block_map_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0);
 	signal tc_block_map_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0);
-	signal tc_block_map_rd : std_logic;
-	signal tc_block_map_solid : std_logic;
 
 	signal block_map_rd_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0);
 	signal block_map_rd_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0);
@@ -123,7 +121,6 @@ architecture ex1 of tetris_game is
 		RESET, WAIT_INIT, 
 		DO_FRAME_SYNC, WAIT_FRAME_SYNC,
 		CLEAR_SCREEN,
-		TEST_WRITE_BLOCK_MAP, TEST_WRITE_BLOCK_MAP_2, TEST_WRITE_BLOCK_MAP_3, TEST_WRITE_BLOCK_MAP_4,
 		PROCESS_INPUT,
 		TEST_MOVEMENT, WAIT_CHECK_COLLISION,
 		DRAW_TEST_TETROMINO, WAIT_DRAW_TEST_TETROMINO,
@@ -142,7 +139,8 @@ architecture ex1 of tetris_game is
 		TEST_ADD_TETROMINO_HANDLER,
 		WAIT_TEST_ADD_TETROMINO_HANDLER,
 		TEST_ROWS_FULL_HANDLER,
-		WAIT_ROWS_FULL_HANDLER
+		WAIT_ROWS_FULL_HANDLER,
+		START_GRAVITY_TIMER
 	);
 
 	signal td_cur_tetromino : tetromino_t;
@@ -233,6 +231,7 @@ begin
 		md_start <= '0';
 		ath_start <= '0';
 		rfh_start <= '0';
+		timer_gravity_start <= '0';
 		
 		--block map stuff
 		block_map_rd_x <= (others=>'0');
@@ -255,9 +254,11 @@ begin
 				gfx_instr <= gfx_initializer_instr;
 				gfx_instr_wr <= gfx_initializer_instr_wr;
 				if (gfx_initializer_busy = '0') then
-					state_nxt.fsm_state <= CLEAR_BLOCK_MAP_INIT;
+					state_nxt.fsm_state <= START_GRAVITY_TIMER;
 				end if;
-			
+			when START_GRAVITY_TIMER => 
+				timer_gravity_start <= '1';
+				state_nxt.fsm_state <= CLEAR_BLOCK_MAP_INIT; 
 			when CLEAR_BLOCK_MAP_INIT =>
 				state_nxt.cur_tetromino_x <= std_logic_vector(to_unsigned(BLOCKS_X/2-1, state.cur_tetromino_x'length));
 				state_nxt.cur_tetromino_y <= (others=>'0');
@@ -295,35 +296,7 @@ begin
 				end if;
 			
 			when CLEAR_SCREEN =>
-				write_instr(gfx_instr_clear(color=>x"c"), TEST_WRITE_BLOCK_MAP);
-				
-			when TEST_WRITE_BLOCK_MAP =>
-				block_map_wr <= '1';
-				block_map_wr_x <= std_logic_vector(to_unsigned(0, block_map_wr_x'length));
-				block_map_wr_y <= std_logic_vector(to_unsigned(9, block_map_wr_y'length));
-				block_map_wr_data <= "1";
-				state_nxt.fsm_state <= TEST_WRITE_BLOCK_MAP_2;
-				
-			when TEST_WRITE_BLOCK_MAP_2 =>
-				block_map_wr <= '1';
-				block_map_wr_x <= std_logic_vector(to_unsigned(1, block_map_wr_x'length));
-				block_map_wr_y <= std_logic_vector(to_unsigned(9, block_map_wr_y'length));
-				block_map_wr_data <= "1";
-				state_nxt.fsm_state <= TEST_WRITE_BLOCK_MAP_3;
-			when TEST_WRITE_BLOCK_MAP_3 =>
-				block_map_wr <= '1';
-				block_map_wr_x <= std_logic_vector(to_unsigned(2, block_map_wr_x'length));
-				block_map_wr_y <= std_logic_vector(to_unsigned(9, block_map_wr_y'length));
-				block_map_wr_data <= "1";
-				state_nxt.fsm_state <= TEST_WRITE_BLOCK_MAP_4;
-
-			when TEST_WRITE_BLOCK_MAP_4 =>
-				block_map_wr <= '1';
-				block_map_wr_x <= std_logic_vector(to_unsigned(3, block_map_wr_x'length));
-				block_map_wr_y <= std_logic_vector(to_unsigned(9, block_map_wr_y'length));
-				block_map_wr_data <= "1";
-				state_nxt.fsm_state <= PROCESS_INPUT;
-
+				write_instr(gfx_instr_clear(color=>x"c"), PROCESS_INPUT);
 			--██╗███╗   ██╗██████╗ ██╗   ██╗████████╗
 			--██║████╗  ██║██╔══██╗██║   ██║╚══██╔══╝
 			--██║██╔██╗ ██║██████╔╝██║   ██║   ██║   
@@ -339,6 +312,11 @@ begin
 				state_nxt.dest_tetromino <= state.cur_tetromino;
 				state_nxt.dest_rotation <= state.cur_rotation;
 
+				if(timer_gravity_done = '1') then
+					state_nxt.dest_tetromino_y <= std_logic_vector(signed(state.cur_tetromino_y) + 1);
+					state_nxt.fsm_state <= TEST_MOVEMENT;
+					timer_gravity_start <= '1'; 
+				end if;				
 				if (gc_cntrl_state.btn_right = '1' and state.last_controller_state.btn_right = '0') then
 					state_nxt.dest_tetromino_x <= std_logic_vector(signed(state.cur_tetromino_x) + 1);
 					state_nxt.fsm_state <= TEST_MOVEMENT;
@@ -756,6 +734,15 @@ begin
 		block_map_solid    => tc_block_map_solid
 	);
 
+	timer_gravity_inst: cycles_timer 
+	generic map (
+        CYCLES => FALL_INTERVAL * 50000000 
+    ) port map (
+        finished => timer_gravity_done,
+        clk => clk,
+        res_n => res_n,
+        start => timer_gravity_start
+    );
 
     block_map : block 
         signal block_map_x_int : integer;
