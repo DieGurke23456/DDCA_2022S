@@ -212,8 +212,8 @@ begin
 		if(rising_edge(timer_song_done)) then 
 			synth_cntrl(0).high_time <= high_time_from_pitch(TETRIS_THEME(state.note_index).pitch);
 			synth_cntrl(0).low_time <= high_time_from_pitch(TETRIS_THEME(state.note_index).pitch);
-			synth_cntrl(1).low_time <= high_time_from_pitch(TETRIS_THEME(state.note_index).pitch);
-			synth_cntrl(1).high_time <= high_time_from_pitch(TETRIS_THEME(state.note_index).pitch);
+			synth_cntrl(1).low_time <= high_time_from_pitch(TETRIS_THEME_BASE(state.note_index).pitch);
+			synth_cntrl(1).high_time <= high_time_from_pitch(TETRIS_THEME_BASE(state.note_index).pitch);
 		end if;
 	end process;
 

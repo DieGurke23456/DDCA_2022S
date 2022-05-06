@@ -1,0 +1,207 @@
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:09 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../math/src/math_pkg.vhd 
+-- Loading package STANDARD
+-- Compiling package math_pkg
+-- Compiling package body math_pkg
+-- Loading package math_pkg
+End time: 22:52:09 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:09 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../vga_gfx_cntrl/src/vga_gfx_cntrl_pkg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling package vga_gfx_cntrl_pkg
+-- Compiling package body vga_gfx_cntrl_pkg
+-- Loading package vga_gfx_cntrl_pkg
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../tetris_util/src/tetris_util_pkg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package vga_gfx_cntrl_pkg
+-- Compiling package tetris_util_pkg
+-- Compiling package body tetris_util_pkg
+-- Loading package tetris_util_pkg
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../gfx_util/src/gfx_util_pkg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling package gfx_util_pkg
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../ram/src/ram_pkg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package math_pkg
+-- Compiling package ram_pkg
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../vga_gfx_cntrl/src/bb_rom_pkg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package gfx_util_pkg
+-- Compiling package bb_rom_pkg
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../tetris_util/src/tetromino_collider.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package vga_gfx_cntrl_pkg
+-- Loading package tetris_util_pkg
+-- Compiling entity tetromino_collider
+-- Compiling architecture arch of tetromino_collider
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../tetris_util/src/tetromino_drawer.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package vga_gfx_cntrl_pkg
+-- Loading package tetris_util_pkg
+-- Compiling entity tetromino_drawer
+-- Compiling architecture arch of tetromino_drawer
+End time: 22:52:10 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:10 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../vga_gfx_cntrl/src/precompiled_vga_gfx_cntrl.vho 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package VITAL_Timing
+-- Loading package VITAL_Primitives
+-- Loading package cycloneive_atom_pack
+-- Loading package cycloneive_components
+-- Compiling entity hard_block
+-- Compiling architecture structure of hard_block
+-- Loading package dffeas_pack
+-- Loading package altera_primitives_components
+-- Compiling entity precompiled_vga_gfx_cntrl
+-- Compiling architecture structure of precompiled_vga_gfx_cntrl
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../vga_gfx_cntrl/src/tpg.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity tpg
+-- Compiling architecture arch of tpg
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../ram/src/dp_ram_1c1r1w.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity dp_ram_1c1r1w
+-- Compiling architecture beh of dp_ram_1c1r1w
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../gfx_util/src/gfx_bb.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package gfx_util_pkg
+-- Compiling entity gfx_bb
+-- Compiling architecture arch of gfx_bb
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../gfx_util/src/gfx_line.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Compiling entity gfx_line
+-- Compiling architecture arch of gfx_line
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../vga_gfx_cntrl/src/frame_reader.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package ram_pkg
+-- Compiling entity frame_reader
+-- Compiling architecture arch of frame_reader
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../ram/src/fifo_1c1r1w.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package ram_pkg
+-- Compiling entity fifo_1c1r1w
+-- Compiling architecture arch of fifo_1c1r1w
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ../../ram/src/fifo_1c1r1w_fwft.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package math_pkg
+-- Loading package ram_pkg
+-- Compiling entity fifo_1c1r1w_fwft
+-- Compiling architecture arch of fifo_1c1r1w_fwft
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vcom 10.6c_1 Compiler 2017.09 Sep 15 2017
+Start time: 22:52:11 on May 02,2022
+vcom -2008 -work work -suppress 1236 ./tb/vga_gfx_cntrl_tb.vhd 
+-- Loading package STANDARD
+** Error (suppressible): ./tb/vga_gfx_cntrl_tb.vhd(1): (vcom-1491) Empty source files.
+End time: 22:52:11 on May 02,2022, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
