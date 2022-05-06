@@ -45,6 +45,9 @@ package tetris_drawers_pkg is
     function get_bb_x_from_t_BB(t_bb: t_bb_block) return t_bb_x_cords;
     function get_bb_y_from_t_BB(t_bb: t_bb_block) return t_bb_y_cords; 
 
+    function get_bb_x_from_char(char: character) return t_bb_x_cords;
+    function get_bb_y_from_char(char: character) return t_bb_y_cords;
+    
     function check_block_row_full(row: t_bb_block_row) return boolean;
     function check_block_row_empty(row: t_bb_block_row) return boolean;
 
@@ -163,7 +166,44 @@ package body tetris_drawers_pkg is
         return to_return;
     end function;     
 
+
+    function get_bb_x_from_char(char: character) return t_bb_x_cords is 
+        variable to_return : t_bb_x_cords := 0;
+        variable calc_helper : integer := 0;
+    begin 
+        if char >= '0' and char <= '9' then 
+            to_return := character'pos(char) - character'pos('0');
+        else 
+            calc_helper := character'pos(char) - character'pos('A');
+            for i in 0 to 2 loop 
+                if not (calc_helper <= 9) then
+                    calc_helper := calc_helper - 10;
+                end if;
+            end loop;
+            to_return := calc_helper;
+        end if;
+        return to_return;
+    end function;
+
+    function get_bb_y_from_char(char: character) return t_bb_y_cords is 
+        variable to_return : t_bb_y_cords := 0;
+        variable calc_helper : integer := 0;
+    begin
+        if not (char >= '0' and char <= '9') then 
+            calc_helper := character'pos(char) - character'pos('A');
+            to_return := 1;
+            for i in 0 to 2 loop
+                if not (calc_helper <= 9) then 
+                    calc_helper := calc_helper - 10;
+                    to_return := to_return + 1;
+                end if;
+            end loop;
+        end if;
+        return to_return;
+    end function;
     
+
+
     function get_bb_x_from_t_BB(t_bb: t_bb_block) return t_bb_x_cords is
         variable to_return : t_bb_x_cords;
     begin

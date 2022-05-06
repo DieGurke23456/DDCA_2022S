@@ -48,189 +48,254 @@ begin
 
     main : process
         variable test_tetromino: tetromino_t;
+        variable test_integer_result : integer;
+        variable test_integer_expected: integer;
+        variable test_character_range_lower: character;
+        variable test_character_range_upper: character;
         variable test_t_bb: t_bb_block;
         variable test_x_cords: t_bb_x_cords;
         variable test_y_cords: t_bb_y_cords;
-        variable test_matrix_a: t_bb_block_matrix(0 to 4) := (
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO),
-            (T_BB_T,     T_BB_T, T_BB_T),
-            (T_BB_T,     T_BB_T, T_BB_T),
-            (T_BB_T,     T_BB_T, T_BB_T)
-        );
-        variable out_matrix_a: t_bb_block_matrix(0 to 4) := (
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
-        );
-        variable merged_matrix_a: t_bb_block_matrix(0 to 4) := (
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO)
-        );
-        variable test_matrix_b: t_bb_block_matrix(0 to 4) := (
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_T,     T_BB_T, T_BB_T),
-            (T_BB_T,     T_BB_T, T_BB_T),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO),
-            (T_BB_T,     T_BB_T, T_BB_T)
-        );
-        variable out_matrix_b: t_bb_block_matrix(0 to 4) := (
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
-        );
-        variable merged_matrix_b: t_bb_block_matrix(0 to 4) := (
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_I,     T_BB_I, T_BB_I),
-            (T_BB_EMPTY, T_BB_T, T_BB_CARO)
-        );
-        constant EMPTY_MATRIX: t_bb_block_matrix(0 to 4) := (
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
-            (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
-        );
+        -- variable test_matrix_a: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO),
+        --     (T_BB_T,     T_BB_T, T_BB_T),
+        --     (T_BB_T,     T_BB_T, T_BB_T),
+        --     (T_BB_T,     T_BB_T, T_BB_T)
+        -- );
+        -- variable out_matrix_a: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
+        -- );
+        -- variable merged_matrix_a: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO)
+        -- );
+        -- variable test_matrix_b: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_T,     T_BB_T, T_BB_T),
+        --     (T_BB_T,     T_BB_T, T_BB_T),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO),
+        --     (T_BB_T,     T_BB_T, T_BB_T)
+        -- );
+        -- variable out_matrix_b: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
+        -- );
+        -- variable merged_matrix_b: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_I,     T_BB_I, T_BB_I),
+        --     (T_BB_EMPTY, T_BB_T, T_BB_CARO)
+        -- );
+        -- constant EMPTY_MATRIX: t_bb_block_matrix(0 to 4) := (
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY),
+        --     (T_BB_EMPTY, T_BB_EMPTY, T_BB_EMPTY)
+        -- );
 
 
     begin
-        report "testing get_T_BB_from_tetromino" ;
-        if get_T_BB_from_tetromino(TET_T) = T_BB_T then 
-            report "test 1 passed";
-        else
-            report "test 1 failed";
-        end if;
+        -- report "testing get_T_BB_from_tetromino" ;
+        -- if get_T_BB_from_tetromino(TET_T) = T_BB_T then 
+        --     report "test 1 passed";
+        -- else
+        --     report "test 1 failed";
+        -- end if;
         
-        if get_tetromino_from_T_BB(T_BB_T) = TET_T then 
-            report "test 2 passed";
-        else 
-            report "test 2 failed";
-        end if;
+        -- if get_tetromino_from_T_BB(T_BB_T) = TET_T then 
+        --     report "test 2 passed";
+        -- else 
+        --     report "test 2 failed";
+        -- end if;
 
-        report "testing get_bb_x_from_t_BB";
+        -- report "testing get_bb_x_from_t_BB";
         
-        if get_bb_x_from_t_BB(T_BB_T) = 0 then
-            report "test 3 passed";
-        else 
-            report "test 3 failed";
-        end if;
+        -- if get_bb_x_from_t_BB(T_BB_T) = 0 then
+        --     report "test 3 passed";
+        -- else 
+        --     report "test 3 failed";
+        -- end if;
 
-        if get_bb_y_from_t_BB(T_BB_T) = 5 then 
-            report "test 4 passed";
-        else 
-            report "test 4 failed";
-        end if;
+        -- if get_bb_y_from_t_BB(T_BB_T) = 5 then 
+        --     report "test 4 passed";
+        -- else 
+        --     report "test 4 failed";
+        -- end if;
 
-        if check_block_row_full(test_matrix_a(2)) then 
-            report "test 5 passed";
-        else if check_matrix_full_rows(test_matrix_a) = "0111" then
-            report "test 7 passed";
-        else
-            report to_string(check_matrix_full_rows(test_matrix_a));
-        end if;
-            report "test 5 failed";
-        end if;
+        -- if check_block_row_full(test_matrix_a(2)) then 
+        --     report "test 5 passed";
+        -- else if check_matrix_full_rows(test_matrix_a) = "0111" then
+        --     report "test 7 passed";
+        -- else
+        --     report to_string(check_matrix_full_rows(test_matrix_a));
+        -- end if;
+        --     report "test 5 failed";
+        -- end if;
 
-        if check_block_row_full(test_matrix_a(1)) then 
-            report "test 6 failed";
-        else 
-            report "test 6 passed";
-        end if;
-        if check_matrix_full_rows(test_matrix_a) = "0111" then
-            report "test 7 passed";
-            report to_string(check_matrix_full_rows(test_matrix_a));
-        else
-            report to_string(check_matrix_full_rows(test_matrix_a));
-        end if;
+        -- if check_block_row_full(test_matrix_a(1)) then 
+        --     report "test 6 failed";
+        -- else 
+        --     report "test 6 passed";
+        -- end if;
+        -- if check_matrix_full_rows(test_matrix_a) = "0111" then
+        --     report "test 7 passed";
+        --     report to_string(check_matrix_full_rows(test_matrix_a));
+        -- else
+        --     report to_string(check_matrix_full_rows(test_matrix_a));
+        -- end if;
 
-        if check_matrix_full_rows(test_matrix_b) = "1101" then
-            report "test 8 passed";
-            report to_string(check_matrix_full_rows(test_matrix_b));
-        else
-            report "test 8 failed";
-        end if;
+        -- if check_matrix_full_rows(test_matrix_b) = "1101" then
+        --     report "test 8 passed";
+        --     report to_string(check_matrix_full_rows(test_matrix_b));
+        -- else
+        --     report "test 8 failed";
+        -- end if;
 
-        if equals(test_matrix_a(0), test_matrix_a(0)) then
-            report "test 10 passed";
-        else
-            report "test 10 failed";
-        end if;
-        if not equals(test_matrix_a(0), test_matrix_a(1)) then
-            report "test 11 passed";
-        else
-            report "test 11 failed";
-        end if;
+        -- if equals(test_matrix_a(0), test_matrix_a(0)) then
+        --     report "test 10 passed";
+        -- else
+        --     report "test 10 failed";
+        -- end if;
+        -- if not equals(test_matrix_a(0), test_matrix_a(1)) then
+        --     report "test 11 passed";
+        -- else
+        --     report "test 11 failed";
+        -- end if;
 
-        if equals(test_matrix_a,test_matrix_a) then 
-            report "test 12 passed";
-        else
-            report "test 12 failed";
-        end if;
-        if not equals(test_matrix_a,test_matrix_b) then 
-            report "test 12 passed";
-        else
-            report "test 12 failed";
-        end if;
+        -- if equals(test_matrix_a,test_matrix_a) then 
+        --     report "test 12 passed";
+        -- else
+        --     report "test 12 failed";
+        -- end if;
+        -- if not equals(test_matrix_a,test_matrix_b) then 
+        --     report "test 12 passed";
+        -- else
+        --     report "test 12 failed";
+        -- end if;
 
-        if equals(out_matrix_a, delete_rows_of_matrix(test_matrix_a, check_matrix_full_rows(test_matrix_a))) then
-            report "test 13 passed";
-        else 
-            report "test 13 failed";
-        end if;
+        -- if equals(out_matrix_a, delete_rows_of_matrix(test_matrix_a, check_matrix_full_rows(test_matrix_a))) then
+        --     report "test 13 passed";
+        -- else 
+        --     report "test 13 failed";
+        -- end if;
 
-        if check_block_row_empty(EMPTY_ROW) then 
-            report "test_empty_1 passed";
-        else 
-            report "test_empty_1 failed";
-        end if; 
+        -- if check_block_row_empty(EMPTY_ROW) then 
+        --     report "test_empty_1 passed";
+        -- else 
+        --     report "test_empty_1 failed";
+        -- end if; 
 
-        if check_block_row_empty(out_matrix_a(0)) then
-            report "test_empty_2 failed";
-        else 
-            report "test_empty_2 passed";
-        end if;
+        -- if check_block_row_empty(out_matrix_a(0)) then
+        --     report "test_empty_2 failed";
+        -- else 
+        --     report "test_empty_2 passed";
+        -- end if;
 
-        if check_block_row_empty(out_matrix_a(2)) then
-            report "test_empty_3 passed";
-        else
-            report "test_empty_3 failed";
-        end if;
+        -- if check_block_row_empty(out_matrix_a(2)) then
+        --     report "test_empty_3 passed";
+        -- else
+        --     report "test_empty_3 failed";
+        -- end if;
         
-        if equals(out_matrix_b, delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))) then
-            report "test 14 passed";
-        else 
-            report "test 14 failed";
-            echo(""&LF);
-            print(out_matrix_b);
-            echo(""&LF);
-            print(delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b)));
-        end if;
+        -- if equals(out_matrix_b, delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))) then
+        --     report "test 14 passed";
+        -- else 
+        --     report "test 14 failed";
+        --     echo(""&LF);
+        --     print(out_matrix_b);
+        --     echo(""&LF);
+        --     print(delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b)));
+        -- end if;
 
-        if equals(merged_matrix_a,
-                merge_columns_of_matrix(
-                    delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))
-                )
-            ) then
-            report "test 15 passed";
-        else
-            report "test 15 failed";
-            print(merged_matrix_a);
-            echo(""&LF);
-            print(                merge_columns_of_matrix(
-                delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))
-            ));
-            echo(""&LF);
-        end if;
-        print(add_tetromino_to_matrix(EMPTY_MATRIX, TET_T, ROT_0, 0,3));
+        -- if equals(merged_matrix_a,
+        --         merge_columns_of_matrix(
+        --             delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))
+        --         )
+        --     ) then
+        --     report "test 15 passed";
+        -- else
+        --     report "test 15 failed";
+        --     print(merged_matrix_a);
+        --     echo(""&LF);
+        --     print(                merge_columns_of_matrix(
+        --         delete_rows_of_matrix(test_matrix_b, check_matrix_full_rows(test_matrix_b))
+        --     ));
+        --     echo(""&LF);
+        -- end if;
+        -- print(add_tetromino_to_matrix(EMPTY_MATRIX, TET_T, ROT_0, 0,3));
+        
+        test_integer_result := get_bb_x_from_char('0');
+        for i in '0' to '9' loop
+            test_integer_result := get_bb_x_from_char(i);
+            test_integer_expected := character'pos(i) - character'pos('0');
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+            
+            test_integer_result := get_bb_y_from_char(i);
+            test_integer_expected := 0;
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+        end loop;
+        for i in 'A' to 'J' loop 
+            test_integer_result := get_bb_x_from_char(i);
+            test_integer_expected := character'pos(i) - character'pos('A');
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+            
+            test_integer_result := get_bb_y_from_char(i);
+            test_integer_expected := 1;
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+        end loop;
+
+        for i in 'K' to 'T' loop 
+            test_integer_result := get_bb_x_from_char(i);
+            test_integer_expected := character'pos(i) - character'pos('K');
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+            
+            test_integer_result := get_bb_y_from_char(i);
+            test_integer_expected := 2;
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+        end loop;
+
+        test_character_range_lower := 'U'; 
+        test_character_range_upper := 'Z';
+        -- because 'Z' and 'U' are ambiguous (std_logic_iee777whatev and character))
+        -- you can't write i in 'U' to 'Z'
+        -- (-_-)
+        for i in test_character_range_lower to test_character_range_upper  loop 
+            test_integer_result := get_bb_x_from_char(i);
+            test_integer_expected := character'pos(i) - character'pos('U');
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+            
+            test_integer_result := get_bb_y_from_char(i);
+            test_integer_expected := 3;
+            assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
+        end loop;
+        
+
+
+        -- for i in 0 to 9 loop 
+        --     test_integer_result := get_bb_y_from_char(character'val(character'pos('0') + i));
+        --     assert test_integer_result = 0 report "get_bb_y_from_char('"&integer'image(i)&"') failed, expected "&integer'image(0)&", got " & integer'image(test_integer_result);
+        -- end loop;
+        -- for i in 'A' to 'J' loop 
+        --     test_integer_result := get_bb_y_from_char(i);
+        --     assert test_integer_result = 1 report "get_bb_y_from_char('"&integer'image(i)&"') failed, expected "&integer'image(0)&", got " & integer'image(test_integer_result);
+
+        -- end loop;
+        report "test finished";
+        
+
+
 
         finish;
 

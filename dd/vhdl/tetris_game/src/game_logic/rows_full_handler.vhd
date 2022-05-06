@@ -17,7 +17,7 @@ entity rows_full_handler is
         busy : out std_logic;
         in_matrix : in t_bb_block_matrix(ROWS - 1 downto 0);
         out_matrix : out t_bb_block_matrix(ROWS - 1 downto 0);
-        rows_removed : out std_logic_vector(ROWS - 1 downto 0)
+        rows_removed : out integer range 0 to ROWS
     );
 end entity;
 architecture arch of rows_full_handler is 
@@ -29,6 +29,7 @@ architecture arch of rows_full_handler is
         row_adding: integer range 0 to ROWS;
         row_full: std_logic;
         rows_removed: std_logic_vector(ROWS - 1 downto 0);
+        rows_removed_count: integer range 0 to ROWS;
         rows_removed_matrix: t_bb_block_matrix(ROWS - 1 downto 0); 
         out_matrix : t_bb_block_matrix(ROWS - 1 downto 0);
     end record;
@@ -46,6 +47,7 @@ begin
 				current_column => 0,
 				row_full => '0',
                 rows_removed => (others => '0'),
+                rows_removed_count => 0,
                 row_adding => 0,
                 rows_removed_matrix => EMPTY_MATRIX,
                 out_matrix => EMPTY_MATRIX
@@ -59,7 +61,7 @@ begin
     begin
         state_nxt <= state;
 		busy <= '1';
-        rows_removed <= state.rows_removed;
+        rows_removed <= state.rows_removed_count;
         out_matrix <= state.out_matrix;
         case state.fsm_state is 
             WHEN RFH_IDLE =>
@@ -71,6 +73,7 @@ begin
                     state_nxt.current_column <= 0;
                     state_nxt.row_full <= '0';
                     state_nxt.rows_removed <= (others => '0');
+                    state_nxt.rows_removed_count <= 0;
                 end if;
             WHEN CHECK_ROWS => 
                 state_nxt.rows_removed_matrix <= in_matrix;
@@ -80,6 +83,9 @@ begin
                 else
                     state_nxt.current_row <= 0;
                     state_nxt.fsm_state <= REMOVE_FULL_ROWS;
+                end if;
+                if state.row_full then
+                    state_nxt.rows_removed_count <= state.rows_removed_count + 1; 
                 end if;
                 state_nxt.rows_removed <= state.rows_removed(ROWS - 2 downto 0) & state.row_full;
             WHEN CHECK_ROW_FULL =>

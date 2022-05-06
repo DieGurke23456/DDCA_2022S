@@ -8,7 +8,7 @@ use work.gc_cntrl_pkg.all;
 use work.audio_cntrl_pkg.all;
 use work.ram_pkg.all;
 use work.tetris_util_pkg.all;
-use work.decimal_printer_pkg.all;
+use work.precompiled_decimal_printer_pkg.all;
 use work.tetris_drawers_pkg.all;
 use work.tetris_game_logic_pkg.all;
 use work.tetris_audio_pkg.all;
@@ -16,7 +16,7 @@ use work.tetris_audio_pkg.all;
 architecture ex1 of tetris_game is
 
 	type gfx_instr_array_t is array(natural range<>) of std_logic_vector;
-	constant FALL_RATE : integer := 2;
+	constant FALL_RATE : integer := 4;
 	constant BPS : integer := 7;
 	constant DISPLAY_WIDTH : integer := 320;
 	constant DISPLAY_HEIGHT : integer := 240;
@@ -41,6 +41,7 @@ architecture ex1 of tetris_game is
 	signal dp_gfx_instr_wr : std_logic;
 	signal dp_start : std_logic;
 	signal dp_busy : std_logic;
+	signal dp_number, dp_x, dp_y : std_logic_vector(15 downto 0);
 
 	signal gfx_initializer_start : std_logic;
 	signal gfx_initializer_busy : std_logic;
@@ -93,7 +94,7 @@ architecture ex1 of tetris_game is
 	--rows_full_handler 
 	signal rfh_start,rfh_busy : std_logic;
 	signal rfh_out_matrix: t_bb_block_matrix(0 to BLOCKS_Y -1);
-	signal rfh_rows_removed: std_logic_vector(BLOCKS_Y - 1 downto 0);
+	signal rfh_rows_removed: integer range 0 to EMPTY_MATRIX'length;
 
 	--matrix drawer
 	signal md_start,md_busy : std_logic;
@@ -135,7 +136,7 @@ architecture ex1 of tetris_game is
 		DRAW_TEST_MATRIX,
 		WAIT_DRAW_TEST_MATRIX,
 		CLEAR_BLOCK_MAP_INIT, CLEAR_BLOCK_MAP_WRITE,
-		START_DECIMAL_PRINTER, WAIT_DECIMAL_PRINTER,
+		PRINT_SCORE, WAIT_PRINT_SCORE, PRINT_LINES_CLEARED, WAIT_PRINT_LINES_CLEARED,
 		TEST_ADD_TETROMINO_HANDLER,
 		WAIT_TEST_ADD_TETROMINO_HANDLER,
 		TEST_ROWS_FULL_HANDLER,
@@ -170,9 +171,31 @@ architecture ex1 of tetris_game is
 		block_matrix : t_bb_block_matrix(BLOCKS_Y - 1 downto 0);
 		audio_sync_delay_counter : integer range 0 to 10;
 		note_index : integer range 0 to TETRIS_THEME'length;
+		rows_removed: integer;
+		score: integer;
+		check_instant_collision : boolean;
+		game_over: boolean;
+		show_current_tetromino: boolean;
 	end record;
 	signal state, state_nxt : state_t;
-	
+	constant reset_state : state_t := (
+		fsm_state => RESET,
+		last_controller_state => GC_BUTTONS_RESET_VALUE,
+		cur_tetromino => TET_Z,
+		next_tetromino => TET_I,
+		detected_collision => '0',
+		current_wall_block => 0,
+		current_wall_column => 0,
+		block_matrix => EMPTY_MATRIX,
+		audio_sync_delay_counter => 0,
+		note_index => 0,
+		rows_removed => 0,
+		score => 0,
+		check_instant_collision => false,
+		game_over => false,
+		show_current_tetromino => true,
+		others => (others =>'0')
+	);
 	type tetromino_object_t is record
 		x: std_logic_vector(log2c(BLOCKS_X) downto 0);
 		y: std_logic_vector(log2c(BLOCKS_Y) downto 0);
@@ -189,19 +212,7 @@ begin
 	sync : process(clk, res_n)
 	begin
 		if (res_n = '0') then
-			state <= (
-				fsm_state => RESET,
-				last_controller_state => GC_BUTTONS_RESET_VALUE,
-				cur_tetromino => TET_Z,
-				next_tetromino => TET_I,
-				detected_collision => '0',
-				current_wall_block => 0,
-				current_wall_column => 0,
-				block_matrix => EMPTY_MATRIX,
-				audio_sync_delay_counter => 0,
-				note_index => 0,
-				others => (others=>'0')
-			);
+			state <= reset_state;
 		elsif (rising_edge(clk)) then
 			state <= state_nxt;
 		end if;
@@ -262,11 +273,11 @@ begin
 		
 		case state.fsm_state is
 			when RESET =>
+				state_nxt <= reset_state;
 				state_nxt.fsm_state <= WAIT_INIT;
 				gfx_initializer_start <= '1';
 				gfx_instr <= gfx_initializer_instr;
 				gfx_instr_wr <= gfx_initializer_instr_wr;
-				
 			when WAIT_INIT =>
 				gfx_instr <= gfx_initializer_instr;
 				gfx_instr_wr <= gfx_initializer_instr_wr;
@@ -328,35 +339,45 @@ begin
 				state_nxt.dest_tetromino_y <= state.cur_tetromino_y;
 				state_nxt.dest_tetromino <= state.cur_tetromino;
 				state_nxt.dest_rotation <= state.cur_rotation;
-				if(timer_song_done = '1') then 
-					state_nxt.fsm_state <= WAIT_AUDIO_SYNC_DELAY;
-					state_nxt.note_index <= state.note_index + 1;
-					timer_song_start <= '1';
+				if(not state.game_over) then 
+					if(timer_song_done = '1') then 
+						state_nxt.fsm_state <= WAIT_AUDIO_SYNC_DELAY;
+						state_nxt.note_index <= state.note_index + 1;
+						timer_song_start <= '1';
+					end if;
+					if(timer_gravity_done = '1') then
+						state_nxt.dest_tetromino_y <= std_logic_vector(signed(state.cur_tetromino_y) + 1);
+						timer_gravity_start <= '1'; 
+					end if;				
+					if (gc_cntrl_state.btn_right = '1' and state.last_controller_state.btn_right = '0') then
+						state_nxt.dest_tetromino_x <= std_logic_vector(signed(state.cur_tetromino_x) + 1);
+						state_nxt.fsm_state <= TEST_MOVEMENT;
+					end if;
+					if (gc_cntrl_state.btn_left = '1' and state.last_controller_state.btn_left = '0') then
+						state_nxt.dest_tetromino_x <= std_logic_vector(signed(state.cur_tetromino_x) - 1);
+						state_nxt.fsm_state <= TEST_MOVEMENT;
+					end if;
+					if (gc_cntrl_state.btn_down = '1' and state.last_controller_state.btn_down = '0') then
+						state_nxt.dest_tetromino_y <= std_logic_vector(signed(state.cur_tetromino_y) + 1);
+						state_nxt.fsm_state <= TEST_MOVEMENT;
+					end if;
+					if (gc_cntrl_state.btn_a = '1' and state.last_controller_state.btn_a = '0') then
+						state_nxt.dest_rotation <= std_logic_vector(unsigned(state.cur_rotation) + 1);
+						state_nxt.fsm_state <= TEST_MOVEMENT;
+					end if;
+					if (gc_cntrl_state.btn_x = '1' and state.last_controller_state.btn_x = '0') then
+						state_nxt.fsm_state <= TEST_ROWS_FULL_HANDLER;
+					end if;
+				else
+					if(timer_gravity_done = '1') then
+						timer_gravity_start <= '1';
+						state_nxt.show_current_tetromino <= not state.show_current_tetromino;
+					end if;
+					if(gc_cntrl_state.btn_start = '1' and state.last_controller_state.btn_start = '0') then 
+						state_nxt.fsm_state <= RESET;
+					end if;
 				end if;
-				if(timer_gravity_done = '1') then
-					state_nxt.dest_tetromino_y <= std_logic_vector(signed(state.cur_tetromino_y) + 1);
 
-					timer_gravity_start <= '1'; 
-				end if;				
-				if (gc_cntrl_state.btn_right = '1' and state.last_controller_state.btn_right = '0') then
-					state_nxt.dest_tetromino_x <= std_logic_vector(signed(state.cur_tetromino_x) + 1);
-					state_nxt.fsm_state <= TEST_MOVEMENT;
-				end if;
-				if (gc_cntrl_state.btn_left = '1' and state.last_controller_state.btn_left = '0') then
-					state_nxt.dest_tetromino_x <= std_logic_vector(signed(state.cur_tetromino_x) - 1);
-					state_nxt.fsm_state <= TEST_MOVEMENT;
-				end if;
-				if (gc_cntrl_state.btn_down = '1' and state.last_controller_state.btn_down = '0') then
-					state_nxt.dest_tetromino_y <= std_logic_vector(signed(state.cur_tetromino_y) + 1);
-					state_nxt.fsm_state <= TEST_MOVEMENT;
-				end if;
-				if (gc_cntrl_state.btn_a = '1' and state.last_controller_state.btn_a = '0') then
-					state_nxt.dest_rotation <= std_logic_vector(unsigned(state.cur_rotation) + 1);
-					state_nxt.fsm_state <= TEST_MOVEMENT;
-				end if;
-				if (gc_cntrl_state.btn_x = '1' and state.last_controller_state.btn_x = '0') then
-					state_nxt.fsm_state <= TEST_ROWS_FULL_HANDLER;
-				end if;
 			when WAIT_AUDIO_SYNC_DELAY => 
 				if(state.audio_sync_delay_counter < 10) then
 					state_nxt.audio_sync_delay_counter <= state.audio_sync_delay_counter + 1;
@@ -366,7 +387,6 @@ begin
 					state_nxt.audio_sync_delay_counter <= 0;
 					state_nxt.fsm_state <= TEST_MOVEMENT;
 				end if;
-
 			when TEST_ADD_TETROMINO_HANDLER => 
 				ath_start <= '1';
 				state_nxt.fsm_state <= WAIT_TEST_ADD_TETROMINO_HANDLER;
@@ -376,6 +396,7 @@ begin
 					state_nxt.fsm_state <= TEST_ROWS_FULL_HANDLER;
 					prng_en <= '1';
 					state_nxt.cur_tetromino <= state.next_tetromino;
+					state_nxt.check_instant_collision <= true;
 					state_nxt.cur_tetromino_x <= std_logic_vector(to_unsigned(BLOCKS_X/2-1, state.cur_tetromino_x'length));
 					state_nxt.cur_tetromino_y <= (others=>'0');
 					state_nxt.cur_rotation <= ROT_0;
@@ -387,6 +408,18 @@ begin
 			when WAIT_ROWS_FULL_HANDLER => 
 				if (rfh_busy = '0') then
 					state_nxt.block_matrix <= rfh_out_matrix;
+					state_nxt.rows_removed <= state.rows_removed + rfh_rows_removed;
+					case rfh_rows_removed is 
+						when 1 => 
+							state_nxt.score <= state.score + 1; 
+						when 2 => 
+							state_nxt.score <= state.score + 3;
+						when 3 => 
+							state_nxt.score <= state.score + 7;
+						when 4 => 
+							state_nxt.score <= state.score + 10;
+						when others => 
+					end case; 
 					state_nxt.fsm_state <= DRAW_WALL_1;
 				end if;
 			when TEST_MOVEMENT =>
@@ -400,8 +433,11 @@ begin
 						state_nxt.cur_tetromino_y <= state.dest_tetromino_y;
 						state_nxt.cur_rotation <= state.dest_rotation;
 						state_nxt.cur_tetromino <= state.dest_tetromino;
+						state_nxt.check_instant_collision <= false;
 					else
-						if(to_integer(signed(state.dest_tetromino_y)) - to_integer(signed(state.cur_tetromino_y)) > 0) then 
+						if(state.check_instant_collision) then 
+							state_nxt.game_over <= true;
+						elsif(to_integer(signed(state.dest_tetromino_y)) - to_integer(signed(state.cur_tetromino_y)) > 0) then 
 							state_nxt.fsm_state <= TEST_ADD_TETROMINO_HANDLER;
 						end if;
 					end if;
@@ -456,7 +492,11 @@ begin
 				gfx_instr <= md_gfx_instr;
 				gfx_instr_wr <= md_gfx_instr_wr;
 				if(md_busy = '0') then
-					state_nxt.fsm_state <= DRAW_TETROMINO;
+					if (state.show_current_tetromino) then -- blinking
+						state_nxt.fsm_state <= DRAW_TETROMINO;
+					else 
+						state_nxt.fsm_state <= DRAW_NEXT_TETROMINO;
+					end if;
 				end if;
 			when DRAW_TETROMINO =>
 				td_start <= '1';
@@ -484,7 +524,7 @@ begin
 				gfx_instr <= td_gfx_instr;
 				gfx_instr_wr <= td_gfx_instr_wr;
 				if (td_busy = '0') then
-					state_nxt.fsm_state <= START_DECIMAL_PRINTER;
+					state_nxt.fsm_state <= PRINT_SCORE;
 				end if;
 			
 			--██╗      █████╗ ██████╗ ███████╗██╗     
@@ -493,17 +533,31 @@ begin
 			--██║     ██╔══██║██╔══██╗██╔══╝  ██║     
 			--███████╗██║  ██║██████╔╝███████╗███████╗
 			--╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
-			when START_DECIMAL_PRINTER =>
+			when PRINT_SCORE => 
 				dp_start <= '1';
-				state_nxt.fsm_state <= WAIT_DECIMAL_PRINTER;
-				
-			when WAIT_DECIMAL_PRINTER =>
+				state_nxt.fsm_state <= WAIT_PRINT_SCORE;
+			when WAIT_PRINT_SCORE => 
 				gfx_instr <= dp_gfx_instr;
 				gfx_instr_wr <= dp_gfx_instr_wr;
+				dp_x <= x"00c8";
+				dp_y <= x"0014";
+				dp_number <= std_logic_vector(to_signed(state.score, 16));
+				if (dp_busy = '0') then
+					state_nxt.fsm_state <= PRINT_LINES_CLEARED;
+					dp_number <= std_logic_vector(to_signed(state.rows_removed, 16));
+				end if;
+			when PRINT_LINES_CLEARED => 
+				dp_start <= '1';
+				state_nxt.fsm_state <= WAIT_PRINT_LINES_CLEARED;
+			when WAIT_PRINT_LINES_CLEARED => 
+				gfx_instr <= dp_gfx_instr;
+				gfx_instr_wr <= dp_gfx_instr_wr;
+				dp_x <= x"00c8";
+				dp_y <= x"0034";
+				dp_number <= std_logic_vector(to_signed(state.rows_removed, 16));
 				if (dp_busy = '0') then
 					state_nxt.fsm_state <= DO_FRAME_SYNC;
 				end if;
-			
 		end case;
 	end process;
 
@@ -690,7 +744,7 @@ begin
 			gfx_instr_full => gfx_instr_full
 		);
 	
-	decimal_printer_inst : decimal_printer
+	decimal_printer_inst : precompiled_decimal_printer
 	port map (
 		clk            => clk,
 		res_n          => res_n,
@@ -699,9 +753,9 @@ begin
 		gfx_instr_full => gfx_instr_full,
 		start          => dp_start,
 		busy           => dp_busy,
-		x              => x"00c8",
-		y              => x"0014",
-		number         => gc_cntrl_state.trigger_l & gc_cntrl_state.trigger_r
+		x              => dp_x,
+		y              => dp_y,
+		number         => dp_number
 	);
 	
 	tetromino_collider_inst : tetromino_collider
@@ -745,6 +799,7 @@ begin
         start => timer_song_start
     );
 
+
     block_map : block 
         signal block_map_x_int : integer;
         signal block_map_y_int : integer;
@@ -776,14 +831,6 @@ begin
             end if;
         end process;
     end block;
-
-
-	--synth_cntrl(0).high_time <= x"30";
-	--synth_cntrl(0).low_time <= x"30"; 
-	--synth_cntrl(0).play <= gc_cntrl_state.btn_left;
-	--synth_cntrl(1).high_time <= x"22";
-	--synth_cntrl(1).low_time <= x"22"; 
-	--synth_cntrl(1).play <=  gc_cntrl_state.btn_right;
 
 	gc_cntrl_rumble <= gc_cntrl_state.btn_a;
 
