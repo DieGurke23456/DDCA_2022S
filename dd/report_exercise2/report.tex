@@ -54,6 +54,40 @@
 
 \begin{qa}{Briefly describe the architecture of your \textsf{tetris\_game} module. Are there any submodules? What is their purpose? How many FSMs did you use?}
 add your explanation here (approximately 8-10 sentences, you can also include figures) ... 
+
+The submodules used for the drawing of blocks and strings on the screen are located in tetris_drawers_pkg.vhd;
+The smallest unit of the implementation is a T_BB_BLOCK. It defines which bitblit to use when drawing it, and whether it is empty or not. 
+A T_BB_ROW is made of multiple T_BB_BLOCKS.
+A T_BB_MATRIX is made of multiple T_BB_ROWS. 
+The block_drawer is used to draw a specific bit_blit to a specified position on the screen. It is not used directly in the tetris_architecture.
+The block_line_drawer is used to draw a line of blocks across the screen, provided a starting_point, a t_bb_block to use, a length, and a direction(horizontal or vertical).
+Inside the architecture, it used to draw the borders of the map.
+The block_matrix_drawer is used to draw a t_bb_block_matrix, starting at the specified x and y coordinates.
+The string_drawer is used to print the labels for the score, removed-lines and next-tetromino.   
+
+The submodules used for the game logic are located in the tetris_game_logic_pkg.vhd
+The add_tetromino_handler takes a block_matrix, a tetromino, the coordinates of the tetromino inside the matrix, and the rotation of the tetromino as input.
+It adds all solid blocks of the tetromino to the matrix, and returns the new matrix. 
+The rows_full_handler is used for checking for full rows, removing them, and shifting the remaining rows accordingly. It also provides information about the number of rows that were removed.
+The timer is a simple counter that counts the number of clock_cycles since it was last started, and sets its ouput to '1' after the specified amount of time has passed.
+It is both used for the automatic downwards movement of the tetromino, aswell as for measuring the time between different pitches for the synthesizers. 
+
+The methods and constants used for the music are located in the tetris_audio_pkg.vhd
+Here, a basic 2-channel arrangement of the tetris-theme is provided, aswell as some functions matching the different pitches to 8-bit vectors for the high- and lowtime of the synthesizers.
+"Shouldn't you have tried implementing Task 1 before wasting time with adding music to the game?" "Yes, yes I should have"
+
+As for the tetris_architecture itself, its heart is the state.matrix object.
+It stores information about which blocks are solid on the map, aswell as which type of bitblit should be used when drawing them. The tetromino-collider acceses the matrix and 
+the current tetromino.
+"Couldn't you just have used the on-chip-memory to store the matrix?" "Yes, yes I could have". In hinsight, this would have been the better choice, as all submodules which have a matrix as output and input require 
+a huge amount of data-connections and flip-flops, wheras storing the matrix inside the on-chip memory would have been the much more efficient option.
+
+When the collider registers a collision, the add_tetromino_handler is started, which adds the current tetromino to the block_matrix.
+After that, the rows_full_handler is started, which checks for full rows and removes them accordingly. 
+
+
+
+
 \end{qa}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
