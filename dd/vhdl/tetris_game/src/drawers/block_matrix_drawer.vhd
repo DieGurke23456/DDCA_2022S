@@ -88,7 +88,7 @@ begin
 		bd_x <= 0;
 		bd_y <= 0;
 		bd_start <= '0';
-
+		bd_block_to_draw <= T_BB_EMPTY;
 		case state.fsm_state is
 			when MD_IDLE => 
 				busy <= '0';

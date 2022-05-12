@@ -128,6 +128,28 @@ package tetris_drawers_pkg is
             gfx_instr_full : in std_logic
         );
     end component;
+    
+    component string_drawer is 
+        generic (
+            BLOCK_SIZE : integer; -- size of a block in px
+            BLOCKS_X: integer;    -- size of coordinate system in x dimension
+            BLOCKS_Y: integer;    -- size of coordinate system in y dimension
+            MAX_LENGTH: integer   --max-length of strings that can be passed to instance
+        );
+        port (
+            clk : in std_logic;
+            res_n : in std_logic;
+            start : in std_logic;
+            busy : out std_logic;
+            x : in integer range 0 to (BLOCKS_X - 1);
+            y : in integer range 0 to (BLOCKS_Y - 1);
+            string_to_draw : in string(1 to MAX_LENGTH);
+            chars_to_draw : in integer range 0 to MAX_LENGTH;
+            gfx_instr : out std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
+            gfx_instr_wr : out std_logic;
+            gfx_instr_full : in std_logic
+        );
+    end component;
 
 
 
@@ -202,8 +224,6 @@ package body tetris_drawers_pkg is
         return to_return;
     end function;
     
-
-
     function get_bb_x_from_t_BB(t_bb: t_bb_block) return t_bb_x_cords is
         variable to_return : t_bb_x_cords;
     begin

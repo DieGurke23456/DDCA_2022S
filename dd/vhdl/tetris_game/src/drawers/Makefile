@@ -40,13 +40,16 @@ VHDL_FILES = \
 	./block_drawer.vhd\
 	./block_line_drawer.vhd\
 	./block_matrix_drawer.vhd\
+	./string_drawer.vhd\
 	../../../tetris_game/src/drawers/tb/tetris_drawers_package_tb.vhd
 
 TB_FILES = \
-	./tb/tetris_drawers_package_tb.vhd
+	./tb/tetris_drawers_package_tb.vhd\
+	./tb/string_drawer_tb.vhd
 
 TIME_RESOLUTION = 1ps
 TB = tb_tetris_drawers_package
+STRING_TB = tb_string_drawer
 
 SIM_TIME = 2663 us
 WAVE_FILE = scripts/wave.do
@@ -79,8 +82,15 @@ list_sources:
 sim: compile
 	vsim -c -do "vsim $(TB) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
 
+
 sim_gui: compile
 	vsim -do "vsim $(TB) -t $(TIME_RESOLUTION) $(VSIM_ARGS); do $(WAVE_FILE);run $(SIM_TIME)" 
+
+sim_string: compile 
+	vsim -c -do "vsim $(TB_STRING) -t $(TIME_RESOLUTION) $(VSIM_ARGS); run $(SIM_TIME);quit"
+
+sim_string_gui: compile
+	vsim -do "vsim $(TB_STRING) -t $(TIME_RESOLUTION) $(VSIM_ARGS); do $(WAVE_FILE);run $(SIM_TIME)" 
 
 clean:
 	rm -f transcript

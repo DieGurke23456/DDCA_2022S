@@ -34,7 +34,7 @@ architecture ex1 of tetris_game is
 
 	constant NEXT_TETROMINO_X_POS: integer := BLOCKS_VIEW_X  - 6;
 	constant NEXT_TETROMINO_Y_POS: integer := BLOCKS_VIEW_Y / 2;
-
+	constant STRING_MAX_LENGTH : integer := 10;
 
 	--decimal printer signals
 	signal dp_gfx_instr : std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
@@ -102,22 +102,26 @@ architecture ex1 of tetris_game is
 	signal md_y : integer range 0 to (BLOCKS_VIEW_Y - 1);
 	signal md_gfx_instr : std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
 	signal md_gfx_instr_wr : std_logic;	
+
+	--string drawer 
+	signal sd_start, sd_busy : std_logic;
+	signal sd_x: integer range 0 to (BLOCKS_VIEW_X - 1);
+	signal sd_y: integer range 0 to (BLOCKS_VIEW_Y - 1);
+	subtype string_short is string(1 to STRING_MAX_LENGTH);
+	signal sd_string_to_draw: string_short;
+	signal sd_gfx_instr: std_logic_vector(GFX_INSTR_WIDTH-1 downto 0);
+	signal sd_chars_to_draw: integer range 0 to STRING_MAX_LENGTH;
+	signal sd_gfx_instr_wr: std_logic;
 	
 	-- tetromino_collider 
 	signal tc_start,tc_busy,tc_collision_detected, tc_block_map_rd,tc_block_map_solid : std_logic;
 	signal tc_block_map_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0);
 	signal tc_block_map_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0);
 
-	signal block_map_rd_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0);
-	signal block_map_rd_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0);
 	signal block_map_rd : std_logic;
-	signal block_map_rd_data : std_logic_vector(0 downto 0);
-	
-	signal block_map_wr_x : std_logic_vector(log2c(BLOCKS_X)-1 downto 0);
-	signal block_map_wr_y : std_logic_vector(log2c(BLOCKS_Y)-1 downto 0);
-	signal block_map_wr : std_logic;
-	signal block_map_wr_data : std_logic_vector(0 downto 0);
 
+
+	
 	signal prng_value : std_logic_vector(2 downto 0);
 	signal prng_en : std_logic;
 
@@ -135,14 +139,15 @@ architecture ex1 of tetris_game is
 		WAIT_DRAW_WALL_2,
 		DRAW_TEST_MATRIX,
 		WAIT_DRAW_TEST_MATRIX,
-		CLEAR_BLOCK_MAP_INIT, CLEAR_BLOCK_MAP_WRITE,
 		PRINT_SCORE, WAIT_PRINT_SCORE, PRINT_LINES_CLEARED, WAIT_PRINT_LINES_CLEARED,
 		TEST_ADD_TETROMINO_HANDLER,
 		WAIT_TEST_ADD_TETROMINO_HANDLER,
 		TEST_ROWS_FULL_HANDLER,
 		WAIT_ROWS_FULL_HANDLER,
 		START_GRAVITY_TIMER,
-		WAIT_AUDIO_SYNC_DELAY
+		WAIT_AUDIO_SYNC_DELAY,
+		START_STRING_DRAWER,
+		WAIT_STRING_DRAWER
 	);
 
 	signal td_cur_tetromino : tetromino_t;
@@ -242,32 +247,52 @@ begin
 		
 		prng_en <= '0';
 		dp_start <= '0'; -- decimal printer 
+		dp_number <= (others => '0');
+		dp_x <= (others => '0');
+		dp_y <= (others => '0');
+
 		tc_start <= '0'; -- tetromino collider
 		gfx_initializer_start <= '0';
 		--synth_cntrl(1).play <= '1';
 		gfx_instr_wr <= '0';
 		gfx_instr <= (others=>'0');
 		td_start <= '0';
+		td_cur_tetromino <= state.cur_tetromino;
+		td_cur_rotation <= state.cur_rotation;
 		td_x <= (others=>'0');
 		td_y <= (others=>'0');
 
 		bd_start <= '0';
+		bd_x <= 0;
+		bd_y <= 0;
+		bd_block <= T_BB_EMPTY;
+
 		bld_start <= '0';
+		bld_x <= 0;
+		bld_y <= 0;
+		bld_length <= 0;
+		bld_dir <= '0';
+		bld_block <= T_BB_WALL;
+
 		md_start <= '0';
+		md_x <= 0;
+		md_y <= 0;
+
 		ath_start <= '0';
+		
 		rfh_start <= '0';
 		timer_gravity_start <= '0';
 		timer_song_start <= '0';
-		
-		--block map stuff
-		block_map_rd_x <= (others=>'0');
-		block_map_rd_y <= (others=>'0');
-		block_map_rd <= '0';
-		block_map_wr <= '0';
-		block_map_wr_x <= (others=>'0');
-		block_map_wr_y <= (others=>'0');
-		block_map_wr_data <= (others=>'0');
 
+		sd_start <= '0';
+		sd_x <= 0;
+		sd_y <= 0;
+		sd_string_to_draw <= (others => ' ');
+		sd_chars_to_draw <= 0;
+
+		--block map stuff
+		block_map_rd <= '0';
+		
 		synth_cntrl(0).play <= '1';
 		synth_cntrl(1).play <= '1';
 		
@@ -287,42 +312,19 @@ begin
 			when START_GRAVITY_TIMER => 
 				timer_gravity_start <= '1';
 				timer_song_start <= '1';
-				state_nxt.fsm_state <= CLEAR_BLOCK_MAP_INIT; 
-			when CLEAR_BLOCK_MAP_INIT =>
 				state_nxt.cur_tetromino_x <= std_logic_vector(to_unsigned(BLOCKS_X/2-1, state.cur_tetromino_x'length));
-				state_nxt.cur_tetromino_y <= (others=>'0');
-				state_nxt.row_counter <= (others=>'0');
-				state_nxt.column_counter <= (others=>'0');
-				state_nxt.fsm_state <= CLEAR_BLOCK_MAP_WRITE;
-			
-			when CLEAR_BLOCK_MAP_WRITE =>
-				if (unsigned(state.column_counter) = BLOCKS_X-1) then
-					state_nxt.column_counter <= (others=>'0');
-					if (unsigned(state.row_counter) = BLOCKS_Y-1) then
-						state_nxt.fsm_state <= DO_FRAME_SYNC;
-					else
-						state_nxt.row_counter <= std_logic_vector(unsigned(state.row_counter) + 1);
-					end if;
-				else
-					state_nxt.column_counter <= std_logic_vector(unsigned(state.column_counter) + 1);
-				end if;
-				
-				block_map_wr_x <= state.column_counter;
-				block_map_wr_y <= state.row_counter;
-				block_map_wr_data <= (others=>'0');
-				block_map_wr <= '1';			
+				state_nxt.cur_tetromino_y <= (others=>'0');	
+				state_nxt.fsm_state <= DO_FRAME_SYNC; 
 			when DO_FRAME_SYNC =>
 				if (gfx_instr_full = '0') then
 					gfx_instr_wr <= '1';
 					gfx_instr <= gfx_instr_frame_sync;
 					state_nxt.fsm_state <= WAIT_FRAME_SYNC;
 				end if;
-			
 			when WAIT_FRAME_SYNC =>
 				if (gfx_frame_sync = '1') then
 					state_nxt.fsm_state <= CLEAR_SCREEN;
 				end if;
-			
 			when CLEAR_SCREEN =>
 				write_instr(gfx_instr_clear(color=>x"c"), PROCESS_INPUT);
 			--██╗███╗   ██╗██████╗ ██╗   ██╗████████╗
@@ -456,10 +458,12 @@ begin
 				bld_length <= BLOCKS_Y;
 				bld_dir <= '0';
 				state_nxt.fsm_state <= WAIT_DRAW_WALL_1;
+				bld_block <= T_BB_WALL;
 			when WAIT_DRAW_WALL_1 =>
 				if (bld_busy = '0') then 
 					state_nxt.fsm_state <= DRAW_WALL_2;
 				end if;
+				bld_length <= BLOCKS_Y;
 				gfx_instr <= bld_gfx_instr;
 				gfx_instr_wr <= bld_gfx_instr_wr;
 				bld_block <= T_BB_WALL;
@@ -470,10 +474,12 @@ begin
 				bld_length <= BLOCKS_Y;
 				bld_dir <= '0';
 				state_nxt.fsm_state <= WAIT_DRAW_WALL_2;
+				bld_block <= T_BB_WALL;
 			when WAIT_DRAW_WALL_2 =>
 				if (bld_busy = '0') then 
 					state_nxt.fsm_state <= DRAW_TEST_MATRIX;
 				end if;
+				bld_length <= BLOCKS_Y;
 				gfx_instr <= bld_gfx_instr;
 				gfx_instr_wr <= bld_gfx_instr_wr;
 				bld_block <= T_BB_WALL;
@@ -556,6 +562,20 @@ begin
 				dp_y <= x"0034";
 				dp_number <= std_logic_vector(to_signed(state.rows_removed, 16));
 				if (dp_busy = '0') then
+					state_nxt.fsm_state <= DO_FRAME_SYNC;
+				end if;
+			when START_STRING_DRAWER => 
+				sd_start <= '1';
+				state_nxt.fsm_state <= WAIT_STRING_DRAWER;
+				sd_chars_to_draw <= 6;
+			when WAIT_STRING_DRAWER => 
+				gfx_instr <= sd_gfx_instr;
+				gfx_instr_wr <= sd_gfx_instr_wr;
+				sd_x <= 16;
+				sd_y <= 2;
+				sd_string_to_draw <= "ABCDEF    ";
+				sd_chars_to_draw <= 6;
+				if(sd_busy = '0') then
 					state_nxt.fsm_state <= DO_FRAME_SYNC;
 				end if;
 		end case;
@@ -798,6 +818,27 @@ begin
         res_n => res_n,
         start => timer_song_start
     );
+
+	string_drawer_isnt: string_drawer
+	generic map (
+		BLOCK_SIZE => BLOCK_SIZE,
+		BLOCKS_X => BLOCKS_VIEW_X,
+		BLOCKS_Y => BLOCKS_VIEW_Y,
+		MAX_LENGTH => STRING_MAX_LENGTH
+	)
+	port map (
+		clk            => clk,
+		res_n          => res_n,
+		start          => sd_start,
+		busy           => sd_busy,
+		x              => sd_x,
+		y              => sd_y,
+		string_to_draw => sd_string_to_draw,
+		gfx_instr      => sd_gfx_instr,
+		chars_to_draw  => sd_chars_to_draw, 
+		gfx_instr_wr   => sd_gfx_instr_wr,
+		gfx_instr_full => gfx_instr_full
+	);
 
 
     block_map : block 

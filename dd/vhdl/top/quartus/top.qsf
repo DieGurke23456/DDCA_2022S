@@ -462,6 +462,7 @@ set_location_assignment PIN_Y2 -to clk
 set_instance_assignment -name RESERVE_PIN AS_INPUT_TRI_STATED -to clk
 set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
 set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name VHDL_FILE ../../tetris_game/src/drawers/string_drawer.vhd
 set_global_assignment -name VHDL_FILE ../../decimal_printer/src/precompiled_decimal_printer_pkg.vhd
 set_global_assignment -name QXP_FILE ../../decimal_printer/src/precompiled_decimal_printer.qxp
 set_global_assignment -name VHDL_FILE ../../tetris_game/src/audio/tetris_audio_pkg.vhd

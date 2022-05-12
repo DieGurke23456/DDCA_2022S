@@ -281,20 +281,7 @@ begin
             assert test_integer_result = test_integer_expected report "get_bb_x_from_char('"& i &"') failed, expected "&integer'image(test_integer_expected)&", got " & integer'image(test_integer_result);
         end loop;
         
-
-
-        -- for i in 0 to 9 loop 
-        --     test_integer_result := get_bb_y_from_char(character'val(character'pos('0') + i));
-        --     assert test_integer_result = 0 report "get_bb_y_from_char('"&integer'image(i)&"') failed, expected "&integer'image(0)&", got " & integer'image(test_integer_result);
-        -- end loop;
-        -- for i in 'A' to 'J' loop 
-        --     test_integer_result := get_bb_y_from_char(i);
-        --     assert test_integer_result = 1 report "get_bb_y_from_char('"&integer'image(i)&"') failed, expected "&integer'image(0)&", got " & integer'image(test_integer_result);
-
-        -- end loop;
         report "test finished";
-        
-
 
 
         finish;

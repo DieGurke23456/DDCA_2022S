@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/homes/d12019840/stuff/ddca_ss2022'
+make: Leaving directory `/homes/d12019840/stuff/ddca_ss2022'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
