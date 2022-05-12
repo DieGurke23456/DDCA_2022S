@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="17cm" height="7cm" viewBox="139 254 337 129" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <ellipse style="fill: #ffffff" cx="207.067" cy="323.534" rx="67.0673" ry="23.5336"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="207.067" cy="323.534" rx="67.0673" ry="23.5336"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="207.067" y="327.434">
+      <tspan x="207.067" y="327.434">STATE A</tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="407.067" cy="323.534" rx="67.0673" ry="23.5336"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="407.067" cy="323.534" rx="67.0673" ry="23.5336"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="407.067" y="327.434">
+      <tspan x="407.067" y="327.434">STATE B</tspan>
+    </text>
+  </g>
+  <g>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 239.87,344.714 A 155.346,155.346 0 0 0 365.374,348.643"/>
+    <polygon style="fill: #000000" points="372.25,345.682 365.397,354.515 365.488,348.926 361.071,345.499 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="372.25,345.682 365.397,354.515 365.488,348.926 361.071,345.499 "/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="280" y="380">
+    <tspan x="280" y="380">a = '0'</tspan>
+  </text>
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="206" y="271">
+    <tspan x="206" y="271">Example state diagram </tspan>
+  </text>
+</svg>
