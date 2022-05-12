@@ -193,7 +193,8 @@ package body tetris_drawers_pkg is
         variable to_return : t_bb_x_cords := 0;
         variable calc_helper : integer := 0;
     begin 
-        if char >= '0' and char <= '9' then 
+        if char = ' ' then 
+        elsif char >= '0' and char <= '9' then 
             to_return := character'pos(char) - character'pos('0');
         else 
             calc_helper := character'pos(char) - character'pos('A');
@@ -211,7 +212,7 @@ package body tetris_drawers_pkg is
         variable to_return : t_bb_y_cords := 0;
         variable calc_helper : integer := 0;
     begin
-        if not (char >= '0' and char <= '9') then 
+        if not ((char >= '0' and char <= '9') or char /= ' ') then 
             calc_helper := character'pos(char) - character'pos('A');
             to_return := 1;
             for i in 0 to 2 loop

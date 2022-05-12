@@ -352,13 +352,7 @@ package tetris_audio_pkg is
 
         function high_time_from_pitch(pitch: pitch_t) return high_time_t;
 
-    component duration_counter is
-        generic(
-            SIXTEENTH_CYCLE_TIME: integer;
-            duration: in duration_t;
-            finished: in std_logic
-        );
-    end component;
+
 end package;
 package body tetris_audio_pkg is 
     function note_constr(pitch: pitch_t;duration: duration_t) return note_t is 
