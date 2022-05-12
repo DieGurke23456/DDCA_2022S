@@ -146,8 +146,12 @@ architecture ex1 of tetris_game is
 		WAIT_ROWS_FULL_HANDLER,
 		START_GRAVITY_TIMER,
 		WAIT_AUDIO_SYNC_DELAY,
-		START_STRING_DRAWER,
-		WAIT_STRING_DRAWER
+        DRAW_LABEL_1,
+        WAIT_DRAW_LABEL_1,
+        DRAW_LABEL_2,
+        WAIT_DRAW_LABEL_2,
+        DRAW_LABEL_3,
+        WAIT_DRAW_LABEL_3
 	);
 
 	signal td_cur_tetromino : tetromino_t;
@@ -562,22 +566,59 @@ begin
 				dp_y <= x"0034";
 				dp_number <= std_logic_vector(to_signed(state.rows_removed, 16));
 				if (dp_busy = '0') then
-					state_nxt.fsm_state <= DO_FRAME_SYNC;
+					state_nxt.fsm_state <= DRAW_LABEL_1;
 				end if;
-			when START_STRING_DRAWER => 
-				sd_start <= '1';
-				state_nxt.fsm_state <= WAIT_STRING_DRAWER;
-				sd_chars_to_draw <= 6;
-			when WAIT_STRING_DRAWER => 
-				gfx_instr <= sd_gfx_instr;
-				gfx_instr_wr <= sd_gfx_instr_wr;
-				sd_x <= 16;
+            when DRAW_LABEL_1 => 
+                sd_start <= '1';
+                sd_string_to_draw <= ('S','C','O','R','E', others => ' ');
+                sd_chars_to_draw <= 5;
+                sd_x <= 16;
 				sd_y <= 2;
-				sd_string_to_draw <= "ABCDEF    ";
-				sd_chars_to_draw <= 6;
-				if(sd_busy = '0') then
-					state_nxt.fsm_state <= DO_FRAME_SYNC;
-				end if;
+                state_nxt.fsm_state <= WAIT_DRAW_LABEL_1;
+            when WAIT_DRAW_LABEL_1 => 
+                gfx_instr <= sd_gfx_instr;
+                gfx_instr_wr <= sd_gfx_instr_wr;
+                sd_string_to_draw <= ('S','C','O','R','E', others => ' ');
+                sd_chars_to_draw <= 5;
+                sd_x <= 16;
+                sd_y <= 2;
+                if(sd_busy = '0' ) then 
+                    state_nxt.fsm_state <= DRAW_LABEL_2;
+                end if;
+            when DRAW_LABEL_2 => 
+                sd_start <= '1';
+                sd_string_to_draw <= ('L','I','N','E','S', others => ' ');
+                sd_chars_to_draw <= 5;
+                sd_x <= 16;
+                sd_y <= 5;
+                state_nxt.fsm_state <= WAIT_DRAW_LABEL_2;
+            when WAIT_DRAW_LABEL_2 => 
+                gfx_instr <= sd_gfx_instr;
+                gfx_instr_wr <= sd_gfx_instr_wr;
+                sd_string_to_draw <= ('L','I','N','E','S', others => ' ');
+                sd_chars_to_draw <= 5;
+                sd_x <= 16;
+                sd_y <= 5;
+                if(sd_busy = '0' ) then 
+                    state_nxt.fsm_state <= DRAW_LABEL_3;
+                end if;
+            when DRAW_LABEL_3 => 
+                sd_start <= '1';
+                sd_string_to_draw <= ('N','E','X','T', others => ' ');
+                sd_chars_to_draw <= 4;
+                sd_x <= 16;
+                sd_y <= 8;
+                state_nxt.fsm_state <= WAIT_DRAW_LABEL_3; 
+            when WAIT_DRAW_LABEL_3 => 
+                gfx_instr <= sd_gfx_instr;
+                gfx_instr_wr <= sd_gfx_instr_wr;
+                sd_string_to_draw <= ('N','E','X','T', others => ' ');
+                sd_chars_to_draw <= 4;
+                sd_x <= 16;
+                sd_y <= 8;
+                if(sd_busy = '0' ) then 
+                    state_nxt.fsm_state <= DO_FRAME_SYNC;
+                end if;                
 		end case;
 	end process;
 
